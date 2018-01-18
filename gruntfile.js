@@ -23,21 +23,14 @@ module.exports = function(grunt) {
       options: {
         serve: false,
         incremental: true,
-        trace: true,
         verbose: true
       },
 
       build: {
-      },
-
-      buildData: {
         options: {
-          layouts: './_csv_tmp',
-          config: './_config.yml',
-          src: './_csv_tmp',
-          dest: './_data'
+          trace: true,
         }
-      }
+      },
     },
 
     less: {
@@ -68,17 +61,6 @@ module.exports = function(grunt) {
         ],
         dest: './resources/js/site.js',
       },
-
-      addYaml: {
-        options: {
-          separator: '',
-          src: [
-            './_includes/yamlHeader.yml',
-            './_csv_src/schedule.csv',
-          ],
-          dest: './_csv_tmp/schedule.csv',
-        }
-      }
     },
 
     copy: {
@@ -98,15 +80,9 @@ module.exports = function(grunt) {
       },
 
 
-      jekyllData: {
-        files: [ 
-          '_csv_src/**',
-        ],
-        tasks: ['jekyll:buildData', 'jekyll:build'],
-      },
-
       jekyll: {
         files: [ 
+          '_data/*',
           '*.html',
           '*.yml',
           '*.markdown',
@@ -131,13 +107,13 @@ module.exports = function(grunt) {
         options: {
           livereload: false,
         },
-        tasks: ['jekyll:build'],
+        tasks: ['touch', 'jekyll:build'],
       }
     },
   });
 
-  grunt.registerTask('build', ['touch', 'concat:addYaml', 'jekyll:buildData', 'jekyll:build']);
-  grunt.registerTask('watch', ['watch:less', 'watch:jekyllData', 'watch:jekyll']);
+  grunt.registerTask('build', ['touch', 'jekyll:build']);
+  grunt.registerTask('watch', ['watch:less', 'watch:jekyll']);
   grunt.registerTask('dev', ['concat', 'copy', 'build', 'connect', 'watch']);
 
   grunt.loadNpmTasks('grunt-jekyll');

@@ -45,52 +45,97 @@ exclude: [bower_components, README.md, bower.json, gruntfile.js, node_modules]
 #book_web_link: http://shop.oreilly.com/product/0636920032977.do
 #book_web_author: "Ethan Brown"
 
-book_js: "Speaking JavaScript"
-book_js_note: "(free to read online)"
-book_js_link: http://speakingjs.com/es5/index.html
-book_js_author: Axel Rauschmayer
+vars:
+    book_js: "Speaking JavaScript"
+    book_js_note: "(free to read online)"
+    book_js_link: http://speakingjs.com/es5/index.html
+    book_js_author: Axel Rauschmayer
 
-book_js_2: "Exploring ES6"
-book_js_2_note: "(free to read online)"
-book_js_2_link: http://exploringjs.com/es6/index.html 
-book_js_2_author: Axel Rauschmayer
+    book_js_2: "Exploring ES6"
+    book_js_2_note: "(free to read online)"
+    book_js_2_link: http://exploringjs.com/es6/index.html 
+    book_js_2_author: Axel Rauschmayer
 
-book_js_3: "You Don't Know JS"
-book_js_3_note: "(free to read online)"
-book_js_3_link: "https://github.com/getify/You-Dont-Know-JS/"
-book_js_3_author: Kyle Simpson
+    book_js_3: "You Don't Know JS"
+    book_js_3_note: "(free to read online)"
+    book_js_3_link: "https://github.com/getify/You-Dont-Know-JS/"
+    book_js_3_author: Kyle Simpson
 
-book_js_4: "JavaScript Allongé, the \"Six\" Edition" 
-book_js_4_note: "(free to read online)"
-book_js_4_link: https://leanpub.com/javascriptallongesix/read 
-book_js_4_author: "Reg \"raganwald\" Braithwaite"
+    book_js_4: "JavaScript Allongé, the \"Six\" Edition" 
+    book_js_4_note: "(free to read online)"
+    book_js_4_link: https://leanpub.com/javascriptallongesix/read 
+    book_js_4_author: "Reg \"raganwald\" Braithwaite"
 
-book_js_5: Eloquent JavaScript, 2nd Edition
-book_js_5_note: "(free to read online)"
-book_js_5_link: http://eloquentjavascript.net/
-book_js_5_author: Marijn Haverbeke
+    book_js_5: Eloquent JavaScript, 2nd Edition
+    book_js_5_note: "(free to read online)"
+    book_js_5_link: http://eloquentjavascript.net/
+    book_js_5_author: Marijn Haverbeke
 
-book_js_6: "Node: Up and Running"
-book_js_6_note: "(free to read online)"
-book_js_6_link: "http://chimera.labs.oreilly.com/books/1234000001808/index.html"
-book_js_6_author: Tom Hughes-Croucher and Mike Wilson
+    book_js_6: "Node: Up and Running"
+    book_js_6_note: "(free to read online)"
+    book_js_6_link: "http://chimera.labs.oreilly.com/books/1234000001808/index.html"
+    book_js_6_author: Tom Hughes-Croucher and Mike Wilson
 
-book_js_7: "DOM Enlightenment"
-book_js_7_note: "(draft version free to read online)"
-book_js_7_link: "http://domenlightenment.com/"
-book_js_7_author: Cody Lindley 
+    book_js_7: "DOM Enlightenment"
+    book_js_7_note: "(draft version free to read online)"
+    book_js_7_link: "http://domenlightenment.com/"
+    book_js_7_author: Cody Lindley 
 
-book_js_8: "Learning JavaScript Design Patterns"
-book_js_8_note: "(free to read online)"
-book_js_8_link: "https://addyosmani.com/resources/essentialjsdesignpatterns/book/"
-book_js_8_author: Addy Osmani 
+    book_js_8: "Learning JavaScript Design Patterns"
+    book_js_8_note: "(free to read online)"
+    book_js_8_link: "https://addyosmani.com/resources/essentialjsdesignpatterns/book/"
+    book_js_8_author: Addy Osmani 
 
-book_js_9: "Programming JavaScript Applications"
-book_js_9_note: "(free to read online)"
-book_js_9_link: "http://chimera.labs.oreilly.com/books/1234000000262/index.html"
-book_js_9_author: Eric Elliott 
+    book_js_9: "Programming JavaScript Applications"
+    book_js_9_note: "(free to read online)"
+    book_js_9_link: "http://chimera.labs.oreilly.com/books/1234000000262/index.html"
+    book_js_9_author: Eric Elliott 
 
-survey_intro: https://docs.google.com/forms/d/e/1FAIpQLScNVF3rD6QbIMNAclbz85Syq6T4JFONUmhRiA3UxfwXmB-QvQ/viewform
-piazza: https://piazza.com/class/j6qyg6yrhvt4ti
+    survey_intro: https://docs.google.com/forms/d/e/1FAIpQLScNVF3rD6QbIMNAclbz85Syq6T4JFONUmhRiA3UxfwXmB-QvQ/viewform
+    piazza: https://piazza.com/class/j6qyg6yrhvt4ti
 
 
+#book_js: "Speaking JavaScript"
+#book_js_note: "(free to read online)"
+#book_js_link: http://speakingjs.com/es5/index.html
+#book_js_author: Axel Rauschmayer
+
+#book_js_2: "Exploring ES6"
+#book_js_2_note: "(free to read online)"
+#book_js_2_link: http://exploringjs.com/es6/index.html 
+#book_js_2_author: Axel Rauschmayer
+
+#book_js_3: "You Don't Know JS"
+#book_js_3_note: "(free to read online)"
+#book_js_3_link: "https://github.com/getify/You-Dont-Know-JS/"
+#book_js_3_author: Kyle Simpson
+
+#book_js_4: "JavaScript Allongé, the \"Six\" Edition" 
+#book_js_4_note: "(free to read online)"
+#book_js_4_link: https://leanpub.com/javascriptallongesix/read 
+#book_js_4_author: "Reg \"raganwald\" Braithwaite"
+
+#book_js_5: Eloquent JavaScript, 2nd Edition
+#book_js_5_note: "(free to read online)"
+#book_js_5_link: http://eloquentjavascript.net/
+#book_js_5_author: Marijn Haverbeke
+
+#book_js_6: "Node: Up and Running"
+#book_js_6_note: "(free to read online)"
+#book_js_6_link: "http://chimera.labs.oreilly.com/books/1234000001808/index.html"
+#book_js_6_author: Tom Hughes-Croucher and Mike Wilson
+
+#book_js_7: "DOM Enlightenment"
+#book_js_7_note: "(draft version free to read online)"
+#book_js_7_link: "http://domenlightenment.com/"
+#book_js_7_author: Cody Lindley 
+
+#book_js_8: "Learning JavaScript Design Patterns"
+#book_js_8_note: "(free to read online)"
+#book_js_8_link: "https://addyosmani.com/resources/essentialjsdesignpatterns/book/"
+#book_js_8_author: Addy Osmani 
+
+#book_js_9: "Programming JavaScript Applications"
+#book_js_9_note: "(free to read online)"
+#book_js_9_link: "http://chimera.labs.oreilly.com/books/1234000000262/index.html"
+#book_js_9_author: Eric Elliott 
