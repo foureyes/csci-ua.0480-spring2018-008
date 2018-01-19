@@ -6,7 +6,7 @@ title: Values, Types, and Operators
 <section markdown="block" class="intro-slide">
 # Values, Types, and Operators 
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small> 
 </small></p>

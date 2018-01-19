@@ -6,7 +6,7 @@ title: "A Simple Web Server"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>

@@ -5,7 +5,7 @@ title: "About the Exam, Review"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -36,7 +36,7 @@ Ask me any questions if you have any concerns - in class or via email. For offic
 
 * __4/10__
 
-* in this room, {{ site.course_room }}
+* in this room, {{ site.vars.course_room }}
 * during regular class time (11:00-12:15am)
 * please come on time to get full amount of time for exam
 * pen/pencil and paper, no laptops
@@ -54,7 +54,7 @@ The material for the exam will come from:
 
 * slides (1 - 12)
 * homework (1 - 5)
-* {{ site.book_js }} (1 through 5, 6, 8, 13, 17 up to browsers and http, and 20 up to streams)
+* {{ site.vars.book_js }} (1 through 5, 6, 8, 13, 17 up to browsers and http, and 20 up to streams)
 
 <br>
 (of course, see the sample questions to get an idea of the types of questions on the exam)

@@ -6,7 +6,7 @@ title: "Objects Revisited, Prototypes"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -62,7 +62,7 @@ Although JavaScript _has_ objects, its approach to _object-oriented programming_
 * ... rather than its class or the class that it inherits from
 
 <div markdown="block" class="img">
-![duck]({{ site.slides_img_prefix }}/duck.jpg)
+![duck]({{ site.vars.slides_img_prefix }}/duck.jpg)
 </div>
 
 </section>
@@ -230,7 +230,7 @@ console.log(empty.toString());
 
 <div markdown="block" class="img">
 Magic!<br>
-![magic]({{ site.slides_img_prefix }}/magic.gif)
+![magic]({{ site.vars.slides_img_prefix }}/magic.gif)
 </div>
 {:.fragment}
 </section>

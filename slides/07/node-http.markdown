@@ -6,7 +6,7 @@ title: "Node's HTTP Module"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -516,7 +516,7 @@ We'll serve 3 pages and an image:
 * __/__, __home__ - read from public/index.html
 * __about__ - read from public/about.html
 * __404__ - read from public/404.html
-* __magicman.png__ - an image ... read from [public/img/magicman.png]({{ site.slides_img_prefix }}/magicman.png)
+* __magicman.png__ - an image ... read from [public/img/magicman.png]({{ site.vars.slides_img_prefix }}/magicman.png)
 
 </section>
 <section markdown="block">
@@ -553,7 +553,7 @@ Sample body for index.html, home.html
 
 </code></pre>
 
-And, of course, drop [magicman.png]({{ site.slides_img_prefix }}/magicman.png) into img.
+And, of course, drop [magicman.png]({{ site.vars.slides_img_prefix }}/magicman.png) into img.
 
 </section>
 

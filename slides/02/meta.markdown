@@ -6,7 +6,7 @@ title: "About Class #2"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -40,7 +40,7 @@ title: "About Class #2"
 
 * __has everyone been able to get to the class slides?__ &rarr;
 * does everyone see this course __on NYU classes?__ &rarr;
-* __have you tried reading {{ site.book_js }}? Good? Not so good?__ &rarr;
+* __have you tried reading {{ site.vars.book_js }}? Good? Not so good?__ &rarr;
 </section>
 
 <!--
@@ -50,7 +50,7 @@ title: "About Class #2"
 * I'll let you know the results from the survey next Tuesday as well
 * __has everyone been able to get to the class slides?__ &rarr;
 * __what about NYU classes?__ &rarr;
-* __have you tried reading {{ site.book_js }}? Good? Not so good?__ &rarr;
+* __have you tried reading {{ site.vars.book_js }}? Good? Not so good?__ &rarr;
 </section>
 -->
 
@@ -81,7 +81,7 @@ Homework #1 will be posted Friday evening. It'll help you get familiar with Java
     * if you don't have a laptop, do it from your phone or do it immediately when you get home
 * (all of your assignments will be private)
 * the assignment will likely be...
-    * a few exercises from {{ site.book_js }}
+    * a few exercises from {{ site.vars.book_js }}
     * threes dice game... or maybe blackjack (yeah, you've probably done this before)
     * using some sort of input library
 </section>

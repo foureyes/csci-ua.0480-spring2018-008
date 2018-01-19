@@ -6,7 +6,7 @@ title: Control Structures
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 </section>
 
@@ -92,7 +92,7 @@ for(let i = 0; i <= 5; i = i + 1) {
 // (i++ works too, of course)
 </code></pre>
 
-{{ site.book_js }} calls the three parts: initialization, check and update.
+{{ site.vars.book_js }} calls the three parts: initialization, check and update.
 
 __Hey - notice that <code>let</code> in front of the loop variable declaration?  Do that.__
 {:.fragment}

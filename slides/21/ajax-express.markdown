@@ -5,7 +5,7 @@ title: "AJAX and Express"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -183,7 +183,7 @@ It has:
 
 
 <div markdown="block" class="img">
-![github]({{ site.slides_img_prefix }}/github-repo-browser.jpg)
+![github]({{ site.vars.slides_img_prefix }}/github-repo-browser.jpg)
 </div>
 
 </section>

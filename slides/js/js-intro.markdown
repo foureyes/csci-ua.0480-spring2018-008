@@ -5,7 +5,7 @@ title: Introducing JavaScript
 <section markdown="block" class="intro-slide">
 # Introducing JavaScript
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small> 
 </small></p>
@@ -307,7 +307,7 @@ __Choose the one that you're most comfortable with__!
 
 I'd like to get an idea of what languages / technologies everyone has had experience with. 
 
-* __please fill out__ [this survey]({{ site.survey_intro }}) rn 
+* __please fill out__ [this survey]({{ site.vars.survey_intro }}) rn 
 * take ~5 minutes to do this in class (you can finish it up outside of class later)
 * (it's also my secret way of taking attendance)
 * (and collecting your GitHub usernames)

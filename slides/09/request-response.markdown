@@ -5,7 +5,7 @@ title: "Express - Request and Response Objects"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -206,7 +206,7 @@ __Where did I find the request headers from the previous slide?__ &rarr;
 {:.fragment}
 
 <div markdown="block" class="img">
-![chrome]({{ site.slides_img_prefix }}/chrome-req-headers-sm.gif)
+![chrome]({{ site.vars.slides_img_prefix }}/chrome-req-headers-sm.gif)
 </div>
 {:.fragment}
 </section>

@@ -5,7 +5,7 @@ title: Functions
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -451,7 +451,7 @@ function f(x) {
 <section markdown="block">
 ## Hoisting Continued
 
-From {{ site.book_js }}:
+From {{ site.vars.book_js }}:
 
 __What happens when you put such a function declaration inside an if statement or a loop?__ 
 

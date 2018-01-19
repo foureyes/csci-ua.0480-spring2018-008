@@ -7,7 +7,7 @@ title: "Mongoose"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -43,7 +43,7 @@ __We're using MongoDB as our database and Mongoose as our ODM__
 
 
 <div markdown="block" class="img">
-![mongoose]({{ site.slides_img_prefix }}/mongoose.jpg)
+![mongoose]({{ site.vars.slides_img_prefix }}/mongoose.jpg)
 </div>
 </section>
 

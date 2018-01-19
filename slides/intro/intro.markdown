@@ -4,9 +4,9 @@ title: Intro
 ---
 <section markdown="block" class="intro-slide">
 
-# {{ site.course_name }}
+# {{ site.vars.course_name }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p>
 <small>
@@ -21,9 +21,9 @@ title: Intro
 
 Just to make sure you're in the right place:
 
-* {:.fragment} Special Topics - __{{ site.course_name }}__ (_AIT_)
+* {:.fragment} Special Topics - __{{ site.vars.course_name }}__ (_AIT_)
 * {:.fragment} _Someone_ started calling it AIT for short and that caught on 👍🏽
-* {:.fragment} Course Number __{{ site.course_number }}__, Section __{{ site.course_section }}__
+* {:.fragment} Course Number __{{ site.vars.course_number }}__, Section __{{ site.vars.course_section }}__
 
 
 <aside class="notes">
@@ -197,7 +197,7 @@ The concepts and theory remain the same across this and other _technology stacks
 ### Joe Versoza
 
 * {:.fragment} I think I know some of you / you know me from 0002 or 0101 (uh-oh ... __why__ would you want take another _class_ with me?)!
-* {:.fragment} __Clinical Assistant Professor__ (you can find me at: {{ site.office_hours_room }})
+* {:.fragment} __Clinical Assistant Professor__ (you can find me at: {{ site.vars.office_hours_room }})
 * {:.fragment} Before teaching full time
 	* {:.fragment} managed a bunch of programmers at a non profit
     * {:.fragment} (turns out, managing programmers is _not so fun_ &#128557; &#128514; &#128528;) 
@@ -378,8 +378,8 @@ __If you think it's going too slowly...__ (you're one of those professionals tha
 <section markdown="block">
 ## Additional Course Info
 
-* __Office Hours:__ {{ site.office_hours }}
-* __Office Hours Room:__  {{ site.office_hours_room }}
+* __Office Hours:__ {{ site.vars.office_hours }}
+* __Office Hours Room:__  {{ site.vars.office_hours_room }}
 * __Readings:__ [pulled from multiple free online books and documentation](/syllabus.html#books)
 * __Grading:__ [weights for homework, exams, etc.](/syllabus.html#grading)
 </section>

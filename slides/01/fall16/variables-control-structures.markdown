@@ -6,7 +6,7 @@ title: Variables and Some Built-In Functions
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 </section>
 
@@ -220,7 +220,7 @@ Lastly, a quick aside...
 
 ### (What time is it?)
 
-From {{ site.book_js }}: 
+From {{ site.vars.book_js }}: 
 
 * the __environment__ is the collection of variables and their values that exist at a given time
 * when a program starts up, __this environment is not empty__

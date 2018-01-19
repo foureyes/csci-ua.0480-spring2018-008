@@ -4,9 +4,9 @@ title: Intro
 ---
 <section markdown="block" class="intro-slide">
 
-# {{ site.course_name }}
+# {{ site.vars.course_name }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p>
 <small>
@@ -21,9 +21,9 @@ title: Intro
 
 Just to make sure you're in the right place:
 
-* Special Topics - __{{ site.course_name }}__ 
+* Special Topics - __{{ site.vars.course_name }}__ 
 * _Someone_ started calling it AIT (not me, I have enough acronyms in my life!), and for some reason, that caught on
-* Course Number __{{ site.course_number }}__, Section __{{ site.course_section }}__
+* Course Number __{{ site.vars.course_number }}__, Section __{{ site.vars.course_section }}__
 
 <aside class="notes">
 * hold on, are you in the right place?
@@ -185,7 +185,7 @@ This course is __a practical introduction__ to creating __modern web application
 ### Joe Versoza
 
 * {:.fragment} I think I know some of you / you know me (uh-oh ... why would you want take another _class_ with me?)!
-* {:.fragment} __Clinical Assistant Professor__ (you can find me at: {{ site.office_hours_room }})
+* {:.fragment} __Clinical Assistant Professor__ (you can find me at: {{ site.vars.office_hours_room }})
 * {:.fragment} Before teaching...
 	* part-time adjunct at __NYU__ and __City-Tech__
 	* IT Manager at non-profit (wrangling developers / herding cats) 
@@ -317,17 +317,17 @@ Let's check out the [schedule on the course site](../../schedule.html)
 <section markdown="block">
 ## Logistics / Course Info / Office Hours
 
-* __Course Site__: [ {{ site.course_site }}]({{ site.course_site }})
-* __Easier Link (Maybe)__: [ {{ site.course_site_alt }}]({{ site.course_site_alt }})
-* __Course Title:__ {{ site.course_name }}
-* __Course Number:__ {{ site.course_number }}-{{ site.course_section }}
-* __Semester:__ {{ site.course_semester }}
-* __Meeting Time:__ {{ site.course_time }}
-* __Room:__ {{ site.course_room }}
+* __Course Site__: [ {{ site.vars.course_site }}]({{ site.vars.course_site }})
+* __Easier Link (Maybe)__: [ {{ site.vars.course_site_alt }}]({{ site.vars.course_site_alt }})
+* __Course Title:__ {{ site.vars.course_name }}
+* __Course Number:__ {{ site.vars.course_number }}-{{ site.vars.course_section }}
+* __Semester:__ {{ site.vars.course_semester }}
+* __Meeting Time:__ {{ site.vars.course_time }}
+* __Room:__ {{ site.vars.course_room }}
 * __Instructor:__ Joe Versoza
 * __Email:__ jversoza at cs dot nyu dot edu
-* __Office Hours:__ {{ site.office_hours }}
-* __Office Hours Room:__  {{ site.office_hours_room }}
+* __Office Hours:__ {{ site.vars.office_hours }}
+* __Office Hours Room:__  {{ site.vars.office_hours_room }}
 </section>
 
 <section markdown="block">
@@ -362,8 +362,8 @@ Let's check out the [schedule on the course site](../../schedule.html)
 Readings will be assigned in the required books.
 
 * __Required:__
-	* [{{ site.book_js }}]( {{ site.book_js_link }}) by {{ site.book_js_author }} (available [free, online]({{ site.book_js_link }}))
-	* [{{ site.book_js_2 }}]( {{ site.book_js_2_link }}) by {{ site.book_js_2_author }}
+	* [{{ site.vars.book_js }}]( {{ site.vars.book_js_link }}) by {{ site.vars.book_js_author }} (available [free, online]({{ site.vars.book_js_link }}))
+	* [{{ site.vars.book_js_2 }}]( {{ site.vars.book_js_2_link }}) by {{ site.vars.book_js_2_author }}
 </section>
 
 <section markdown="block">

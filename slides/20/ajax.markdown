@@ -6,7 +6,7 @@ title: "AJAX"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -33,7 +33,7 @@ Let's make a quick diagram of how that all worked. __A run-of-the-mill database 
 
 <div markdown="block" class="img">
 
-![html]({{ site.slides_img_prefix }}/html-small.png)
+![html]({{ site.vars.slides_img_prefix }}/html-small.png)
 
 </div>
 {:.fragment}
@@ -109,7 +109,7 @@ __Let's draw out how all of these technologies may come together as a single pag
 
 <div markdown="block" class="img">
 
-![ajax]({{ site.slides_img_prefix }}/ajax-small.png)
+![ajax]({{ site.vars.slides_img_prefix }}/ajax-small.png)
 
 </div>
 {:.fragment}
@@ -610,7 +610,7 @@ __Our repository viewer will have:__ &rarr;
 It might look like this:
 
 <div markdown="block" class="img">
-![github]({{ site.slides_img_prefix }}/github-repo-browser.jpg)
+![github]({{ site.vars.slides_img_prefix }}/github-repo-browser.jpg)
 </div>
 
 </section>

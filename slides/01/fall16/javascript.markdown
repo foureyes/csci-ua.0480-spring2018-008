@@ -5,7 +5,7 @@ title: Introducing JavaScript
 <section markdown="block" class="intro-slide">
 # Introducing JavaScript
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small> 
 </small></p>
@@ -25,12 +25,12 @@ title: Introducing JavaScript
 ## Books (JavaScript Specific)
 
 * __required__
-	* [{{ site.book_js }}]({{ site.book_js_link }}) &rarr;
+	* [{{ site.vars.book_js }}]({{ site.vars.book_js_link }}) &rarr;
 		* great JavaScript / intro to programming book (may be too basic for some, though!)
-		* the [online version]({{ site.book_js_link }}) is free
-	* [{{ site.book_js_2 }}]({{ site.book_js_2_link }}) &rarr;
+		* the [online version]({{ site.vars.book_js_link }}) is free
+	* [{{ site.vars.book_js_2 }}]({{ site.vars.book_js_2_link }}) &rarr;
 		* if you've seen JavaScript before / feel like you have this _programming thing_ down, this is for you
-		* the [online version]({{ site.book_js_link }}) is also free
+		* the [online version]({{ site.vars.book_js_link }}) is also free
 	
 </section>
 
@@ -153,7 +153,7 @@ pines:~ joe$ node
 
 ### OK! Now About the _Actual_ Language
 
-* From the book, {{ site.book_js }}:
+* From the book, {{ site.vars.book_js }}:
 	* [Values](http://eloquentjavascript.net/01_values.html)
 	* [Program Structure](http://eloquentjavascript.net/02_program_structure.html)
 * ...And the slides (based on the above readings)

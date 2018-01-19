@@ -5,7 +5,7 @@ title: "Prototypes"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -58,7 +58,7 @@ console.log(hat.toString()); // returns object
 </code></pre>
 
 <div markdown="block" class="img">
-![rabbit out of a hat]({{ site.slides_img_prefix }}/rabbit-hat.gif)
+![rabbit out of a hat]({{ site.vars.slides_img_prefix }}/rabbit-hat.gif)
 </div>
 </section>
 

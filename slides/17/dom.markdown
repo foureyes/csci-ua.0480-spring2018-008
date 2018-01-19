@@ -5,7 +5,7 @@ title: "The Document Object Model"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -165,7 +165,7 @@ Another two properties of Nodes are:
 <section markdown="block">
 ## Shortcomings
 
-{{ site.book_js }} mentions that there are some shortcoming with the way the DOM interface is designed. For example:
+{{ site.vars.book_js }} mentions that there are some shortcoming with the way the DOM interface is designed. For example:
 
 * {:.fragment}the <code>childNodes</code> property of a node is not actually an array (__let's see... it has length, but what methods would we expect from an array?__&rarr;) 
 	* {:.fragment} (no slice())

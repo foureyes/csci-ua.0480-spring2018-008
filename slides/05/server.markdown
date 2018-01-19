@@ -5,7 +5,7 @@ title: "A Web Server in Node"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -13,7 +13,7 @@ title: "A Web Server in Node"
 <section markdown="block">
 ## A Sample Web Server in Node
 
-From our book... {{ site.book_web }}
+From our book... {{ site.vars.book_web }}
 
 <pre><code data-trim contenteditable>
 var http = require('http');

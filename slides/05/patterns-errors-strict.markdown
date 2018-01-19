@@ -6,7 +6,7 @@ title: "Patterns, Errors, Use Strict"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -223,7 +223,7 @@ Place <code>"use strict"</code> at the top of a file or function to make JavaScr
 <section markdown="block">
 ## use strict Example 1
 
-From {{ site.book_js }}:
+From {{ site.vars.book_js }}:
 
 <pre><code data-trim contenteditable>
 function canYouSpotTheProblem() {
@@ -240,7 +240,7 @@ canYouSpotTheProblem();
 <section markdown="block">
 ## use strict Example 2
 
-From {{ site.book_js }}:
+From {{ site.vars.book_js }}:
 
 <pre><code data-trim contenteditable>
 "use strict";

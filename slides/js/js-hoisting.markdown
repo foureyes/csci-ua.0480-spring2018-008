@@ -6,7 +6,7 @@ title: Hoisting
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -36,7 +36,7 @@ __Hoisting__ basically brings declarations to the __top of the current scope__. 
 
 <br>
 
-(btw, [this article](http://www.i-programmer.info/programming/javascript/5364-javascript-hoisting-explained.html?start=1) explained a lot, as well as [Chapter 4](http://eloquentjavascript.net/03_functions.html) in {{ site.book_js }})
+(btw, [this article](http://www.i-programmer.info/programming/javascript/5364-javascript-hoisting-explained.html?start=1) explained a lot, as well as [Chapter 4](http://eloquentjavascript.net/03_functions.html) in {{ site.vars.book_js }})
 {:.fragment}
 </div>
 </section>

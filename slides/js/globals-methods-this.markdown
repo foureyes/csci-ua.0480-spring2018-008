@@ -5,7 +5,7 @@ title: "Global Object, Methods, This"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -246,7 +246,7 @@ this.globalScope: hey there, I'm a global
 There's no module level scope in browser implementations, so both variables are global. __Here's what happened in Chrome's console.__ &rarr;
 
 <div markdown="block" class="img">
-![global this]({{ site.slides_img_prefix }}/global-this.png)
+![global this]({{ site.vars.slides_img_prefix }}/global-this.png)
 </div>
 
 There's some more info in: [the node docs](http://nodejs.org/api/globals.html#globals_global)... [and, of course, SO](http://stackoverflow.com/questions/19850234/node-js-variable-declaration-and-scope).
@@ -388,7 +388,7 @@ My current favorite is: [Face with no good gesture](http://www.unicode.org/repor
 Apparently, this could be the symbol for [incorrect, bad, wrong or false](http://qz.com/250350/the-origins-of-two-cryptic-emoji/).
 
 <div markdown="block" class="img">
-![face no good]({{ site.slides_img_prefix }}/face-no-good.png)
+![face no good]({{ site.vars.slides_img_prefix }}/face-no-good.png)
 </div>
 
 </section>

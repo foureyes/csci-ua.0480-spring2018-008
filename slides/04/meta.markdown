@@ -5,7 +5,7 @@ title: "About Class #5"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -22,7 +22,7 @@ Yeah. Soooo... I made a couple of typos.
 __Let's talk about shuffling first.__ &rarr;
 
 <div markdown="block" class="img">
-![shuffling]({{ site.slides_img_prefix }}/shuffling.gif)
+![shuffling]({{ site.vars.slides_img_prefix }}/shuffling.gif)
 </div>
 {:.fragment}
 
@@ -30,7 +30,7 @@ __Oh, I mean the other shuffling.__ &rarr;
 {:.fragment}
 
 <div markdown="block" class="img">
-![shuffle cards]({{ site.slides_img_prefix }}/shuffle-cards.gif)
+![shuffle cards]({{ site.vars.slides_img_prefix }}/shuffle-cards.gif)
 </div>
 {:.fragment}
 
@@ -90,7 +90,7 @@ __In the midst of the _fun_ stuff.__ &rarr;
 * we'll start talkin' web by next Thursday (maybe earlier?)
 
 <div markdown="block" class="img">
-![Waldo]({{ site.slides_img_prefix }}/waldo.jpg)
+![Waldo]({{ site.vars.slides_img_prefix }}/waldo.jpg)
 </div>
 {:.fragment}
 </section>

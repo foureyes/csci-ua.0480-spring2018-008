@@ -6,7 +6,7 @@ title: "Higher Order Functions (Continued)"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -17,7 +17,7 @@ title: "Higher Order Functions (Continued)"
 __What's abstraction again?__ &rarr;
 
 <div markdown="block" class="img">
-![pollock]({{ site.slides_img_prefix }}/pollock.jpg)
+![pollock]({{ site.vars.slides_img_prefix }}/pollock.jpg)
 </div>
 
 __Abstraction__ is the process of hiding away necessary, yet immaterial details so that the programmer can focus on solving the actual higher-level problem...
@@ -316,7 +316,7 @@ const cards = [{'suit':'♦', 'face':'4'},
              {'suit':'♥', 'face':'K'}];
 </code></pre>
 <div markdown="block" class="img">
-![jack]({{ site.slides_img_prefix }}/jack.png)
+![jack]({{ site.vars.slides_img_prefix }}/jack.png)
 </div>
 </section>
 
@@ -437,7 +437,7 @@ console.log(average(players.filter(inTeam('Spurs')).map(shootingPercentage)).toF
 A quick side note: that guy __Ginobili__ is an Argentinian basketball player that once hit a flying bat out of the air during a game.
 
 <div markdown="block" class="img">
-![ginobili]({{ site.slides_img_prefix }}/ginobili.gif)
+![ginobili]({{ site.vars.slides_img_prefix }}/ginobili.gif)
 </div>
 {:.fragment}
 

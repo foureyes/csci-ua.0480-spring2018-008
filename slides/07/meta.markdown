@@ -5,7 +5,7 @@ title: "About Class #7"
 <section markdown="block" class="intro-slide">
 # {{ page.title }}
 
-### {{ site.course_number}}-{{ site.course_section }}
+### {{ site.vars.course_number}}-{{ site.vars.course_section }}
 
 <p><small></small></p>
 </section>
@@ -119,7 +119,7 @@ I'll write something up on those topics...
 
 ### Starting with a general overview of the ...
 <div markdown="block" class="img">
-![the internet]({{ site.slides_img_prefix }}/internet.gif)
+![the internet]({{ site.vars.slides_img_prefix }}/internet.gif)
 </div>
 </section>
 
