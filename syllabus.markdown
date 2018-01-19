@@ -12,16 +12,16 @@ nav-state: syllabus
 <div class="panel-heading">Course Info</div>
 <div class="panel-body" markdown="block">
 
-* __Course Title:__ {{ site.course_name }}
-* __Course Number:__ {{ site.course_number }}-{{ site.course_section }}
-* __Semester:__ {{ site.course_semester }}
-* __Meeting Time:__ {{ site.course_time }}
-* __Room:__ {{ site.course_room }}
+* __Course Title:__ {{ site.vars.course_name }}
+* __Course Number:__ {{ site.vars.course_number }}-{{ site.vars.course_section }}
+* __Semester:__ {{ site.vars.course_semester }}
+* __Meeting Time:__ {{ site.vars.course_time }}
+* __Room:__ {{ site.vars.course_room }}
 * __Instructor:__ Joe Versoza
-* __Contact:__ <a href="{{ site.contact_link }}">{{ site.contact_label }} {{ site.contact_note }}</a>
+* __Contact:__ <a href="{{ site.vars.contact_link }}">{{ site.vars.contact_label }} {{ site.vars.contact_note }}</a>
 * __Email:__ jversoza at cs dot nyu dot edu
-* __Office Hours:__ {{ site.office_hours }}
-* __Office Hours Room:__  {{ site.office_hours_room }}
+* __Office Hours:__ {{ site.vars.office_hours }}
+* __Office Hours Room:__  {{ site.vars.office_hours_room }}
 </div>
     </div>
   </div><!-- end col -->
@@ -140,15 +140,15 @@ Expect about __one homework__ every __week__, with one final project assigned mi
 
 __Readings will be sourced from the following books__ (all are free to read online, but a hardcopy or ebook can purchased as well!): 
 
-* [{{ site.book_js }}]( {{ site.book_js_link }}) by {{ site.book_js_author }} 
-* [{{ site.book_js_2 }}]( {{ site.book_js_2_link }}) by {{ site.book_js_2_author }} 
-* [{{ site.book_js_3 }}]( {{ site.book_js_3_link }}) by {{ site.book_js_3_author }} 
-* [{{ site.book_js_4 }}]( {{ site.book_js_4_link }}) by {{ site.book_js_4_author }} 
-* [{{ site.book_js_5 }}]( {{ site.book_js_5_link }}) by {{ site.book_js_5_author }} 
-* [{{ site.book_js_6 }}]( {{ site.book_js_6_link }}) by {{ site.book_js_6_author }} 
-* [{{ site.book_js_7 }}]( {{ site.book_js_7_link }}) by {{ site.book_js_7_author }} 
-* [{{ site.book_js_8 }}]( {{ site.book_js_8_link }}) by {{ site.book_js_8_author }} 
-* [{{ site.book_js_9 }}]( {{ site.book_js_9_link }}) by {{ site.book_js_9_author }} 
+* [{{ site.vars.book_js }}]( {{ site.vars.book_js_link }}) by {{ site.vars.book_js_author }} 
+* [{{ site.vars.book_js_2 }}]( {{ site.vars.book_js_2_link }}) by {{ site.vars.book_js_2_author }} 
+* [{{ site.vars.book_js_3 }}]( {{ site.vars.book_js_3_link }}) by {{ site.vars.book_js_3_author }} 
+* [{{ site.vars.book_js_4 }}]( {{ site.vars.book_js_4_link }}) by {{ site.vars.book_js_4_author }} 
+* [{{ site.vars.book_js_5 }}]( {{ site.vars.book_js_5_link }}) by {{ site.vars.book_js_5_author }} 
+* [{{ site.vars.book_js_6 }}]( {{ site.vars.book_js_6_link }}) by {{ site.vars.book_js_6_author }} 
+* [{{ site.vars.book_js_7 }}]( {{ site.vars.book_js_7_link }}) by {{ site.vars.book_js_7_author }} 
+* [{{ site.vars.book_js_8 }}]( {{ site.vars.book_js_8_link }}) by {{ site.vars.book_js_8_author }} 
+* [{{ site.vars.book_js_9 }}]( {{ site.vars.book_js_9_link }}) by {{ site.vars.book_js_9_author }} 
 
 Significant material will be pulled from the following sites:
 

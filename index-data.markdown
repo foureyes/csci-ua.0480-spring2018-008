@@ -107,6 +107,11 @@ td:nth-child(3) {
 td:nth-child(4) {
 	width: 35%;
 }
+
+#schedule {
+	display: grid;
+	grid-template-columns: 1fr 4fr 6fr 6fr 3fr
+}
 </style>
 <!--
 <style>
