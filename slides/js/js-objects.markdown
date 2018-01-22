@@ -230,8 +230,8 @@ Let's see some examples of these _so called_ properties (and methods) on some va
 
 * {:.fragment} length is a property of both Strings and Arrays
 <pre><code data-trim contenteditable>
-var exclamation = 'wow!',
-    listOfExclamations = ['golly!', 'gosh!'];
+const exclamation = 'wow!';
+const listOfExclamations = ['golly!', 'gosh!'];
 console.log(exclamation.length, listOfExclamations.length)
 </code></pre>
 {:.fragment}
