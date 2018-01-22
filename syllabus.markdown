@@ -22,6 +22,7 @@ nav-state: syllabus
 * __Email:__ jversoza at cs dot nyu dot edu
 * __Office Hours:__ {{ site.vars.office_hours }}
 * __Office Hours Room:__  {{ site.vars.office_hours_room }}
+
 </div>
     </div>
   </div><!-- end col -->
@@ -174,10 +175,10 @@ Significant material will be pulled from the following sites:
 <div class="panel-heading">Grading</div>
 <div class="panel-body" markdown="block">
 * __25%__ - Homework
-* __25%__ - Exam #1
-* __25%__ - Exam #2
-* __10%__ - Quizzes / Activities
-* __15%__ - Final Project
+* __30%__ - Exam #1
+* __30%__ - Exam #2
+* __5%__ - Quizzes / Activities
+* __10%__ - Final Project
 </div>
     </div>
   </div><!-- end col -->
@@ -211,7 +212,7 @@ Additionally, the tutor will hold workshops based on student demand. Some worksh
 
 * commandline
 * git
-* http
+, ' '* http
 * html
 * css
 

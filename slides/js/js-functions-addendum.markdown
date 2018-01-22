@@ -440,11 +440,60 @@ function f(x=1) {
 f(); // no args, result is 1!
 </code></pre>
 
-* {:.fragment} these arguments are evaluated at call time, so a new object is created each time (that way, changes won't be persisted across function calls for default arguments that are  mutable)
-* {:.fragment} you can reference other parameters in your expression!
 
-<br>
 [See more examples at mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters)
+{:.fragment}
+
+</section>
+
+<section markdown="block">
+## Default Parameter Value Details
+
+These values are __evaluated at call time, so a new object is created each time__ (that way, changes won't be persisted across function calls for default arguments that are  mutable) &rarr;
+<pre><code data-trim contenteditable>
+function extraSauce(condiments = []) {
+	condiments.push('ketchup');
+	console.log(condiments);
+}
+extraSauce() // ['ketchup']
+extraSauce() // still just ['ketchup']
+</code></pre>
+{:.fragment}
+
+You can even __reference other parameters in your expression__!
+{:.fragment}
+
+<pre><code data-trim contenteditable>
+function foo(a = 1, b = (2 * a)) {
+	console.log(a, b);
+}
+foo();  // 1 2
+foo(7); // 7 14
+</code></pre>
+{:.fragment}
+
+</section>
+
+<section markdown="block">
+## More Default Parameter Value Details!
+
+__Parameters with default values can be anywhere in parameter list__ &rarr;
+
+<pre><code data-trim contenteditable>
+function foo(a, b = 'it me!', c) {
+	console.log(a, b, c);
+}
+foo(1, 2, 3)  // 1 2 3
+foo(1)        // 1 'it me!' undefined
+</code></pre>
+{:.fragment}
+
+The value, `undefined`, is what actually triggers the default value
+{:.fragment}
+
+<pre><code data-trim contenteditable>
+foo(1, undefined, 3)  // 1 it me! 3
+</code></pre>
 {:.fragment}
 
 </section>

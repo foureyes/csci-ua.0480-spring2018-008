@@ -1,4 +1,4 @@
-title: CSCI-UA.0480 Fall 2017, Section 007
+title: CSCI-UA.0480 Fall 2017, Section 008
 
 baseurl: ""
 resource_prefix: "resources/"
@@ -68,32 +68,34 @@ vars:
     book_js_9_author: Eric Elliott 
 
     survey_intro: https://docs.google.com/forms/d/e/1FAIpQLScNVF3rD6QbIMNAclbz85Syq6T4JFONUmhRiA3UxfwXmB-QvQ/viewform
-    piazza: https://piazza.com/class/j6qyg6yrhvt4ti
+    piazza: https://piazza.com/nyu/spring2018/csciua0480section008
 
     email: jversoza@cs.nyu.edu
-    contact_link: piazza.com/nyu/fall2017/csciua0480section003and007 
+    contact_link: https://piazza.com/nyu/spring2018/csciua0480section008/home
     contact_label: piazza
     contact_note: (the best way to contact me!) 
 
     course_number: "CSCI-UA.0480"
-    course_section: "007"
+    course_section: "008"
     course_name: "Applied Internet Technology"
-    course_semester: "Fall 2017"
-    course_time: "Mondays and Wednesdays, 3:30PM - 4:45PM"
+    course_semester: "Spring 2018"
+    course_time: "Mondays and Wednesdays, 11:00AM - 12:15PM"
     course_room: WWH 109
-    course_site: http://foureyes.github.io/csci-ua.0480-fall2017-007/
+    course_site: http://foureyes.github.io/csci-ua.0480-spring2018-008/
     course_site_alt: http://cs.nyu.edu/~jversoza
 
-# office hours
-office_hours: "<br>&nbsp;2:15pm - 3:15pm on Mondays at WWH<br>12:30pm - 1:30pm on Tuesdays at 5th ave (Lobby)<br>12:30pm - 1:30pm on Wednesdays at WWH"
-office_hours_room: WWH 422 and 60 Fifth Ave 110 based on time 
+    # office hours
+    office_hours: "<br>&nbsp;12:45 - 2:15pm on Mondays and Tuesdays at WWH"
+    office_hours_room: WWH 422 
 
-# finals
-# CSCI-UA.0480-002  Special Topics: Applied Internet Technology Joseph Versoza      Tuesday, December 16, 2014  8:00AM - 9:50AM 
-final_date: Dec 13
-final_day: Wed
-final_time: "3:30PM - 4:45PM"
-final_room: WWH 109
+    # finals
+    # CSCI-UA.0480-002  Special Topics: Applied Internet Technology Joseph Versoza      Tuesday, December 16, 2014  8:00AM - 9:50AM 
+    final_date: Dec 13
+    final_day: Wed
+    final_time: "3:30PM - 4:45PM"
+    final_room: WWH 109
+    survey_github: https://docs.google.com/forms/d/e/1FAIpQLScIwproK_ZLJTZ2jrRjbx1b7FnaYnXuvx6zCLORR4HrRiERtQ/viewform
+    node_version: 9.x.x
 
 
 #book_js: "Speaking JavaScript"

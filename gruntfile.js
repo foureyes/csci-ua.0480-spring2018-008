@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       options: {
         match: true,
       },
-      target: ['index-data.markdown'],
+      target: ['index.markdown'],
     },
 
     jekyll: {

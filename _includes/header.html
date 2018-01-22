@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">{{ site.course_number }}-{{ site.course_section }}</a>
+          <a class="navbar-brand" href="#">{{ site.vars.course_number }}-{{ site.vars.course_section }}</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav pull-right">
@@ -39,9 +39,9 @@
     </div>
     <div class="masthead">
       <div class="container">
-        <h1><span>{{ site.course_name }}</span></h1>
+        <h1><span>{{ site.vars.course_name }}</span></h1>
 {% if page.nav-state == 'index' %}
-    <h2><span>{{ site.course_number }}-{{ site.course_section }} {{ site.course_semester }}</span></h2>
+    <h2><span>{{ site.vars.course_number }}-{{ site.vars.course_section }} {{ site.vars.course_semester }}</span></h2>
 {% else %}
 		<h2><span>{{ page.nav-state }}</span></h2>
 {% endif %}
