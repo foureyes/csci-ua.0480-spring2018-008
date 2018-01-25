@@ -109,7 +109,7 @@ Assuming that you've already:
 
 You can then go through the following steps to clone your repository and commit your first changes:
 
-1. ...go to the [class github page](https://github.com/nyu-csci-ua-0480-007-fall-2017)
+1. ...go to the [class github page](https://github.com/nyu-csci-ua-0480-008-spring-2018)
 2. find the repository that starts with your NYU NetID and ends with homework01 (for example, jjv222-homework01) 
 3. on the repository's page, use the green "Clone or download" button on the right side of the screen to copy the HTTPS clone URL to __clone__ the homework. To use the commandline client (with GITHUB_REPOSITORY_URL being the url you copied from the green button):
     <pre><code data-trim contenteditable> git clone GITHUB_REPOSITORY_URL
