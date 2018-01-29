@@ -192,15 +192,7 @@ Significant material will be pulled from the following sites:
 <div class="panel-body" markdown="block">
 There are __tutors available__ for the course.
 
-* Location
-    * __WWH 412__
-* Hours
-    * Typically:
-        * Monday 6:00pm - 8:00pm (Brian)
-        * Tuesday 4:00pm - 5:30pm (Radhika)
-        * Thursday 5:00pm - 7:00pm (Brian)
-        * Friday 1:30 - 3:00 (Radhika)
-    * See pinned message on Piazza for up-to-date hours
+* See [pinned message on Piazza for up-to-date hours](https://piazza.com/class/jcqb4xh11ny10y?cid=7)
 
 {% comment %}
     * __Wednesday__  - 5pm - 7pm
