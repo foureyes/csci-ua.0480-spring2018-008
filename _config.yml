@@ -4,7 +4,6 @@ baseurl: ""
 resource_prefix: "resources/"
 github_username: jversoza
 slides_lib: "../../resources/lib"
-slides_img_prefix: "../../resources/img"
 
 markdown: kramdown
 kramdown:
@@ -95,7 +94,10 @@ vars:
     final_time: "3:30PM - 4:45PM"
     final_room: WWH 109
     survey_github: https://docs.google.com/forms/d/e/1FAIpQLScIwproK_ZLJTZ2jrRjbx1b7FnaYnXuvx6zCLORR4HrRiERtQ/viewform
+    
     node_version: 9.x.x
+
+    slides_img_prefix: "../../resources/img"
 
 
 #book_js: "Speaking JavaScript"
