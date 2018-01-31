@@ -7,8 +7,7 @@ title: CSCI-UA.0480 - Homework #2
   <div class="panel-heading">Homework #2</div>
   <div class="panel-body" markdown="block">
 
-# DRAFT (to be finalized 1/31, 11pm)
-# Higher Order Functions: Exercises and Processing Data - __Due Wednesday, February 7th, by 11PM__
+# Higher Order Functions: Exercises and Processing Data - __Due Thursday, September 28th, by 11PM__
 
 ## Overview
 
@@ -16,7 +15,7 @@ title: CSCI-UA.0480 - Homework #2
 
 __hoffy.js__ - Write a series of functions that demonstrate the use of the rest operator (or call/apply), and higher order functions 
 
-__bnbfunc.js__ and __report.js__ - Print out a report analyzing AirBnb listing data. There are two parts to this:
+__yelpfunc.js__ and __report.js__ - Print out a report analyzing yelp restaurant (business) data. There are two parts to this:
 
 * An initial version that works off of a local JSON file
 * An second version that works off of remote urls and additional data (you can overwrite the previous part with this code)
@@ -438,8 +437,8 @@ __Example:__
 
     // assuming config.json look like this:
     {
-        "foo": "bar", 
-        "baz": [1, 2, 3]
+    "foo": "bar", 
+    "baz": [1, 2, 3]
     }
     
     const readFileWithJSONParse = readFileWith(JSON.parse);
@@ -457,131 +456,132 @@ Once you're finished with your functions, remember to:
 3. commit and push your code!
 
 
-## Part 2 - Processing AirBnb listings data, Reading from a local JSON file
 
-In this part, you'll work with a dataset of AirBnb listings and learn how to read from a local JSON file,
+## Part 2 - Processing Yelp Business Data, Reading from a local JSON file
 
-The original data was sourced from http://tomslee.net/airbnb-data-collection-get-the-data. All credit goes to Tom Slee. The dataset is available under the Creative Commons license (CC BY-NC 2.5 CA). A subset of the data has been made available through the course site and your repository. You'll be using this data to extract a few analytics.
+In this part, you'll work with JSON restaurant data from yelp. The original data was sourced from [https://www.yelp.com/dataset](https://www.yelp.com/dataset). A subset of the data has been made available through the course site and your repository. You'll be using this data to extract a few analytics.
 
 You'll be using two files for this:
-1. `bnbfunc.js` to create a function called `processAirBnbData`
-    * the function will take an `Array` of objects with each object representing a listing
-2. `report.js` to read in and parse JSON data (first a local file, then download from a url) and use the `processAirBnbData` above to create a report
+
+1. `yelpfunc.js` to create a function called `processYelpData`
+    * the function will take an `Array` of objects with each object representing a restaurant
+2. `report.js` to read in and parse JSON data (first a local file, then download from a url) and use the `processYelpData` above to create a report
 
 ### Importing Data
 
-* Download and uncompress [TODO: filename] from the link given in piazza 
-    * put in a folder outside of your repository
+* Download and uncompress business.json.gz from the link given in piazza 
+    * save it in a folder outside of your git repository
 * Create `src/report.js`...
-* Start by reading in the file `combined-listings.json` (remember uncompress the .gz file from above first) using `fs.readFile` (you can use the absolute path) 
-    * make sure that the module is brought in using `require`, then call the function)
-    * __do not use readFileSync__ 
+* Start by reading in the file `business.json` (remember, uncompress the .gz file from above first) using `fs.readFile` (you can use the absolute path) 
+  * make sure that the module is brought in using `require`, then call the function)
+  * __do not use readFileSync__ 
 * See the docs on `fs.readFile` (hint: make sure you specify `utf8` as the second argument)
-
-* The file that you read in contains AirBnb listings
-    * there's one listing per line
-    * each listing is represented by a single JSON object 
-    * __the last line may contain an object with a nextFile property__ ...__this object is not a listing and should be skipped / ignored__ (you'll use this later)
-
+* The file that you read in contains restaurants
+  * there's one restaurant per line
+  * each restaurant is represented by a single JSON object 
+    * __the last line may contain a an object with a nextFile property__ ...__this object is not a restaurant and should be skipped / ignored__ (you'll use this later)
 * Find a way to read in and parse the contents of the file so that:
     * leading and trailing white space is removed from the initial contents (use the string method, `trim`)
-    * each line of JSON is parsed into an actual JavaScript object
-    * (the last line may contain an object that isn't an AirBnb listing; it should not be included in the report generation below)
-    * each resulting object is placed into an `Array` for later processing
-    * you can check out some [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and/or [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON) methods to do this
-    * note that the goal of this assignment is to work with higher order functions and JSON, so memory efficiency does not need to be taken into consideration
+  * each line of JSON is parsed into an actual JavaScript object
+    * (the last line may contain an object that isn't a restaurant; it should not be included in the report generation below)
+  * each resulting object is placed into an `Array` for later processing
+  * you can check out some [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and/or [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON) methods to do this
+  * note that the goal of this assignment is to work with higher order functions and JSON, so memory efficiency does not need to be taken into consideration
 * All of your parsing can only be done from within the callback function (or the function to be called once data is read from the file) that you supply to `fs.readFile`
 * Examine the resulting `Array` ... (for example, try printing it out!)
-* Later, you will be supplying this `Array` to the `processAirBnbData` function to generate a report.
+* Later, you will be supplying this `Array` to the `procesYelpData` function to generate a report.
 * To verify your file reading and parsing, you can try:
-    * printing the "room_type", "neighborhood", "city", "overall_satisfaction", "reviews" of the 17453rd (remember the array index starts from 0) listing in the file in the format: 'Listing no. ${listingIndex} is a listing of type: "${bizz.room_type}" located in ${bizz.neighborhood} (${bizz.city}) with a rating of ${bizz.overall_satisfaction} and has been reviewed ${bizz.reviews} times.'
+    * printing the name, rating and location of the 81st business entry in the file in the format: '{name} is a business located in {city} with a rating of {stars} and {reviews} reviews.'
     * the result should be:
-       
-```
-Listing no. 17453 is a listing of type: "Entire home/apt" located in Pankow (Berlin) with a rating of 4.0 and has been reviewed 11 times.
+        ```
+The Great Canadian Pizza Company is a business located in Mississauga with 4 stars and 18 reviews.
 ```
 
 ### Examining the Data
+
 * Assuming that your parsed data is in a variable called `data` ... 
 * `data` will be an `Array` of JSON objects (each line should have been parsed from JSON before pushing into the `data` array)
 * Each object in `data` contains location data, attributes, and categories.
 
-Below is a sample listing from the dataset with a description of properties you'd need for your assignment (more details about the data can be found here: http://tomslee.net/airbnb-data-collection-get-the-data)
+Below is a sample for a business that is a restaurant serving Mexican & Burgers, is located in San Francisco (CA), has been reviewed 1198 times and has an average rating of 4.5
 
 ```
 {
-  // A unique number identifying an Airbnb listing
-  "room_id": "7739955",
+    // string, 22 character unique string business id
+    "business_id": "tnhfDv5Il8EaGSXZGiuQGg",
 
-  "survey_id": "1438",
-    
-  // A unique number identifying an Airbnb host
-  "host_id": "38614070",
+    // string, the business's name
+    "name": "Garaje",
 
-  // The type of the current listing: One of “Entire home/apt”, “Private room”, or “Shared room”
-  "room_type": "Shared room",
-  
-  "country": "",
+    // string, the neighborhood's name
+    "neighborhood": "SoMa",
 
-  // The city of each listing
-  "city": "New York",
+    // string, the full address of the business
+    "address": "475 3rd St",
 
-  // The borough this listing is located in
-  "borough": "Queens",
+    // string, the city
+    "city": "San Francisco",
 
-  // The neighborhood this listing is located in
-  "neighborhood": "Jackson Heights",
-  
-  // The number of times this listing has been reviewed
-  "reviews": "6",
+    // string, 2 character state code, if applicable
+    "state": "CA",
 
-  // IMPORTANT: the average rating of the listing, this is what "rating" refers to in the instructions
-  "overall_satisfaction": "5.0",
+    // string, the postal code
+    "postal code": "94107",
 
-  // Indicates how many people the listing can accommodate
-  "accommodates": "4",
+    // float, latitude
+    "latitude": 37.7817529521,
 
-  // No. of bedrooms
-  "bedrooms": "1.0",
+    // float, longitude
+    "longitude": -122.39612197,
 
-  // No. of bathrooms
-  "bathrooms": "",
+    // float, star rating, rounded to half-stars
+    "stars": 4.5,
 
-  // The price of each listing in $US for a night-stay
-  "price": "85.0",
+    // interger, number of reviews
+    "review_count": 1198,
 
-  // The minimum stay for a visit, as posted by the host
-  "minstay": "",
+    // integer, 0 or 1 for closed or open, respectively
+    "is_open": 1,
 
-  // Name of the listing, you can ignore this
-  "name": "Room TO SHARE by DAY,week,month",
+    // object, business attributes to values. note: some attribute values might be objects
+    "attributes": {
+        "RestaurantsTakeOut": true,
+        "BusinessParking": {
+            "garage": false,
+            "street": true,
+            "validated": false,
+            "lot": false,
+            "valet": false
+        },
+    },
 
-  // Type of the property
-  "property_type": "House",
+    // an array of strings of business categories
+    "categories": [
+        "Mexican",
+        "Burgers",
+        ...
+    ],
 
-  // The date and time that the values were read from the Airbnb web site
-  "last_modified": "2017-07-15 21:30:31.858764",
-
-  "latitude": "40.749909",
-
-  "longitude": "-73.87688",
-
-  "location": "0101000020E61000000EA14ACD1E7852C0F0FCA204FD5F4440"
+    // an object of key day to value hours, hours are using a 24hr clock
+    "hours": {
+        "Monday": "10:00-21:00",
+        "Tuesday": "10:00-21:00",
+        ...
+    }
 }
-
 ```
-
 
 ### Analytics
 
-#### The `processAirBnbData` Function
-You'll create a function to generate a report (as a string) based on AirBnb data.
+#### The `processYelpData` Function
 
-### `processAirBnbData(listings)`
+You'll create a function to generate a report (as a string) based on Yelp data.
+
+### `processYelpData(restaurants)`
 
 __Parameters:__
 
-* `listings` - an `Array` of objects, with each object representing a place listed on AirBnb
+* `restaurants` - an `Array` of objects, with each object representing a restaurant / business 
 
 __Returns:__
 
@@ -589,132 +589,150 @@ __Returns:__
 
 __Description:__
 
-This function will generate a report based on the `Array` of objects passed in. The report will contain the average ratings for all listings in the file, the most reviewed listings etc. (see full description of report requirements below)
+This function will generate a report based on the `Array` of objects passed in. The report will contain the average stars for all businesses in the file, the most common business name in the file, etc. (see full description of report requirements below)
 
-__Important note about parsing numerical values:__
-
-One of the most common peculiarities you'll come across while working with datasets is that the values in JSON objects might not be in the format you expect them to be.
- eg. in the JSON sample above, observe the format of the value in   
-
- ```
- "overall_satisfaction": "5.0"
- ```
-It's actually a string whereas we'd like to use it as a float value.
-
-In situations like these, you'll need to parse the numerical value from the string. Here, we'll use the `parseFloat(strval)` function (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)
-
-This will return 5.0 as a float when you use `parseFloat(obj.overall_satisfaction)`.
 
 ### Implementation Requirements
 
-1. When creating your report in `processAirBnbData`, you must use all of the following Array methods at least once each in your program:
+1. When creating your report in `processYelpData`, you must use all of the following Array methods at least once each in your program:
     * `forEach`
     * `filter`
     * `map`
     * `reduce`
     * There will be a small penalty for each one not used (-2).
+2. Maintain the order of the restaurants in the file for the section that requires pizza places in Las Vegas (the order that they are printed out should be the order that they appear in the file)
+
 
 ### Report Overview
 
 Your report will use the data passed in to determine:
 
-1. The average rating of all listings
-2. The average price of all listings
-3. All listings in the current dataset with a "rating greater than 4.8, priced less than 55, and accommodating more than 6 people"
-4. The two highest reviewed listings
-5. The borough with the most expensive listings on average in NYC
+1. the average stars of all of the businesses
+2. the names of all of the pizza places in Las Vegas
+3. the two Mexican restaurants with the most reviews
+4. the most common name in the data set
+5. the number of restaurants per state
 
 See the following details...
 
-### Average Rating
+### Average Stars (Rating)
 
-* Include the average rating (overall_satisfaction) of all the records in the file; format to have at least two decimal places. Example output below:
-
-```
-* Average rating of the current dataset is: 2.85
-```
-
-### Average Price
-
-* Include the average price (price) of all the records in the file; format to have at least two decimal places. Example output below:
+* Include the average stars (rating) of all the records in the file; format to have at least two decimal places. Example output below:
 
 ```
-* Average price of the current dataset is: 159.00
+* Average Rating of the dataset: 3.61
 ```
 
-### All listings in the current dataset with a "rating greater than 4.8, priced less than 55, and accommodating more than 6 people"
+### All the Pizza places in Las Vegas, NV
 
-* Find all the listings with the criterion mentioned above. Also include the properties: room_id, overall_satisfaction, price, city, and accommodates.
-
-```
-* All listings in the current dataset with a rating greater than 4.8, priced less than 55, and accommodating more than 6 people:
-    * Listing ID: 7532533 with a rating of 5.0 priced at 35.0 in New York accommodates 8
-    * Listing ID: 17875248 with a rating of 5.0 priced at 24.0 in New York accommodates 8
-    * Listing ID: 15546504 with a rating of 5.0 priced at 54.0 in Berlin accommodates 10
-    * Listing ID: 3328401 with a rating of 5.0 priced at 45.0 in Berlin accommodates 9
-    * Listing ID: 14807731 with a rating of 5.0 priced at 54.0 in Berlin accommodates 8
-    * Listing ID: 14381251 with a rating of 5.0 priced at 37.0 in Berlin accommodates 8
-    * Listing ID: 4027713 with a rating of 5.0 priced at 10.0 in Berlin accommodates 12
-```
-
-### The two highest reviewed listings
-
-Use the `reviews` field to find the two highest reviewed listings. Example output below:
+* Find all the restaurants that serve 'Pizza' and are located in the city of 'Las Vegas', in the state of 'NV'. Include each place's rating too. Example output below:
 
 ```
-* The two highest reviewed listings of the current dataset are:
-    * ID: 205842 in San Francisco reviewed 513 times and rated 5.0
-    * ID: 33577 in San Francisco reviewed 510 times and rated 5.0
+* All restaurants in Las Vegas, NV that serve pizza:
+    * Spago by Wolfgang Puck (* 4 stars *)
+    * Grimaldi's Pizzeria (* 4 stars *)
+    * Mama Cimino's (* 2.5 stars *)
+    * Noble Roman's Pizza (* 2 stars *)
+    * The Locker Room (* 3.5 stars *)
 ```
 
-### The borough with the most expensive listings on average in NYC
+### The two Mexican restaurants with the most reviews
 
-As the title mentions, you're expected to find the borough with the most expensive listings on average in NYC.
-
-Hint: you'll first need to get the aggregate price of all the listings by boroughs, followed by getting the total number of listings for each NYC borough. This will help you find the average price for each borough, you then need to find the one with the highest average price of listings.
+Use the `review_count` field to find the two Mexican restaurants with the most reviews. Example output below:
 
 ```
-* For the current dataset, Staten Island has the most expensive listings in NYC with an average listing price of 331.38
+* The two highest reviewed Mexican serving restaurants are:
+    * The Mission Old Town, Scottsdale (AZ), 1539 reviews (* 4 stars *)
+    * Mariscos Playa Escondida, Las Vegas (NV), 330 reviews (* 4.5 stars *)
 ```
-If the dataset does not have any listings for NYC, then your report should indicate:
+
+### The most common name in the dataset
+
+Find the name that occurs the most frequently in the dataset. Example output below:
 
 ```
-* This file has no data about NYC!
+* Starbucks is the most common business and appears 8 times in the dataset
+```
+
+### Restaurant Count for Each "State"
+
+Count the number of restaurants for each state that occurs in the file. This file contains data from businesses outside of the US, so state abbreviations are not constrained to 2 letters. Example output below
+
+```
+* Restaurant count by state
+    * AZ: 602
+    * BW: 42
+    * EDH: 52
+    * ELN: 1
+    * ESX: 1
+    * FIF: 2
+    * HLD: 4
+    * IL: 19
+    * MLN: 3
+    * NC: 152
+    * NI: 1
+    * NV: 329
+    * NYK: 1
+    * OH: 154
+    * ON: 363
+    * PA: 126
+    * QC: 88
+    * SC: 2
+    * WI: 58
 ```
 
 ### Return Value
 
 All of the analytics should be coalesced into a single large string representing the analytic report.
 
-This string should be returned by your `processAirBnbData` function in your module, `bnbfunc.js`
+This string should be returned by your `processYelpData` function in your module, `yelpfunc.js`
 
-### Calling processAirBnbData
+### Calling processYelpData
 
 Now that you've finished your function, you can try calling it on your data from `report.js`
 
 1. In report.js: require the module that you created.
-2. Use your function on the data that you parsed from reading in the [TODO: filename] file.
+2. Use your function on the data that you parsed from reading in the `business.json` file.
 3. Print out the resulting string.
 4. You can compare your output with the example output below
 
 ```
-* Average rating of the current dataset is: 2.85
+* Average Rating of the dataset: 3.61
 
-* Average price of the current dataset is: 159.00
+* All restaurants in Las Vegas, NV that serve pizza
+    * Spago by Wolfgang Puck (* 4 stars *)
+    * Grimaldi's Pizzeria (* 4 stars *)
+    * Mama Cimino's (* 2.5 stars *)
+    * Noble Roman's Pizza (* 2 stars *)
+    * The Locker Room (* 3.5 stars *)
 
-* All listings in the current dataset with a rating greater than 4.8, priced less than 55, and accommodating more than 6 people:
-    * Listing ID: 7532533 with a rating of 5.0 priced at 35.0 in New York accommodates 8
-    * Listing ID: 17875248 with a rating of 5.0 priced at 24.0 in New York accommodates 8
-    * Listing ID: 15546504 with a rating of 5.0 priced at 54.0 in Berlin accommodates 10
-    * Listing ID: 3328401 with a rating of 5.0 priced at 45.0 in Berlin accommodates 9
-    * Listing ID: 14807731 with a rating of 5.0 priced at 54.0 in Berlin accommodates 8
-    * Listing ID: 14381251 with a rating of 5.0 priced at 37.0 in Berlin accommodates 8
-    * Listing ID: 4027713 with a rating of 5.0 priced at 10.0 in Berlin accommodates 12
-* The two highest reviewed listings of the current dataset are:
-    * ID: 205842 in San Francisco reviewed 513 times and rated 5.0
-    * ID: 33577 in San Francisco reviewed 510 times and rated 5.0
+* The two highest reviewed Mexican serving restaurants are:
+    * The Mission Old Town, Scottsdale (AZ), 1539 reviews (* 4 stars *)
+    * Mariscos Playa Escondida, Las Vegas (NV), 330 reviews (* 4.5 stars *)
 
-* For the current dataset, Staten Island has the most expensive listings in NYC with an average listing price of 331.38
+* The most common name in the dataset:
+    * Starbucks is the most common business and appears 8 times in the dataset
+
+* Restaurant count by state
+    * AZ: 602
+    * BW: 42
+    * EDH: 52
+    * ELN: 1
+    * ESX: 1
+    * FIF: 2
+    * HLD: 4
+    * IL: 19
+    * MLN: 3
+    * NC: 152
+    * NI: 1
+    * NV: 329
+    * NYK: 1
+    * OH: 154
+    * ON: 363
+    * PA: 126
+    * QC: 88
+    * SC: 2
+    * WI: 58
 ```
 
 Lint, commit and push your code; the next part will make modifications to this existing code (you can overwrite your work in this file directly for the next part).
@@ -736,7 +754,8 @@ Instead of reading a local file, **modify your program** so that it requests JSO
 
 `{"nextFile": "4df1c5ef1280bee2e2b44167027d2469.json"}`
 
-This last object has a key, `nextFile`, and the value represents the name of another file of listings data (in the object above, the name of the next file is: `4df1c5ef1280bee2e2b44167027d2469.json`). This next section will explain how to retrieve this json file from the web.
+This last object has a key, `nextFile`, and the value represents the name of another file of business data (in the object above, the name of the next file is: `4df1c5ef1280bee2e2b44167027d2469.json`). This next section will explain how to retrieve this json file from the web.
+
 
 * The URL for the dataset used in this assignment __will be posted on piazza__
 * [Read the documentation](https://github.com/mikeal/request) to see how to use the requests module (or see the [slides](../slides/js/js-node-npm-debug-git.html#/6))
@@ -752,7 +771,7 @@ This last object has a key, `nextFile`, and the value represents the name of ano
     ```==========
 url:  `https://some.domain/and/path/to/file.json
 ==========```
-* Finally, print out the result of calling `processAirBnbData` on the parsed response
+* Finally, print out the result of calling `processYelpData` on the parsed response
 
 When you run your report again, the output should looks similar to your previous version, though some of the data will be different.
 
@@ -767,63 +786,102 @@ Now, instead of running this report on a single url, you'll download several fil
 * Use the `request` library again to retrieve and process the data from this new URL
 * Continue to do this until you encounter a file that does not have an object with a `nextFile` property as its last line
 
-Sample runs for each fetch of a new file:
+<pre name="hw02-sample" id="hw02-sample"><code data-trim contenteditable>
+==========
+url:  ...
+==========
+* Average Rating of the dataset: 3.6134432783608195
 
-```
-URL: [TODO]
-===================================
-* Average rating of the current dataset is: 2.7596713175771876
-* Average price of the current dataset is: 161.56091608021805
-* All listings in the current dataset with a rating greater than 4.8, priced less than 55, and accommodating more than 6 people:
-    * Listing ID: 7532533 with a rating of 5.0 priced at 35.0 in New York accommodates 8
-    * Listing ID: 17875248 with a rating of 5.0 priced at 24.0 in New York accommodates 8
-    * Listing ID: 15546504 with a rating of 5.0 priced at 54.0 in Berlin accommodates 10
-    * Listing ID: 3328401 with a rating of 5.0 priced at 45.0 in Berlin accommodates 9
-    * Listing ID: 14807731 with a rating of 5.0 priced at 54.0 in Berlin accommodates 8
-    * Listing ID: 14381251 with a rating of 5.0 priced at 37.0 in Berlin accommodates 8
-    * Listing ID: 4027713 with a rating of 5.0 priced at 10.0 in Berlin accommodates 12
-* The two highest reviewed listings of the current dataset are:
-    * ID: 545685 in San Francisco reviewed 461 times and rated 4.5
-    * ID: 960593 in San Francisco reviewed 424 times and rated 4.5
-* For the current dataset, Staten Island has the most expensive listings in NYC with an average listing price of 375.390243902439
+* All restaurants in Las Vegas, NV that serve pizza
+    * Ray's Pizzeria and Restaurant (* 2.5 stars *)
+    * Bambino's East Coast Pizzeria (* 4.5 stars *)
+    * Papa John's Pizza (* 2 stars *)
+    * Bonanno's New York Pizzeria (* 3 stars *)
+    * Hunt & Gather Cafe (* 4 stars *)
+    * CiCi's Pizza (* 3.5 stars *)
+    * Marco's Pizza (* 3.5 stars *)
+    * Taqueria El Capullo (* 4.5 stars *)
 
-URL: nextFileURL
-===================================
-* Average rating of the current dataset is: 2.0962055070517125
-* Average price of the current dataset is: 120.72926460711888
-* All listings in the current dataset with a rating greater than 4.8, priced less than 55, and accommodating more than 6 people:
-    * Listing ID: 12200678 with a rating of 5.0 priced at 11.0 in Moscow accommodates 8
-    * Listing ID: 7376527 with a rating of 5.0 priced at 10.0 in Moscow accommodates 10
-    * Listing ID: 7237904 with a rating of 5.0 priced at 10.0 in Moscow accommodates 10
-    * Listing ID: 8290631 with a rating of 5.0 priced at 16.0 in Moscow accommodates 16
-    * Listing ID: 3750417 with a rating of 5.0 priced at 13.0 in Moscow accommodates 12
-    * Listing ID: 6741553 with a rating of 5.0 priced at 10.0 in Moscow accommodates 16
-    * Listing ID: 12539160 with a rating of 5.0 priced at 45.0 in Moscow accommodates 7
-    * Listing ID: 15322544 with a rating of 5.0 priced at 43.0 in Moscow accommodates 7
-    * Listing ID: 11986735 with a rating of 5.0 priced at 53.0 in Moscow accommodates 8
-    * Listing ID: 5182769 with a rating of 5.0 priced at 53.0 in Moscow accommodates 7
-    * Listing ID: 4948793 with a rating of 5.0 priced at 14.0 in Moscow accommodates 16
-    * Listing ID: 13243056 with a rating of 5.0 priced at 10.0 in Moscow accommodates 8
-    * Listing ID: 7453138 with a rating of 5.0 priced at 14.0 in Moscow accommodates 16
-    * Listing ID: 7733397 with a rating of 5.0 priced at 14.0 in Moscow accommodates 12
-* The two highest reviewed listings of the current dataset are:
-    * ID: 205842 in San Francisco reviewed 513 times and rated 5.0
-    * ID: 33577 in San Francisco reviewed 510 times and rated 5.0
-* This file has no data about NYC!
+* The two highest reviewed Mexican serving restaurants are:
+    * Taco Guild, Phoenix (AZ), 958 (* 4 stars *)
+    * Jose Cuervo Tequileria, Las Vegas (NV), 414 (* 2 stars *)
 
-URL: nextFileURL
-===================================
-* Average rating of the current dataset is: 2.355144135188867
-* Average price of the current dataset is: 147.21317097415508
-* All listings in the current dataset with a rating greater than 4.8, priced less than 55, and accommodating more than 6 people:
-    * Listing ID: 18890521 with a rating of 5.0 priced at 25.0 in New York accommodates 16
-    * Listing ID: 19241287 with a rating of 5.0 priced at 40.0 in New York accommodates 16
-* The two highest reviewed listings of the current dataset are:
-    * ID: 31994 in New York reviewed 344 times and rated 4.5
-    * ID: 63360 in New York reviewed 304 times and rated 4.5
-* For the current dataset, Manhattan has the most expensive listings in NYC with an average listing price of 116.7870195337114
+* The most common name in the dataset:
+    * Starbucks
 
-```
+* Restaurant count by state
+    * 01: 2
+    * AZ: 546
+    * BW: 36
+    * C: 1
+    * EDH: 45
+    * ELN: 1
+    * ESX: 1
+    * HLD: 2
+    * IL: 24
+    * MLN: 3
+    * NC: 166
+    * NV: 369
+    * NY: 1
+    * NYK: 1
+    * OH: 154
+    * ON: 376
+    * PA: 114
+    * QC: 95
+    * SC: 9
+    * WI: 54
+
+
+.
+.
+.
+(more urls processed here...)
+.
+.
+.
+
+
+==========
+url:  https://...
+==========
+* Average Rating of the dataset: 3.64325
+
+* All restaurants in Las Vegas, NV that serve pizza
+    * Pizza Hut (* 1 stars *)
+    * Vit's Pizza (* 2.5 stars *)
+    * Napoli Pizza (* 3 stars *)
+    * Home Plate Grill & Bar (* 4 stars *)
+    * Pizza My Dear (* 4 stars *)
+    * Due Pizzeria (* 4.5 stars *)
+    * Pizza Hut (* 2 stars *)
+
+* The two highest reviewed Mexican serving restaurants are:
+    * Otro Cafe, Phoenix (AZ), 541 (* 4 stars *)
+    * Zócalo Tequilería, Cleveland (OH), 381 (* 2.5 stars *)
+
+* The most common name in the dataset:
+    * Starbucks
+
+* Restaurant count by state
+    * AZ: 543
+    * BW: 44
+    * EDH: 53
+    * FIF: 2
+    * HLD: 1
+    * IL: 17
+    * MLN: 5
+    * NC: 160
+    * NV: 385
+    * NYK: 1
+    * OH: 168
+    * ON: 359
+    * PA: 109
+    * QC: 103
+    * SC: 5
+    * WI: 42
+    * WLN: 3
+</code></pre>
+
 </div>
 
 </div>
