@@ -196,31 +196,44 @@ __Example:__
 
 <hr>
 
-### `maybe(fn)`
+### `makePropertyChecker(prop)`
 
 __Parameters:__
 
-* `fn` - the function to be called 
+* `prop` - a string representing the property to check for
 
 __Returns:__
 
-* a new `function` or `undefined` - the `function` calls the original function
+* `function` - a function that...
+    * has 1 parameter, an `object`
+    * returns `true` if the original `prop` is in `object`, `false` otherwise
 
 __Description:__
 
-`maybe` will take a function, `fn` and return an entirely new function that behaves mostly like the original function, `fn` passed in, but will return undefined if any `null` or `undefined` arguments are passed in to `fn`.
 
-The new function will take the same arguments as the original function (`fn`). Consequently when the new function is called, it will use the arguments passed to it and call the old function and return the value that's returned from the old function. However, if any of the arguments are `undefined` or `null`, the old function is not called, and `undefined` is returned instead. You can think of it as a way of calling the old function only if all of the arguments are not `null` or not `undefined`.
+The previous functions showed how functions can be passed in as arguments to another function. In this function, we'll be returning a function. You can think of it as a _function producing factory_! 
 
+The original function will take an argument, a `String` representing the property that the new function will check for. You can use the newly returned function to check an object for that property. However, it will only check for properties on the object itself, not inherited properties. See the [slides on objects](../slides/js/objects.html#/16) to see how to do this. Again, you can also check out the [readings](http://eloquentjavascript.net/05_higher_order.html) or [slides](../slides/js/higher-order-functions-continued.html) on higher order functions for relevant background material and examples.
 
 __Example:__
 
-    function createFullName(firstName, lastName) {
-        return `${firstName} ${lastName}`; 
-    }
-    maybe(createFullName)('Frederick', 'Functionstein'); // Frederick Functionstein
-    maybe(createFullName)(null, 'Functionstein');        // undefined
-    maybe(createFullName)('Freddy', undefined);          // undefined 
+    // returns a function that checks for an object for a specific property
+    // setup some objects
+    const duck = {
+        quack: function(){
+            console.log('quack');
+        }
+    };
+    const notADuck = {};
+
+    // this new syntax creates an object that inherits from duck
+    const duckling = Object.create(duck);
+    
+    const canQuack = makePropertyChecker('quack');
+    canQuack(duck) // --> true
+    canQuack(notADuck) // --> false
+    canQuack(duckling) // --> false
+    
 
 <hr>
 
@@ -242,7 +255,7 @@ __Returns:__
 
 __Description:__
 
-This function is a decorator (similar to `maybe`). [See the slides on the decorator pattern](../slides/04/higher-order-functions-continued.html) for background information. It builds on top of the example in the slides by actually _modifying_ the return value of the original function. 
+This function is a decorator. [See the slides on the decorator pattern](../slides/js/higher-order-functions-continued.html) for background information. It builds on top of the example in the slides by actually _modifying_ the return value of the original function. 
 
 This function wraps the function `fn` in another function so that operations can be performed before and after the original function `fn` is called. This can be used to modify incoming arguments, modify the return value, or do any other task before or after the function call. Again, we'll be modifying the return value in this case.
 
@@ -307,7 +320,7 @@ __Example:__
 
 <hr>
 
-### `filterWith(fn)`
+### `mapWith(fn)`
 
 __Parameters:__
 
@@ -317,26 +330,26 @@ __Returns:__
 
 * `function` - a function that...
     * has 1 parameter, an `Array`
-    * returns a new Array where only elements that cause `fn` to return `true` are present (all other elements from the old Array are not included)_
+    * returns a new Array where every element is the result of calling the original function passed in `fn` on elements in the incoming Array, producing an entirely new `Array`
 
-_Description:__
+__Description:__
 
-This is different from regular filter. The regular version of filter immediately calls the callback function on every element in an Array to return a new Array of filtered elements. `filterWith`, on the other hand, gives back a function rather than executing the callback immediately (think of the difference between bind and call/apply). `filterWith` is basically a function that turns another function into a filtering function (a function that works on Arrays). 
+This is different from regular map. The regular version of map immediately calls the callback function on every element in an Array to return a new Array. `mapWith`, on the other hand, gives back a function rather than executing the callback immediately (think of the difference between bind and call/apply). `mapWith` is basically a function that turns another function into a mapping function (a function that works on Arrays). 
 
 __Example:__
 
-    // original even function that works on Numbers
-    function even(n) {return n % 2 === 0;} 
+    // original square function that works on Numbers
+    function square(n) {return n * n;} 
 
-    // create a 'filter' version of the square function
-    filterWithEven = filterWith(even); 
+    // create a 'mapped' version of the square function
+    mapWithSquare = mapWith(square); 
 
     // now square can work on Arrays of Numbers!
-    console.log(filterWithEven([1, 2, 3, 4])); // [2, 4]    
+    console.log(mapWithSquare([1, 2, 3])); // [1, 4, 9]    
     
-    const nums = [1, NaN, 3, NaN, NaN, 6, 7];
-    const filterNaN = filterWith(n => !isNaN(n));
-    console.log(filterNaN(nums)); // [1, 3, 6, 7]
+    mapWithParseInt = mapWith((n) => parseInt(n));
+    console.log(mapWithParseInt([' 123', '45', '67 '])); // [123, 45, 67]
+
 
 <hr>
 

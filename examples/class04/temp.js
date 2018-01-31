@@ -2,6 +2,7 @@ function Werewolf(mood) {
   this.mood = mood;
 }
 
+
 Werewolf.prototype.howl = function(thing) {
   console.log(this.mood, 'werewolf howls at the', thing);
 }
