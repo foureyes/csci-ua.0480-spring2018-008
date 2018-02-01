@@ -78,6 +78,7 @@ __There will a small (-2) penalty every time one is used__. (Homework is 100 poi
 
 1. prep...
     * create a `.gitignore` to ignore node_modules
+	* create a `package.json` by using `npm init`
     * make sure that `mocha`, `chai`, and `eslint` are still installed (similar to previous assignment)
         <pre><code data-trim contenteditable>npm install -g mocha
 npm install --save-dev eslint
