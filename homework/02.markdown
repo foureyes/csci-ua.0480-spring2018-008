@@ -19,7 +19,7 @@ __hoffy.js__ - Write a series of functions that demonstrate the use of the rest 
 __bnbfunc.js__ and __report.js__ - Print out a report analyzing AirBnb listing data. There are two parts to this:
 
 * An initial version that works off of a local JSON file
-* An second version that works off of remote urls and additional data (you can overwrite the previous part with this code)
+* A second version that works off of remote urls and additional data (you can overwrite the previous part with this code)
 
 See the [sample output](#hw02-sample) at the end of these instructions.
 
@@ -479,23 +479,21 @@ The original data was sourced from http://tomslee.net/airbnb-data-collection-get
 You'll be using two files for this:
 1. `bnbfunc.js` to create a function called `processAirBnbData`
     * the function will take an `Array` of objects with each object representing a listing
-2. `report.js` to read in and parse JSON data (first a local file, then download from a url) and use the `processAirBnbData` above to create a report
+2. `report.js` to read in and parse JSON data (first a local file, then download from a url) and use the `processAirBnbData` function above to create a report
 
 ### Importing Data
 
-* Download and uncompress [TODO: filename] from the link given in piazza 
-    * put in a folder outside of your repository
+* Download and uncompress the __compressed file from the link given in piazza__
+    * place it in a folder outside of your repository
 * Create `src/report.js`...
 * Start by reading in the file `combined-listings.json` (remember uncompress the .gz file from above first) using `fs.readFile` (you can use the absolute path) 
-    * make sure that the module is brought in using `require`, then call the function)
+    * make sure that `fs` the module is brought in using `require`, then call the function)
     * __do not use readFileSync__ 
 * See the docs on `fs.readFile` (hint: make sure you specify `utf8` as the second argument)
-
 * The file that you read in contains AirBnb listings
     * there's one listing per line
     * each listing is represented by a single JSON object 
-    * __the last line may contain an object with a nextFile property__ ...__this object is not a listing and should be skipped / ignored__ (you'll use this later)
-
+    * __the last line may contain an object with a nextFile property__ ... __this object is not a listing and should be skipped / ignored__ (you'll use this later)
 * Find a way to read in and parse the contents of the file so that:
     * leading and trailing white space is removed from the initial contents (use the string method, `trim`)
     * each line of JSON is parsed into an actual JavaScript object
@@ -505,7 +503,7 @@ You'll be using two files for this:
     * note that the goal of this assignment is to work with higher order functions and JSON, so memory efficiency does not need to be taken into consideration
 * All of your parsing can only be done from within the callback function (or the function to be called once data is read from the file) that you supply to `fs.readFile`
 * Examine the resulting `Array` ... (for example, try printing it out!)
-* Later, you will be supplying this `Array` to the `processAirBnbData` function to generate a report.
+* Later, you will be supplying this `Array` to the `processAirBnbData` function that you create in `bnbfunc.js` to generate a report.
 * To verify your file reading and parsing, you can try:
     * printing the "room_type", "neighborhood", "city", "overall_satisfaction", "reviews" of the 17453rd (remember the array index starts from 0) listing in the file in the format: 'Listing no. ${listingIndex} is a listing of type: "${bizz.room_type}" located in ${bizz.neighborhood} (${bizz.city}) with a rating of ${bizz.overall_satisfaction} and has been reviewed ${bizz.reviews} times.'
     * the result should be:
@@ -588,7 +586,8 @@ Below is a sample listing from the dataset with a description of properties you'
 ### Analytics
 
 #### The `processAirBnbData` Function
-You'll create a function to generate a report (as a string) based on AirBnb data.
+
+You'll create a function to generate a report (as a string) based on AirBnb data. You'll write this function in `bnbfunc.js`.
 
 ### `processAirBnbData(listings)`
 
@@ -614,7 +613,7 @@ One of the most common peculiarities you'll come across while working with datas
  ```
 It's actually a string whereas we'd like to use it as a float value.
 
-In situations like these, you'll need to parse the numerical value from the string. Here, we'll use the `parseFloat(strval)` function (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)
+In situations like these, you'll need to parse the numerical value from the string. Here, we'll [use the `parseFloat(strval)` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)
 
 This will return 5.0 as a float when you use `parseFloat(obj.overall_satisfaction)`.
 
@@ -635,7 +634,7 @@ Your report will use the data passed in to determine:
 2. The average price of all listings
 3. All listings in the current dataset with a "rating greater than 4.8, priced less than 55, and accommodating more than 6 people"
 4. The two highest reviewed listings
-5. The borough with the most expensive listings on average in NYC
+5. The borough with the most expensive listings on average in NYC (if NYC listings exist)
 
 See the following details...
 
@@ -655,7 +654,7 @@ See the following details...
 * Average price of the current dataset is: 159.00
 ```
 
-### All listings in the current dataset with a "rating greater than 4.8, priced less than 55, and accommodating more than 6 people"
+### All listings in the current dataset with a "rating greater than 4.8, priced less than 55, and accommodating more than 6 people" (because you _like to party_!)
 
 * Find all the listings with the criterion mentioned above. Also include the properties: room_id, overall_satisfaction, price, city, and accommodates.
 
@@ -705,8 +704,8 @@ This string should be returned by your `processAirBnbData` function in your modu
 
 Now that you've finished your function, you can try calling it on your data from `report.js`
 
-1. In report.js: require the module that you created.
-2. Use your function on the data that you parsed from reading in the [TODO: filename] file.
+1. In report.js: require the module that you created (`bnbfunc.js`).
+2. Use your function on the data that you parsed from reading in the `combined-listings.json` file that you opened earlier.
 3. Print out the resulting string.
 4. You can compare your output with the example output below
 
@@ -740,12 +739,12 @@ In this part, you'll be setting up your project to work with JSON data from a ur
 
 1. Install the requests library in your project's root folder: `npm install --save request` (similar to installing `readline-sync` in the previous assignment)
 2. Add the module to the beginning of `report.js` using `require`
-3. **Comment out or delete reading from a local file**
+3. __Comment out or delete reading from a local file__
 
 
 ### Retrieve and Process JSON Data
 
-Instead of reading a local file, **modify your program** so that it requests JSON data from a specified url. This URL will be distributed via piazza (see a pinned note). Again, there will be one additional object in the last line of the file:
+Instead of reading a local file, __modify your program__ so that it requests JSON data from a specified url. __This URL will be distributed via piazza__. Again, there will be one additional object in the last line of the file: 
 
 `{"nextFile": "4df1c5ef1280bee2e2b44167027d2469.json"}`
 
@@ -754,7 +753,7 @@ This last object has a key, `nextFile`, and the value represents the name of ano
 * The URL for the dataset used in this assignment __will be posted on piazza__
 * [Read the documentation](https://github.com/mikeal/request) to see how to use the requests module (or see the [slides](../slides/js/js-node-npm-debug-git.html#/6))
 * Notice that the data is only available within the callback that you pass in to calling `request` (much like using readFile)
-* Again, a **callback** is a function passed as an argument to another function... the callback will be invoked / executed at a later time, when some event is triggered
+* Again, a __callback__ is a function passed as an argument to another function... the callback will be invoked / executed at a later time, when some event is triggered
 * In the case of `request`, it's the function that you pass in as the 2nd argument
 * (The call to your report generation should be moved to the callback of request...)
 * Parse the body of the response from `request` into an Array of objects (similar to how you processed the file in the previous part)
@@ -776,14 +775,14 @@ Now, instead of running this report on a single url, you'll download several fil
 * Print out the URL that you're retrieving before running a report for each file/url
 * The last object from the JSON file contains a `nextFile` property;
 * The `nextFile` property contains the next file to retrieve
-* Construct a new URL based on that filename and print out the new URL
+* Construct a new URL based on that filename and print out the new URL (simply concatenate the domain and path with the new file name)
 * Use the `request` library again to retrieve and process the data from this new URL
 * Continue to do this until you encounter a file that does not have an object with a `nextFile` property as its last line
 
 Sample runs for each fetch of a new file:
 
 ```
-URL: [TODO]
+URL: http://some.url/foo.json
 ===================================
 * Average rating of the current dataset is: 2.7596713175771876
 * Average price of the current dataset is: 161.56091608021805
@@ -800,7 +799,7 @@ URL: [TODO]
     * ID: 960593 in San Francisco reviewed 424 times and rated 4.5
 * For the current dataset, Staten Island has the most expensive listings in NYC with an average listing price of 375.390243902439
 
-URL: nextFileURL
+URL: http://some.url/bar.json
 ===================================
 * Average rating of the current dataset is: 2.0962055070517125
 * Average price of the current dataset is: 120.72926460711888
@@ -824,7 +823,7 @@ URL: nextFileURL
     * ID: 33577 in San Francisco reviewed 510 times and rated 5.0
 * This file has no data about NYC!
 
-URL: nextFileURL
+URL: http://some.url/baz.json
 ===================================
 * Average rating of the current dataset is: 2.355144135188867
 * Average price of the current dataset is: 147.21317097415508
