@@ -7,7 +7,6 @@ title: CSCI-UA.0480 - Homework #2
   <div class="panel-heading">Homework #2</div>
   <div class="panel-body" markdown="block">
 
-# DRAFT (to be finalized 1/31, 11pm)
 # Higher Order Functions: Exercises and Processing Data - __Due Wednesday, February 7th, by 11PM__
 
 ## Overview
