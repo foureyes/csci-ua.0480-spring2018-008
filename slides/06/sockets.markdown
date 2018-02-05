@@ -81,7 +81,7 @@ __The `createServer` function__:
 __Again, the server object has a `listen` method__ &rarr;
 
 * {:.fragment} this tells the server to start accepting connections on the supplied port and hostname
-* {:.fragment} 1.0.0.127 is localhost
+* {:.fragment} 127.0.0.1 is _localhost_
 * {:.fragment} if hostname is left out, it'll accept connections on _any_ address (for example, binding to the current address of the machine that it's running on so that it's accessible outside of localhost)
 * {:.fragment} leaving out the port number lets the os decide what the port number should be
 
@@ -90,7 +90,7 @@ __Again, the server object has a `listen` method__ &rarr;
 <section markdown="block">
 ## Socket Object Events
 
-__You can specify what your server will do based on specific events by using the socket object that's passed in to your anonymous function / callback for initial connection).__ 
+__You can specify what your server will do based on specific events by using the socket object that's passed in to your anonymous function / callback for initial connection.__ 
 
 Some examples of socket events include:
 

@@ -10,7 +10,7 @@ title: "A Hasty Introduction to Web Development"
 <p><small></small></p>
 </section>
 <section markdown="block">
-# We just went over three weeks worth of JavaScript. Now what? 
+# We just went over a few weeks worth of JavaScript. Now what? 
 
 </section>
 
@@ -239,10 +239,11 @@ We can map domains to IP addresses through DNS (Domain Name System).
 To retrieve documents on the web, we use __HTTP__ (Hyper Text Transfer Protocol). The computer/application asking for the document is the __client__ or _user-agent_, and the computer responding to requests for documents is the __server__.
 
 * generally, the __server__ is going to be some sort of web server, like Apache or Nginx
-* __the user-agent is going to be__ &rarr; <span class="fragment">some sort of browser, like Chrome or Safari</span>
+* the __client__ (or the __user-agent__) is usuall &rarr; <span class="fragment">some sort of browser, like Chrome or Safari</span> (there are clients other than browsers too)
 
 <br>
-__HTTP is a request-response protocol, a very basic communication method between computers:__
+__HTTP is a request-response protocol, a very basic text-based (at least for version 1.1) communication method between computers:__
+{:.fragment}
 
 * the client sends a request for some data 
 * the second computer responds to the request
@@ -254,10 +255,10 @@ __HTTP is a request-response protocol, a very basic communication method between
 
 The interaction between your browser and a web server goes something like this:
 
-* the browser attempts to connect to the address of the server
-* if the server is listening and _reachable_, a TCP connection is made between the server and the client on port 80 (the default port for HTTP traffic)
-* the browser sends a request message
-* on the same connection, the web server gives back a response message
+1. {:.fragment} the browser attempts to connect to the address of the server
+2. {:.fragment} if the server is listening and _reachable_, a TCP connection is made between the server and the client on port 80 (the default port for HTTP traffic)
+3. {:.fragment}  the browser sends a request message
+4. {:.fragment}  on the same connection, the web server gives back a response message
 </section>
 
 <section markdown="block">
@@ -265,14 +266,15 @@ The interaction between your browser and a web server goes something like this:
 
 A request consists of:
 
-* __a request line ...__  which includes a request method and a path - <code>GET /teaching HTTP/1.1</code>
-* __request headers__ <code>Host: jvers.com</code>, <code>User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 </code>
-* __an empty line__
-* __an optional body__
-* note that a new line is represented by a [carriage return, line feed](https://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2): __\r\n__
+* {:.fragment} __a request line ...__  which includes a request method and a path - <code>GET /teaching HTTP/1.1</code>
+* {:.fragment} __request headers__ <code>Host: jvers.com</code>, <code>User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 </code>
+* {:.fragment} __an empty line__
+* {:.fragment} __an optional body__
+* {:.fragment} note that a new line is represented by a [carriage return, line feed](https://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2): __\r\n__
 
 <br>
 [Here's a list of request header fields](http://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields).
+{:.fragment}
 </section>
 
 <section markdown="block">
@@ -292,14 +294,15 @@ Here's a list of available [request methods](http://en.wikipedia.org/wiki/Hypert
 
 A response consists of:
 
-* __a status-line ...__ which includes a status code and reason - <code>HTTP/1.1 200 OK</code>
-* __response header fields__ - <code>Content-Type: text/html</code>
-* __an empty line__
-* __an optional message body__ - usually an HTML document!
-* note that a new line is represented by a [carriage return, line feed](https://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2): __\r\n__
+* {:.fragment} __a status-line ...__ which includes a status code and reason - <code>HTTP/1.1 200 OK</code>
+* {:.fragment} __response header fields__ - <code>Content-Type: text/html</code>
+* {:.fragment} __an empty line__
+* {:.fragment} __an optional message body__ - usually an HTML document!
+* {:.fragment} note that a new line is represented by a [carriage return, line feed](https://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2): __\r\n__
 
 <br>
 [And of course, a list of response header fields](http://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Response_fields).
+{:.fragment}
 </section>
 
 <section markdown="block">
@@ -411,8 +414,24 @@ curl www.google.com
 # get the entire response (headers and body)
 curl -i www.google.com
 </code></pre>
+
+Note that the above examples all use __GET__ as the http method
 </section>
 
+<section markdown="block">
+## curl and POST
+
+`curl` can also be used to send a request body along with a __POST__ request. To do this &rarr;
+
+1. {:.fragment} use the `--data` or `-d` flag sends the data after the option as an HTTP POST
+	* `curl -d username=foo`
+	* multiple `-d` options are merged: `curl -d username=foo -d password=bar` results in username=foo&password=bar
+2. {:.fragment} use the `-F` flag to emulate sending form data (including sending files!)
+	* causes curl to POST data using the `Content-Type multipart/form-data` header 
+	* (emulates pressing the submit button in a form)
+
+
+</section>
 <section markdown="block">
 ## A Brief Note About Request and Response Headers
 
@@ -456,4 +475,19 @@ __So... web development can mean a lot of things. Broadly speaking:__ &rarr;
 
 <br>
 We'll be dealing with __server-side__ development first...
+</section>
+
+<section markdown="block">
+## HTTP/2
+
+__Note that another version of HTTP, HTTP/2 is _actually_ out and being used!__ HTTP/2 &rarr;
+
+* HTTP methods, status codes and semantics remain the same!
+* however, the focus of the protocol is improved performance:
+	* uses binary format rather than plain text
+	* parallel requests can be made over the same connection
+	* server can push required resources to client even before client makes requests!
+	* compresses headers
+* [check out the mdn page for the evolution of http](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP)
+* for now, we won't be dealing with HTTP/2 as the semantics are essentially the same
 </section>
