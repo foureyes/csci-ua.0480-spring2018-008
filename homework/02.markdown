@@ -493,7 +493,7 @@ You'll be using two files for this:
 * The file that you read in contains AirBnb listings
     * there's one listing per line
     * each listing is represented by a single JSON object 
-    * __the last line may contain an object with a nextFile property__ ... __this object is not a listing and should be skipped / ignored__ (you'll use this later)
+    * __the last line may contain an object with a `next_file` property__ ... __this object is not a listing and should be skipped / ignored__ (you'll use this later)
 * Find a way to read in and parse the contents of the file so that:
     * leading and trailing white space is removed from the initial contents (use the string method, `trim`)
     * each line of JSON is parsed into an actual JavaScript object
@@ -746,9 +746,9 @@ In this part, you'll be setting up your project to work with JSON data from a ur
 
 Instead of reading a local file, __modify your program__ so that it requests JSON data from a specified url. __This URL will be distributed via piazza__. Again, there will be one additional object in the last line of the file: 
 
-`{"nextFile": "4df1c5ef1280bee2e2b44167027d2469.json"}`
+`{"next_file": "4df1c5ef1280bee2e2b44167027d2469.json"}`
 
-This last object has a key, `nextFile`, and the value represents the name of another file of listings data (in the object above, the name of the next file is: `4df1c5ef1280bee2e2b44167027d2469.json`). This next section will explain how to retrieve this json file from the web.
+This last object has a key, `next_file`, and the value represents the name of another file of listings data (in the object above, the name of the next file is: `4df1c5ef1280bee2e2b44167027d2469.json`). This next section will explain how to retrieve this json file from the web.
 
 * The URL for the dataset used in this assignment __will be posted on piazza__
 * [Read the documentation](https://github.com/mikeal/request) to see how to use the requests module (or see the [slides](../slides/js/js-node-npm-debug-git.html#/6))
@@ -758,7 +758,7 @@ This last object has a key, `nextFile`, and the value represents the name of ano
 * (The call to your report generation should be moved to the callback of request...)
 * Parse the body of the response from `request` into an Array of objects (similar to how you processed the file in the previous part)
     * Leading and trailing white space should removed from the initial contents (use the string method, `trim`) before parsing (again, same as the previous part)
-    * For now, you can ignore the last object that contains `nextFile`
+    * For now, you can ignore the last object that contains `next_file`
     * Modify your script if necessary to ignore that line 
 * Print out the url of the file you requested
     ```==========
@@ -770,14 +770,14 @@ When you run your report again, the output should looks similar to your previous
 
 ### Get Next JSON Files
 
-Now, instead of running this report on a single url, you'll download several files. You will not know the URLs of the subsequent files in advance. Instead, you'll have to examine the `nextFile` property of the last object in the initial JSON data requested.
+Now, instead of running this report on a single url, you'll download several files. You will not know the URLs of the subsequent files in advance. Instead, you'll have to examine the `next_file` property of the last object in the initial JSON data requested.
 
 * Print out the URL that you're retrieving before running a report for each file/url
-* The last object from the JSON file contains a `nextFile` property;
-* The `nextFile` property contains the next file to retrieve
+* The last object from the JSON file contains a `next_file` property;
+* The `next_file` property contains the next file to retrieve
 * Construct a new URL based on that filename and print out the new URL (simply concatenate the domain and path with the new file name)
 * Use the `request` library again to retrieve and process the data from this new URL
-* Continue to do this until you encounter a file that does not have an object with a `nextFile` property as its last line
+* Continue to do this until you encounter a file that does not have an object with a `next_file` property as its last line
 
 Sample runs for each fetch of a new file:
 
