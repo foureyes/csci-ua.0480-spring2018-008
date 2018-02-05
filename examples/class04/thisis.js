@@ -117,18 +117,33 @@ class PartyWerewolf extends Werewolf {
 }
 */
 
+/*
 // arrow function, this will be the this where the arrow function
 // was defined
 const obj = {nums: [1, 2, 3, 4], animal: 'owl'}
+obj.printCount = function(n) {
+  // this is global
+  console.log(n, this.animal);
+}
 obj.count = function() {
 
   // this is correct
-  this.nums.forEach((n) => {
-    // this is global
-    console.log(n, this.animal);
-  });
+  this.nums.forEach(obj.printCount);
 }
 obj.count();
+
+*/
+
+protocol, username:password, domain/ipaddress/host, port number (default is 80), path
+http://joe:mypassword@foo.bar/baz/qux.html?corge=something#whatever
+
+
+
+
+
+
+
+
 
 
 
