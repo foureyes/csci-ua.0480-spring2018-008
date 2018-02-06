@@ -832,7 +832,7 @@ URL: http://some.url/baz.json
     * Listing ID: 19241287 with a rating of 5.0 priced at 40.0 in New York accommodates 16
 * The two highest reviewed listings of the current dataset are:
     * ID: 31994 in New York reviewed 344 times and rated 4.5
-    * ID: 63360 in New York reviewed 304 times and rated 4.5
+	* ID: 1631778 in Nice reviewed 326 times and rated 5.0
 * For the current dataset, Manhattan has the most expensive listings in NYC with an average listing price of 116.7870195337114
 
 ```
