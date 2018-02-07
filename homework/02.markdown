@@ -83,6 +83,7 @@ __There will a small (-2) penalty every time one is used__. (Homework is 100 poi
         <pre><code data-trim contenteditable>npm install -g mocha
 npm install --save-dev eslint
 npm install --save-dev chai
+npm install --save-dev eslint-plugin-mocha
 </code></pre>
     * you'll also need a few additional modules installed locally for the unit tests to run:
         * finally, install sinon and mocha-sinon locally for mocking `console.log` (these are for unit tests)
