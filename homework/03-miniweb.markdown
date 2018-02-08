@@ -13,20 +13,13 @@ hr {
 	<div class="panel-heading">Homework #3</div>
 	<div class="panel-body" markdown="block">
 
-# Creating a Tiny Web Framework, __Due Wednesday, Feb 14th by 11PM__
+# Creating a Tiny Web Framework, __Due Thursday, October 5th by 11PM__
 
 ## Overview
 
 ### Description
 
-There are two major parts to this assignment:
-
-1. create a simple web server and website by using the `net` module
-2. move the functionality from part 1 into classes so that they your code can be reused as a library for making web apps without having to deal with low-level `net` module code
-
-By the end of both parts, you'll have a _toy_  web framework that allows a developer to write simple web applications. 
-
-Again, both parts will be built off of and run from node's built-in TCP server (from the `net` module).
+You'll be writing a small web framework that allows a developer to write simple web applications. These web applications will be built off of and run from node's built-in TCP server (from the `net` module).
 
 __You can only use the following two modules for this assignment__ &rarr;
 
@@ -51,67 +44,6 @@ You will be given access to a private repository on GitHub. It will contain:
 
 * Commit multiple times throughout your development process.
 * Make at least 3 separate commits - (for example, one option may be to make one commit per part in the homework).
-
-
-## Part 1 - An Introduction
-
-In this part, you'll familiarize yourself with the `net` module by creating a simple server that responds to http requests. You'll use events and callback functions to handle a new client connection, data arriving on a socket from a client, and a connection being closed.
-
-Work with the following files:
-
-1. `src/intro.js` - your web server (run this file to serve your site)
-2. `src/webutils.js` - a module that contains helper functions 
-
-### Create helper functions
-
-Start by creating some helper functions in `webutils.js` to ease development. Minimally, implement the following functions:
-
-
-1. `getExtension(fileName)`: extracts the extension of a file name and normalizes it to lowercase
-	* `fileName`: a string representing the name of the file
-	* `return` value: the lowercase extension
-	* description: to extract the extension
-2. `sendTextFile(fileName, sock)`:
-3. `sendImage(fileName, sock)`:
-
-### Homepage With Links
-
-### Styled Page
-
-### Page with an Image
-
-### Redirect
-
-### Form and Post
-
-Start by opening `src/intro.js`. Create a simple server that responds to any request with a valid http response that says `hello world` (as html, with surrounding markup)... the response will have:
-
-1. a status code of `200` 
-2. a `Content-Type` header of `text/html`
-3. a body that contains the following markup:
-    <pre><code data-trim contenteditable> &lt;em&gt;Hello&lt;/em&gt; &lt;strong&gt;World&lt;/strong&gt; </code></pre>
-
-Use the following process to do this:
-
-1. Check out the [slides on the `net` module for some prep](../slides/06/sockets.html#/2), paying close attention to the [the last slide](../slides/06/sockets.html#/10).
-2. Build off of the last example by modifying the echo server code to...
-3. Write back a valid http response (you can write a string directly instead of using a `Buffer`):
-    * [see the slides on http](../slides/05/web.html#/16)
-    * [and an example response](../slides/05/web.html#/24)
-4. Close the connection after a `write` with `sock.end`.
-5. Run `warmup.js` (note that your terminal will look like its "frozen", but it's really just waiting for requests).
-6. Use `curl -i localhost:8080` to test your server.
-7. Then point your browser at `http://localhost:8080`.
-8. Make sure that the html renders (it should have italicized and bold text).
-9. To shutdown your server, CTRL + c in your terminal...
-10. Here's an example of what it might look like: <br> ![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-01-warmUp.gif)
-
-Troubleshooting
-
-1. If your browser doesn't show anything, make sure you're calling `sock.end`.
-2. If html is showing up as text (that is, you see the tags / mark-up in the page itself), double check that you've set the content type correctly.
-
-## Part 2 - Even Warmer - a Request and Response Object
 
 ## `miniWeb` - Framework Overview 
 
@@ -178,6 +110,39 @@ Each part builds off of the previous, with the last parts culminating in finishi
     * add application level functionality, such as routing
 4. __Part 4 - Using your Module!__
     * create a fan site using the module and "Classes" that you just made! 🎉
+
+## Part 1 - Warm Up
+
+In this part, you'll get familiarize yourself with the `net` module by creating a simple server that responds to http requests. You'll make use of events and callback functions to handle a new connection, data arriving on a socket and closing a connection. 
+
+Start by opening `src/warmUp.js`. Create a simple server that responds to any request with a valid http response that says `hello world` (as html, with surrounding markup)... the response will have:
+
+1. a status code of `200` 
+2. a `Content-Type` header of `text/html`
+3. a body that contains the following markup:
+    <pre><code data-trim contenteditable> &lt;em&gt;Hello&lt;/em&gt; &lt;strong&gt;World&lt;/strong&gt; </code></pre>
+
+Use the following process to do this:
+
+1. Check out the [slides on the `net` module for some prep](../slides/06/sockets.html#/2), paying close attention to the [the last slide](../slides/06/sockets.html#/10).
+2. Build off of the last example by modifying the echo server code to...
+3. Write back a valid http response (you can write a string directly instead of using a `Buffer`):
+    * [see the slides on http](../slides/05/web.html#/16)
+    * [and an example response](../slides/05/web.html#/24)
+4. Close the connection after a `write` with `sock.end`.
+5. Run `warmup.js` (note that your terminal will look like its "frozen", but it's really just waiting for requests).
+6. Use `curl -i localhost:8080` to test your server.
+7. Then point your browser at `http://localhost:8080`.
+8. Make sure that the html renders (it should have italicized and bold text).
+9. To shutdown your server, CTRL + c in your terminal...
+10. Here's an example of what it might look like: <br> ![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-01-warmUp.gif)
+
+Troubleshooting
+
+1. If your browser doesn't show anything, make sure you're calling `sock.end`.
+2. If html is showing up as text (that is, you see the tags / mark-up in the page itself), double check that you've set the content type correctly.
+
+## Part 2 - Even Warmer - a Request and Response Object
 
 In this part, you'll build off of your experience from part 1 by creating a `Request` and `Response` object. You'll use these objects and some simple routing to create a page that has an image and an external css file.
 
