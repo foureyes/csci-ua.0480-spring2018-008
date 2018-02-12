@@ -13,7 +13,7 @@ hr {
 	<div class="panel-heading">Homework #3</div>
 	<div class="panel-body" markdown="block">
 
-# Creating a Tiny Web Framework, __Due Wednesday, Feb 14th by 11PM__
+# Creating a Tiny Web Framework, __Due Wednesday, Feb 19th by 11PM__
 
 ## Overview
 
@@ -40,9 +40,10 @@ __You can't use the `http` module... or install additional frameworks, such as `
 You will be given access to a private repository on GitHub. It will contain: 
 
 1. stub source files in the `src` directory
-2. default assets (images, css, etc.) in the `public` folder
+2. some testing assets in the `public` folder
 3. unit tests in `test`
-4. various configuration files, such as `package.json`, `.eslintrc`, etc.
+4. linting files `.eslintrc`, etc.
+5. __you'll have to create your own `package.json`__
 
 * __Push__ your changes to the homework repository on GitHub.
 * Commits later than the deadline will not be included in grading
@@ -62,69 +63,297 @@ Work with the following files:
 1. `src/intro.js` - your web server (run this file to serve your site)
 2. `src/webutils.js` - a module that contains helper functions 
 
+You'll start off by writing some helper functions. Then at the end of this part, you should have an application that uses those helper functions to respond to the following requests:
+
+1. `GET /` - responds with a page that contains links to other pages and a form
+2. `GET /such/stylish` - responds with a page that includes a stylesheet
+3. `GET /css/base.css` - responds with a stylesheet
+4. `GET /picsplz` - responds with a page that includes an image
+5. `GET /img/animal.jpg` - responds with an image of your favorite animal
+6. `GET /showanimage` - responds with a redirect to `picsplz`
+7. `POST /` - responds with the body of the post request as plain text       
+8. A request that isn't `GET` or `POST` - a `405` is sent back saying that the method is not allowed 
+9. A request that is a `GET` or `POST` but does not have a matching path - a `404` is sent back saying that the resource/page was not found
+
+Before starting, __make sure to review the couse materials on the net module and creating tcp/ip servers__:
+
+1. check out the [slides on the `net` module](../slides/06/sockets.html#/2), paying close attention to the [the last slide](../slides/06/sockets.html#/10).
+2. go over the [notes from previous classes](../examples/class06/notes.js)
+3. lastly, make sure that you can write back a valid http response by reviewing::
+    * [the slides on http](../slides/05/web.html#/16)
+    * [and an example response](../slides/05/web.html#/24)
+
 ### Create helper functions
 
-Start by creating some helper functions in `webutils.js` to ease development. Minimally, implement the following functions:
+Start by creating some helper functions in `webutils.js` to ease development. Export these function so that You can use them in `intro.js`. Minimally, implement the following functions (of course, you can create more functions, as the functions will only help with a subset of the part 1's requirements).
+
+### `getExtension(fileName)`
+
+__Parameters:__
+
+* `fileName` - a string representing the name of the file
+
+__Return:__
+
+* the extension of the file in lowercase as a `String`
+
+__Description:__
+
+Extracts the extension of a file name and normalizes it to lowercase. You can assume that everything after the last dot in a fil name is the extension. If there is no dot, then the extension is empty string. Hint: [split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) or [path.extname](https://nodejs.org/api/path.html#path_path_extname_path) may help implement this function.
+
+Example usage:
+
+```
+const ext1 = getExtension('foo.jpg'); // ext1 --> jpg
+const ext2 = getExtension('FOO.JPG'); // ext2 --> jpg
+const ext3 = getExtension('foo.bar.jpg'); // ext3 --> jpg
+const ext4 = getExtension('foo'); // ext4 --> empty string
+```
+
+### `sendTextFile(fileName, sock)`:
+
+__Parameters:__
+
+* `fileName` - a string representing the name of the file (relative to a directory called `public` within the root of your project directory)
+	* example `/css/base.css` would read the file `PROJECT_ROOT/public/css/base.css``
+* `sock` - a socket object to write data to
+
+__Return:__
+
+* no return value 
+
+__Description:__
+
+Sends back an http response with the data from the text file specified as the response body (along with appropriate headers and status line). The `sock` object will be used to write the http response back to the client.
+
+Use `fs.readFile` to read the data from the file from the path passed in: 
+
+1. the path, `fileName` will be relative to a folder called `public` in your project's root directory
+	* the built-in variable, `__dirname` contains the directory that your program is running from
+	* for example, if you're running your project from `/Users/foo/abc123-homework03/src`, then `__dirname` will contain that path
+	* you can assume that your program, `intro.js` will be run directly from the `src` folder in your project's root
+	* consequently, to read `fileName` from `public`, you'll have to use a combination of `__dirname` and `../` to go up one directory to your project root
+	* for example, to construct the absolute path to the file, concatenate or use [path.join](https://nodejs.org/api/path.html#path_path_join_paths) from the `path` module to put together: `__dirname`, `/../public`, and `fileName`
+2. you can assume that the file you are reading is `utf8`, so use that as the 2nd argument to `fs.readFile`
+3. in the callback to `fs.readFile` use the `socket` object that was provided as an argument to the original function to write out a response.
+
+The response should be a valid http response:
+
+1. start with the status line (using the appropriate status code)
+2. include any headers 
+	* hint: `Content-Type` may be useful 
+	* [see the mdn page on MIME types for possible values](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) for `Content-Type`
+	*  use the appropriate value for the extension of the text file being sent
+	* you can assume that we will only be serving stylesheets, html and plain text
+	* creating a mapping from extension to `MIME` type may be helpful
+3. make sure that there's an empty line between the headers and the body of the response (remember `\r\n\r\n` separates the body from the status line and headers)
+4. use the text from the file as the response body
+5. write all of this out to the client using the `socket` object passed in
+6. and finally, use the `socket` object to end the connection
+
+{% comment %}_ {% endcomment %}
+
+If any error occurs while reading the file, don't send back the contents of the file. Instead... send back a response that:
+
+1. let's the client know there was an error
+2. use an appropriate status code and description in the status line of your response
+3. include a plain text body that describes the status code
+
+Example usage:
+
+```
+sendTextFile('/css/base.css', sock); 
+
+// reads /path/to/project/public/css/base.css
+// the resulting response should be something like (with new lines as \r\n\r\n):
+// HTTP/1.1 200 OK
+// Content-Type: text/css
+// 
+// h1 {color: red;}
+```
+
+### `sendImage(fileName, sock)`:
+
+__Parameters:__
+
+* `fileName` - a string representing the name of the file
+* `sock` - a socket object to write data to
+
+__Return:__
+
+* no return value 
+
+__Description:__
+
+This function is similar to `sendTextFile` described above, but instead of reading a plain text file, it will read image data and send it as the response body. The requirements and specifications for `sendImage` differ from `sendTextFile` in the following ways:
+
+* because an image is being read, omit the second argument, encoding, or set it to an empty object for `fs.readFile` so that the raw buffer is given instead of an encoded string: 
+	* `fs.readFile('/img/foo.jpg', (err, data) => {});` 
+	* `fs.readFile('/img/foo.jpg', {}, (err, data) => {});`
+* just like `sendTextFile`, you'll have to send back the appropriate http response status line and headers... so that means you have to send the right `Content-Type` 
+* this function should support: `jpg`, `jpeg`, `gif`, and `png` ([again, check out the mdn article on MIME Types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+* __IMPORTANT__: when sending a response, __you must `write` the response status line, headers and empty line to the `socket` object first__, and then, __only afterwards, `write` out the raw buffer image data__ (essentially, you'll be calling `write` twice)... __DO NOT CONVERT THE IMAGE DATA TO A STRING__
+	* also check out the [class notes for additional examples](http://localhost:4000/examples/class06/notes.js)
+
+### Testing Functions
+
+Once your finished with your implementation above, you can export, test and try using your new functions.
+
+Export the functions using `module.exports`, and try running the tests in test/webutils-test.js
+
+* make sure that `mocha` is installed as in previous assignments 
+* install dev dependencies to run tests: npm install \-\-save-dev chai sinon mocha-sinon (you can ignore any unmet peer dependency warnings)
+* `mocha test/webutils-test.js`
 
 
-1. `getExtension(fileName)`: extracts the extension of a file name and normalizes it to lowercase
-	* `fileName`: a string representing the name of the file
-	* `return` value: the lowercase extension
-	* description: to extract the extension
-2. `sendTextFile(fileName, sock)`:
-3. `sendImage(fileName, sock)`:
 
-### Homepage With Links
+### Create Pages
 
-### Styled Page
+Now that you have some helper functions, you can create a web server and put together a few pages! Open up `src/intro.js` to: 
 
-### Page with an Image
+1. create a simple web server 
+	* check out the [echo server example](../examples/net/echoServer.js)
+	* __make sure your server is running on port 8080__
+2. the web server should respond to http requests (see the pages / requests that your server should support after this set of instructions)
+	* review the [sample web server](http://jvers.com/csci-ua.0480-spring2018-008/examples/net/webServer.js) code from the course site
+	* also check out the [class notes for additional examples](http://localhost:4000/examples/class06/notes.js)
+	* of course, bring in your `webutils.js` to help with this (again, you can create more helper functions in addition to the ones required from the instructions above)
+	* if you are using `sendTextFile` or `sendImage`, then make sure to drop your files in the `public` folder of your project root
+3. to run your server, change to the `src` directory in your project root and run `node intro.js` (note that your terminal will look like its "frozen", but it's really just waiting for requests).
+4. use the following to test your server
+	* `curl -i localhost:8080/path/to/page` to test your server.
+	* enter the url in your browser 
+5. To shutdown your server, CTRL + c in your terminal...
 
-### Redirect
+The pages / requests that your web server should handle include: 
 
-### Form and Post
+__A Homepage With Links__
 
-Start by opening `src/intro.js`. Create a simple server that responds to any request with a valid http response that says `hello world` (as html, with surrounding markup)... the response will have:
+* modify your server so that it responds to `GET /` 
+* it should give back an html document
+* the document should contain links to the following pahts
+	1. `/such/stylish`
+	2. `/picsplz`
+	3. `/showanimage`
+* it should also contain this form (which will be used later to create a POST request):
+	<pre><code data-trim contenteditable>&lt;form method="POST" action=""&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;Name: &lt;input type='text' name='name'&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="submit"&gt;	
+&lt;/form&gt;</code></pre>
+* you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with html as the body
+* if you're not getting the response you expect (your browser doesn't show the page, only shows plain text, etc.), check out the [troubleshooting section below](#troubleshoot-part1)
+* example (your text does not have to match exactly, but there should be three links and a form):
+	![pic alt](../resources/img/hw03-web4u-01-home.png)
 
-1. a status code of `200` 
-2. a `Content-Type` header of `text/html`
-3. a body that contains the following markup:
-    <pre><code data-trim contenteditable> &lt;em&gt;Hello&lt;/em&gt; &lt;strong&gt;World&lt;/strong&gt; </code></pre>
+__A Styled Page__
 
-Use the following process to do this:
+* modify your server so that it responds to: 
+	1. `GET /such/stylish` 
+	2. `GET /css/base.css` 
+* `/such/stylish` should respond with an html document that includes a [link tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Examples) that includes a css file
+* the css file that it should include is `/css/base.css`
+* `/css/base.css` should respond with a stylesheet
+	* add styles to `/css/base.css`
+	* minimally, you stylesheet should change the colors of the text so that it's not the default color, black
+	* you can add any other styles that you like
+* you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with the appropriate body (html and css respectively)
+* example (note that the styles are from `/css/base.css`, but the page is `/such/stylish`)... you can style this page any way you like, but minimally, change the colors of the text (you don't _have_ to add borders or a background):
+	![pic alt](../resources/img/hw03-web4u-02-style.png)
 
-1. Check out the [slides on the `net` module for some prep](../slides/06/sockets.html#/2), paying close attention to the [the last slide](../slides/06/sockets.html#/10).
-2. Build off of the last example by modifying the echo server code to...
-3. Write back a valid http response (you can write a string directly instead of using a `Buffer`):
-    * [see the slides on http](../slides/05/web.html#/16)
-    * [and an example response](../slides/05/web.html#/24)
-4. Close the connection after a `write` with `sock.end`.
-5. Run `warmup.js` (note that your terminal will look like its "frozen", but it's really just waiting for requests).
-6. Use `curl -i localhost:8080` to test your server.
-7. Then point your browser at `http://localhost:8080`.
-8. Make sure that the html renders (it should have italicized and bold text).
-9. To shutdown your server, CTRL + c in your terminal...
-10. Here's an example of what it might look like: <br> ![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-01-warmUp.gif)
+__A Page with an Image__
 
-Troubleshooting
+* modify your server so that it responds to:
+	1. `GET /picsplz` 
+	2. `GET /img/animal.jpg`
+* `/picsplz` should respond with an html document that includes an [img tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Examples)
+* includes some text describing the image
+* the image that it should bring in is `/img/animal.jpg`
+* `/img/animal.jpg` responds with an image (jpg) of your favorite animal
+* you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with the appropriate body (html and an image, jpg, respectively)
+* if your image doesn't work, check out the [troubleshooting section below](#troubleshoot-part1)
+* example:
+	![pic alt](../resources/img/hw03-web4u-03-image.png)
 
-1. If your browser doesn't show anything, make sure you're calling `sock.end`.
+__A Redirect__
+
+* modify your server so that it responds to: `GET /showanimage` 
+* this will result in a permanent redirect to `/picsplz`
+* make sure to use the correct status code and headers
+* the body can just be plain text with a message specifying that a permanent redirect is in place
+* to test:
+	* go to `/showanimage` with curl
+	* the response should have the appropriate status code and headers
+	* use your browser to go to `/showanimage`
+    * the url bar should go to `/picsplz`
+	* use incognito mode or clear your cache to make sure that the redirect is not cached when testing
+* you'll have to manually `write` out an http response and `end` the connection to implement a redirect as response... or add a helper function to `webutils.js` that does this
+* example (note that the initial response should be a 301, at which point your browser is redirected to `picsplz`, which is what will appear in the url bar):
+	![pic alt](../resources/img/hw03-web4u-05-redirect-02.png)
+
+__Handling a POST Request__
+
+* modify your server so that it responds to: `POST /`
+* it should respond with a plain text document that shows the _body_ of the original POST request (which means that you should parse out the body of the request that you received)
+	* of course, make sure you send back the appropriate status code for a successful response
+	* along with any necessary headers
+* to test:
+	* submit the form from `/` by filling in the text field and clicking the submit button
+	* this should result in a `POST` request from your browser
+	* you should see a plain text result that containts name=whatever_you_typed
+	* alternatively, use `curl -i localhost:8080 -d name=whatever_you_typed` to initiate a POST request from curl
+* you'll have to manually `write` out an http response and `end` the connection to implement this... make sure to include the body that was parsed out of the request as part of the response!
+example (entering data in the form in `/` should display the form data that was entered):
+	![pic alt](../resources/img/hw03-web4u-07-post.png)
+
+
+__Handling Bad Requests__
+
+Finally, handle the following error conditions:
+
+* if a request has a method that's other than `GET` or `POST`, send back a `405` with a plain text body saying that the method is not allowed 
+* if a request is a `GET` or `POST`,  but it does not have a matching path, send back a `404`  with a plain text body saying that the page was not found
+* both of these can be implemented by manually using `write` and `end` on the socket object to write back the appropriate response... or you can write a method that does this in your helper functions module
+* an example of a 405 using `nc` to send a request that's not `GET` or `POST`:
+	![pic alt](../resources/img/hw03-web4u-09-405.gif)
+* an example of a 404 using curl:
+	![pic alt](../resources/img/hw03-web4u-10-404.gif)
+
+__Everything Together__
+
+Once you've finished up all of the paths specified, an example interaction may look like this:
+
+![pic alt](../resources/img/hw03-web4u-08-all.gif)
+
+<span id="troubleshoot-part1" name="troubleshoot-part1"></span>
+
+### Troubleshooting
+
+1. If your browser doesn't show anything, and it looks like it's waiting for a response, make sure you're calling `sock.end`.
 2. If html is showing up as text (that is, you see the tags / mark-up in the page itself), double check that you've set the content type correctly.
+3. If you see an error in the terminal window that runs your server that says: `Error: This socket has been ended by the other party`, it likely means that `sock.end` was called more than once (you can only end a connection once! ...so calling `sock.end` multiple times on the same socket will result in an error)
+4. If your browser does not display the resource and instead shows an error that says empty or invalid response, then that means that a valid http response is not being sent back or no data was sent back (check the format of your response by printing it out, check for calls to `write` and `end` where appropriate)
+4. if an image is broken: 
+	* it's likely an issue with content type or reading the image as binary data - make sure that the head is written first, then the data of the body sent afterwards
+	* or perhaps not having two \r\n's between the headers and the body
+	* or it could be inadvertently converting the body into a string by writing the headers and the body all at once
+	* or inadvertently adding extra data into the body 
 
-## Part 2 - Even Warmer - a Request and Response Object
+## Part 2 - `Request`, `Response`, and `App` Classes... and a Small Site!
 
-## `miniWeb` - Framework Overview 
+Although we abstracted out some of common tasks into function in part 1 of this assignment, there was still a lot of manual work that needed to be done, and it felt like an _incomplete_ API for creating web applications.
+
+Let's use some JavaScript language features to create a nicer library for creating web applications. We'll create this framework in `src/webframework.js` 
 
 
 ### About the Framework
 
-Your framework, called `miniWeb`, will be built off of node's `net` module. It'll use the `net` module to create a TCP server that will allow connections from clients. The code that you'll write will handle an incoming http request from a client by parsing the http request, determining what do based on the request, and finally sending back an http response. You'll do this by minimally creating these objects (you can create more objects, but these 3 must be present):
+Your framework (`webframework.js`), will be built off of node's `net` module. It'll use the `net` module to create a TCP server that will allow connections from clients. The code that you'll write will handle an incoming http request from a client by parsing the http request, determining what do based on the request, and finally sending back an http response. You'll do this by creating these objects (you can create more objects, but these 3 must be present):
 
 1. `Request` - an object that represents an http request
 2. `Response` - an object that represents an http response... and has the ability to actually send back a response to the client
 3. `App` - represents your web application; takes incoming requests and determines what to do based on path, method, etc. ... 
 
-You can use the objects that you create to write simple web applications. Here are some example of how you might use your mini web framework. Again, __you are making the library / objects / module__ that makes the following possible:
+You can use the objects that you create to write simple web applications. Here are some example of how you might use `webframework.js`. Again, __you are making the library / objects / module__ that makes the following possible:
 
 * Create a new web application
     <pre><code data-trim contenteditable>const App = require('./miniWeb.js').App;
@@ -158,36 +387,23 @@ const app = new App();
 
 ### Building the Framework
 
-This homework is split into __3 parts__. Coding starts with __part 1__.
+In `webframework.js`...
 
-Each part builds off of the previous, with the last parts culminating in finishing up your web framework and building a small fan site 💖 with your web framework! (YES!). __Please do the following in order!__ &rarr;
-
-1. __Part 1 - Warm Up__ - get familiar with the `net` module!
-    * work with nodes' net module to create a simple server 
-    * use callbacks to handle new connections and arriving data
-    * handle http requests from the browser
-    * create a small "hello world" site
-2. __Part 2 - Even Warmer__ - build on the previous part, but adding functionality through `Request` and `Response` objects
-    * create a `Request` object to encapsulate http requests
-    * create a `Response` object to encapsulate http responses; this object will be able to:
-        * send http responses back using a socket object
-        * read files from the file system to send back
-    * create a small site that serves html _and_ images (SUCH WOW! 😮) 
-3. __Part 3 - Converting to App Object__
-    * create an app object that encapsulates your server...
+1. create a `Request` object to encapsulate http requests
+2. create a `Response` object to encapsulate http responses; this object will be able to:
+	* send http responses back using a socket object
+	* read files from the file system to send back
+3. create an app object that encapsulates your server...
     * add application level functionality, such as routing
-4. __Part 4 - Using your Module!__
-    * create a fan site using the module and "Classes" that you just made! 🎉
+4. use your objects to create a simple site!
 
-In this part, you'll build off of your experience from part 1 by creating a `Request` and `Response` object. You'll use these objects and some simple routing to create a page that has an image and an external css file.
+You'll build off of your experience from part 1 by refactoring your code and encapsulating the functionality that you previously created in classes and methods.
 
-### Start by creating a `Request` object
+### Create a `Request` Class
 
 In this section, you'll fully implement a `Request` object. You'll then conditionally serve up different content based on the `path` specified by the request.  The `Request` object __represents an http request__. It can take an http request as a string, parse out information about that request and expose that information as properties (such as `method`, `path`, and `headers`). It assumes HTTP/1.1
 
-In `evenWarmer.js`, copy over your code to create a simple server, and make modifications to it so that it parses the request into a request object.
-
-Create the `Request` _class_  by implementing the following:
+Create the `Request` _class_  by implementing the following in `webframework.js`:
 
 <hr>
 
@@ -223,7 +439,6 @@ Note that our `Request` object will assume HTTP/1.1, so it's not required to kee
 1. `toString` - returns a string representation of the request object as a valid http request (essentially taking its properties and creating a request - or another way of looking at it is recreating the original string passed in to the constructor)
 
 You can add additional properties and methods as needed.
-
 <hr>
 
 #### Example Usage
@@ -247,51 +462,34 @@ console.log(req.headers);
 console.log(req.body);
 // --> ''
 // the body is empty in this case ^^^
-
-console.log(req.toString()); // or req + ''
-// -->
-// GET /foo.html HTTP/1.1\r\n
-// Host: localhost:8080
-// 
-// (notice the empty line above to denote header / body boundary)
 </code></pre>
 
 <hr>
 
-### Using the `Request` Object
+### Testing / Using the `Request` Object
 
 Once your finished with your implementation above, you can export, test and try using your new `Request` object.
 
-1. Export the object using `module.exports`, and try running the tests in test/request-response-test.js
-    * make sure that `mocha` is installed as in previous assignments 
-    * install dev dependencies to run tests: npm install --save-dev chai sinon mocha-sinon (you can ignore any unmet peer dependency warnings)
-    * `mocha test/request-response-test.js`
-2. In your previous code, `sock.on('data', someCallback)` calls `someCallback` when the socket receives data... and that callback takes a single argument, the binary data that the client sent. Pass that data to your `Request` constructor to create a `Request` object
-3. Once you have the http request encapsulated by a `Request` object... use a simple conditional to:
-    1. Check if the `Request` object's path is `/` ... if so, display your hello world page.
-    2. Check if the `Request` object's path is `/foo.css` ... if so, send back a document with content type `text/css` containing `h2 {color: red;}`.
-    3. If it's neither `/` or `/foo.css`, then send back a `404`, content type 'text/plain', and a body of `uh oh... 404 page not found!`.
-4. Make sure to close the connection once you've written your http response by using `sock.end()`
-5. Run your server and check all 3 of these paths using both [curl](../slides/05/web.html#/25) and your browser.
-    * You should see a `200` for `/` and `/foo.css`, along with the appropriate `Content-Type` header, and the body.
-    * You should see a `404` for everything else.
-6. Finally, to see how everything works together, modify the html that `/` sends back:
-    * Above hello world, include your style sheet using a `link` tag in your response for `/`...
-    * Also above hello world, but below your link tag, add an `h2` tag that contains the text, 'this is a red header!'
-    * When you point your browser at `localhost:8080', you should now see a red header above your hello world text.
-7. It should look something like <br> ![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-02-evenWarmer-01-request.gif)
+1. Export the object using `module.exports`, and try running the tests in test/webframework-test.js (comment out the other tests) ... run from within `test` folder
+    * make sure that `mocha` is installed as in the previous part
+    * install dev dependencies to run tests: npm install \-\-save-dev chai sinon mocha-sinon (you can ignore any unmet peer dependency warnings)
+    * `mocha test/webframework-test.js`
+2. This request object can be used to parse the binary data that is passeed in to the callback function `someCallback` in `sock.on('data', someCallback)`
+3. Now you can use the resulting `Request` object's `method` and `path` properties  to conditionally execute code     
+	* `const req = new Request(binaryData.toString());`
+	* `if(req.method === 'GET' && req.path === '/foo') { }`
 
-### And now, for our `Response` object
+### Create a `Response` Class
 
-Instead of issuing `write` calls to the `socket` object, you'll wrap the `socket` up in a `Response` object and use that to send data to the client. Notice that all of the `methods` called on socket are being being called by equivalent methods on your `Response` object.
+Instead of directly calling  `write` on the`socket` object, wrap the `socket` up in a `Response` object and use that to send data to the client. Notice that all of the `methods` called on socket are being being called by equivalent methods on your `Response` object.
 
 The `Response` object represents an http response, and it allows direct manipulation of the underlying socket that represents the current connection for the http request/response. It can hold data about an http response, turn that data into a valid http response... and send that data back to the client (as well as close the connection between the server and the client).
 
 Create a `Response` _class_ based on the [specifications below](#response).  
 
 * Note that it may be useful to keep an object that maps status codes to short descriptions ({"200": "OK", "404": "Not Found"})
-* You can run unit tests as you work, as usual, by adding the object to `module.exports`, and running the tests in test/request-response-test.js
-    * again ... `mocha test/request-response-test.js`
+* You can run unit tests as you work, as usual, by adding the object to `module.exports`, and running the tests in test/webframework-test.js
+    * again ... `mocha test/webframework-test.js`
     * __not all methods are tested__ by the unit tests ⚠️️⚠️️⚠️️
 
 <a name="response"></a>
@@ -393,12 +591,13 @@ res.end('');
     * returns a string, a valid http response
     * when adding a short description for status codes, use these descriptions:
         * `200` - `OK`
-        * `404` - `Not Found`
-        * `500` - `Internal Server Error`
-        * `400` - `Bad Request`
         * `301` - `Moved Permanently`
         * `302` - `Found`
         * `303` - `See Other`
+        * `400` - `Bad Request`
+        * `404` - `Not Found`
+        * `405` - `Method Not Allowed`
+        * `500` - `Internal Server Error`
     * example usage:
         <pre><code data-trim contenteditable>res.setHeader('Content-Type': 'text/plain');
 res.statusCode = 404;
@@ -409,231 +608,20 @@ console.log(res.toString());
 //
 // Uh oh! No page here!
 </code></pre>
-8. `sendFile` is a bit lengthy, so we'll save this for later! ⚠️️
+8. `sendFile(fileName)` and `handleRead(contentType, err, data) - `sendFile` will use the logic in `handleRead` as part of its callback to send the file specified by `fileName` (which will be searched for in `$PROJECT_ROOT/public`) to the client by setting the appropriate content type, writing the data from the file... and immediately closing the connection after the data is sent
+	* __this is essentially just the `sendTextFile` and `sendImage` functions from part 1 combined into a single method!__
+	* implementation details for both these functions are below:
 
-<hr>
+#### Implementing `sendFile` and `handleRead`
 
-### Using the `Response` Object
+These two methods will be used to send back a file in an http response:
 
-__Now let's test your new `Response` object in your original application!__
+* `sendFile(fileName)` - determines the types of file and then attempts to read a file (this function does not return a value)
+*  `handleFileRead(contentType, err, data)` - used to handle the result of attempting to read a file; it'll send back an appropriate response: either a successful response with the file contents as part of the response body or a response the specifies a server error if the file was not successfully read (this function does not return a value)
 
-1. To see your `Response` object at work, remove your calls to `sock.write` / `sock.end` and use a new `Response` object instead.
-2. Again, within the callback that you pass to `sock.on('data', someCallback)` and after you create a `Request` object, create a `Response` object....
-    * Pass in the `sock` object that's in scope (that is the socket object that `on` was called on)
-    * For example:
-        <pre><code data-trim contenteditable> sock.on('data', function(binaryData) {
-  const res = new Response(sock);
-  // ...
-}
-3. Replace every call to `sock.write` / `sock.end` with:
-    * A call to your `Response` object's `setHeader` method to set the content type: `res.setHeader(...)`
-    * A call to your `Response` object's `send` method to send the response back with the appropriate body: `res.send(200, ...);`
-    * A call to your `Response` object's `end` method to close the connection
-4. Everything should still work as it did previously, so try using curl and your browser to request `/`, `/foo.css`, and any other page to trigger a 404
+To implement these methods:
 
-<br>
-
-### Wait, One More Method: Sending back files
-
-There's one last method that we'll implement on `Response`:
-
-`sendFile(fileName)` - sends file specified by fileName (which will be searched for in `$PROJECT_ROOT/public`) to client by specifying appropriate content type, writing the data from the file... and immediately closing the connection after the data is sent
-
-* `fileName` - the name of the file to be sent
-* no return value
-* implementation details
-    * use the `fs` module and the [`readFile` function](https://nodejs.org/api/fs.html#fs_fs_readfile_file_options_callback) to do this instead of using `readline` like we did previously (this is because we may be handling binary data)
-    * `fileName` is searched for in `./public`
-    * consequently, you __should__ prefix the `fileName` with `__dirname + '/../public'` to get an absolute path to the file
-    * you'll have to set the content type based on the file (using the file's extension is adequate for this assignment)
-    * minimally, support the following extensions and file types:
-        1. `jpeg` or `jpg`: `image/jpeg`
-        2. `png`: `image/png`
-        3. `gif`: `image/gif`
-        4. `html`: `text/html`
-        5. `css`: `text/css`
-        6. `txt`: `text/plain`
-    * if the file is an image type, then don't specify an encoding to `readFile`
-    * if the file is text, then just assume `utf8`
-    * you'll need a callback function ... which means that if you want to access the correct `this` or have arguments, you'll have to use use arrow functions or bind (see the hints on this in later instructions)
-    * in your callback 
-        * send back a 500 error if something went wrong
-        * otherwise... __do this in the following order__:
-            1. set the content type by setting the appropriate header
-            2. write the head first using `this.writeHead(200);`
-            3. __then send the data from the file__... `this.write(data);`
-            4. finally, end the connection ... `this.end()`
-        * the above ensures that the binary data is set as binary data rather than being converted to a string first 
-* example usage:
-    <pre><code data-trim contenteditable>// assuming there's a directory called public/css in your project's root...
-res.sendFile('/css/base.css');
-//
-// note that the url does not have to match the name/path of the file being read!
-</code></pre>
-* troubleshooting:
-    * if you receive `Error: This socket has been ended by the other party`, it likely means that `sock.end` was called more than once
-    * if an image is broken: 
-        * it's likely an issue with content type or reading the image as binary data - make sure that the head is written first, then the data of the body sent afterwards
-        * or perhaps not having two \r\n's between the headers and the body
-        * or it could be inadvertently converting the body into a string by writing the headers and the body all at once
-        * or inadvertently adding extra data into the body 
-
-
-#### Background 
-
-In the previous part, we purposely skipped implementing `sendFile`. Send file will take a `fileName` and send back an http response with the appropriate status code (`200`), `Content-Type` header (based on file type being sent back) and body. 
-
-It's a little bit tricky because of:
-
-1. dealing with callbacks
-2. dealing with `this`
-
-For this part, we'll use the `fs` module and `readFile`. See [the official docs for more detailed info](https://nodejs.org/api/fs.html#fs_fs_readfile_file_options_callback). Consequently, we'll have to go over:
-
-1. Using `fs.readFile`
-2. Using a method as a callback for `fs.readFile`
-3. Passing parameters to a callback
-4. The exact implementation of `sendFile`, and the callback function we end up passing to it
-
-<br>
-
-#### Using `fs.readFile`
-
-We're using `fs.readFile` so that we can read binary data. It'll read the entire contents of a file into memory. It works like this:
-
-<pre><code data-trim contenteditable>const fs = require('fs');
-fs.readFile('/tmp/foo.txt', {encoding:'utf8'}, function(err, data) {
-    console.log(data);
-}); 
-</code></pre>
-
-* Note that `readFile`'s second argument is a callback function.
-    * The callback function is executed when an error occurs or the file. 
-    * The callback receives an error object (which contains the error if an error occurred) and the data read from the file.
-    * If encoding was specified in the original call to `readFile`, then the data that's passed to the callback is a string
-    * If there is no encoding, then the raw buffer is passed as the data to the callback
-    * This is useful for reading binary data, like images:
-        <pre><code data-trim contenteditable>// leave encoding out of 2nd argument
-fs.readFile('/tmp/myImage.gif', {}, function(err, data) {
-    // we have the raw buffer!
-    console.log(data);
-}); 
-</code></pre>
-* Of course, the callback doesn't have to be an anonymous function, it can be a named function as well:
-    <pre><code data-trim contenteditable>// in this case, we're passing in handleRead as the callback rather
-// than using an anonymous function
-fs.readFile('/tmp/myImage.gif', {}, handlRead); 
-function handleRead(err, data) {
-    console.log(data);
-}
-</code></pre>
-
-<br>
-
-#### Using a method as a callback
-
-It turns out that the callback to `readFile` (or any function that requires a callback) can be a method plucked from an object. However, if the callback needs to acces the `this` property of the original object, `this` has to bound explicitly. Let's see the problem:
-
-* Imagine you have the following object that represents a redacted file...
-* It takes a `fileName` and a `word` as arguments to the constructor
-* Calling `printFile` will print out the contents of the file with all occurrences of `word` redacted (in this case, it's replaced with the string, `SECRET`)
-* Here's a possible implementation:
-    <pre><code data-trim contenteditable>const fs = require('fs'); <br>    
-function RedactedFile(fileName, word) {
-    this.fileName = fileName;
-    this.word = word;
-}<br>
-RedactedFile.prototype.printFile = function() {
-   fs.readFile(this.fileName, this.handleRead); 
-};<br>
-RedactedFile.prototype.handleRead = function(err, data) {
-    // convert to string
-    let s = data + '';<br>
-    // let's try to replace every occurrence of this.word!<br>
-    const replacementPattern = new RegExp(this.word, "g")
-    s = s.replace(replacementPattern, 'SECRET');<br>
-    // print out the result
-    console.log(s);
-};
-</code></pre>
-* Now let's try running this on a file `/tmp/sensitiveData.txt`, which contains the following lines:
-    <pre><code data-trim contenteditable>I went to the pizza place next door...
-and I ordered 1,000 slices of pineapple pizza.
-</code></pre>
-* Here's the code that we write to print out a redacted version of `/tmp/sensitiveData.txt`:
-    <pre><code data-trim contenteditable>const redacted = new RedactedFile('/tmp/sensitiveData.txt', 'pizza');
-redacted.printFile();
-</code></pre>
-* However, when we run it, we don't get the result we expected!
-* It just prints out the word SECRET __between every character__!?
-* How did this happen?
-    * `this.handleRead` was passed in to `fs.readFile` as a callback...
-    * but when the callback actually gets executed, `this` within the callback function isn't actually bound to the original object (because when the callback is invoked, it's not invoked as a method, but as a regular function call!)
-    * consequently `this.word` is not what we expect (it's `undefined` rather than `pizza`)
-* Consequently, we have to explicitly set the `this` value of the callback
-* There are a few ways to do this... we'll use the way that we learned in class, which is to use arrow functions or `bind`
-* To use an arrow function, wrap the call to method in an arrow function so that `this` remains the same as the `this` in `printFile`
-* Replace `this.handleRead` with  (err, data) => { this.handleRead(err, data); } `this.handleRead.bind(this)` 
-    <pre><code data-trim contenteditable>// fs.readFile(this.fileName, this.handleRead);
-fs.readFile(this.fileName, (err, data) => { this.handleRead(err, data); });
-// or with bind:
-//  fs.readFile(this.fileName, this.handleRead.bind(this));`
-</code></pre>
-* What does that do? 
-    * with arrow functions - it preserves `this`!
-    * with bind: 
-        * Remember that bind gives back function.
-        * With a specified `this` (as given by the caller).
-        * So, it explicitly sets the `this` of the `handleRead` function to the current `this`, which refers to the `RedactedFile` object
-* [Here's an SO article to read more about it!](http://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-context-inside-a-callback/20279485#20279485) This shows a few ways to use a method as a callback by  _somehow_ correctly setting `this`.
-
-<br>
-
-#### Passing arguments to a callback
-
-Imagine if our `handleRead` function took an extra argument, a disclaimer.
-
-<pre><code data-trim contenteditable>RedactedFile.prototype.handleRead = function(disclaimer, err, data) {
-    let s = data + '';
-    const replacementPattern = new RegExp(this.word, "g")
-    s = s.replace(replacementPattern, 'SECRET');
-    console.log(disclaimer);
-    console.log(s);
-};
-</code></pre>
-
-Now... we have an issue, because the callback that should be supplied to `readFile` should only have `err` and `data` as its two arguments (but now our callback has 3!). How can we transform our callback so that it only takes 2 arguments like it did before? Once again, we'll rely on arrow functions or `bind`!
-
-1. our arrow function can have only 2 arguments, but pass in disclaimer as the 1st argument when calling the original method
-        <pre><code data-trim contenteditable>RedactedFile.prototype.printFile = function() {
-    const disclaimer = 'This file has been redacted';
-
-    // bind disclaimer as the first parameter
-    fs.readFile(this.fileName, (err, data) => { this.handleRead(disclaimer, err, data); }); 
-};
-</code></pre>
-2. `bind` allows us to "fix" a parameter or parameters of a function to specific values 
-    * (so we can create a new function with less parameters)
-    * for example: `const parseInt100 = parseInt.bind(null, "100")` ... 
-    * binds "100" to the first argument of `parseInt`, and returns a function that takes only one argument, the `radix`
-    * `parseInt100(2)` ... gives us 4 (because the only argument is the radix)
-    * Consequently, the fix for a callback that requires a parameter is to use bind to fix the initial parameters:
-        <pre><code data-trim contenteditable>RedactedFile.prototype.printFile = function() {
-    const disclaimer = 'This file has been redacted';
-
-    // bind disclaimer as the first parameter
-    fs.readFile(this.fileName, this.handleRead.bind(this, disclaimer)); 
-};
-</code></pre>
-
-<br>
-
-#### Implementing `sendFile`
-
-Now that we know how to use `readFile` and its callback within the context of an object, we'll turn our attention back to  `sendFile`. `sendFile` will read the contents of the `fileName` supplied to it, and it'll read the file relative to the `public` folder in the repository. Here's how you'll implement `sendFile`:
-
-
-1. Determine the absolute path to the file that's passed in as its argument by using `_\_dirname` to find the directory of the module... and go up one so that public can be accessed.
+1. In `sendFile`,  search for the `fileName` passed in as an argument within the `public` folder in the root of your project directory: determine the absolute path to the file name that's passed in by using `__dirname` to find the directory of the running application... and go up one so that `public` can be accessed
     <pre><code data-trim contenteditable>const publicRoot = __dirname + '/../public';
 const filePath =  publicRoot + fileName;
 </code></pre>
@@ -646,45 +634,72 @@ const filePath =  publicRoot + fileName;
         4. `html`: `text/html`
         5. `css`: `text/css`
         6. `txt`: `text/plain`
-3. Call `readFile` with:
-    * a callback function that's a method on the `Response` object, a standalone function or an anonymous function.
-    * a value for encoding if the file being read is text-based (`{"encoding": "utf8"}`)
-4. In any case, the callback should take a `contentType`, `err` and `data` as its arguments... but make sure that `contentType` is set appropriately and that `this` can be used to access `Response` object methods (use arrow functions or bind!)
-5. Call the appropriate `Response` object methods from within your callback to send back a response; note that the methods must be called __in this order__ &rarr;
+3. Call `fs.readFile` with:
+    * the absolute path that you created
+    * if the file is text, then pass in an encoding (assume `utf8`) as the second argument, otherwise... if the file is an image, then don't specify an encoding by omitting this argument (it's ok to rely solely on extension to determine a text file or an image file)
+	* the last argument to `fs.readFile` should be a callback function
+		* note that this callback should _make use of the_ `handleRead` method defined in the same `Response` class as `sendFile`
+4. `handleRead`, (again, a method in the `Response` object) should take a `contentType`, `err` and `data` as its arguments... 
+	* note that the callback for `fs.readFile` usually accepts two arguments... and within your callback, you may want to access the instance (`this`) that `sendFile` was originally called on (for example, you may want to call other instance methods, such as `writeHead`, `end`, etc.)
+	* to solve this, __you must wrap a call to `handleRead` in an arrow function__ when passing it in as a callback to `fs.readFile`
+	* using an arrow function as the callback (that calls `handleRead`) will set `this` appropriately and deal with the mismatch of number of arguments between the callback needed for `fs.readFile` and `handleRead`
+	* ⚠️⚠️⚠️[READ THIS BACKGROUND MATERIAL](03-sendfile-background.html)⚠️⚠️⚠️ on using methods as callbacks and changing the number of parameters to a function/method before using the example code below 
+		* this background material also covers bind as part of a potential solution
+		* however, __use arrow functions instead, as shown below__
+	* here's the code you'll need within the context of `sendFile` and `handleRead` method definitions:
+		<pre><code data-trim contenteditable>sendFile(fileName) {
+  // determine contentType
+  const contentType = 'code to determine content type goes here';<br>
+  // handle read has three arguments, but readFile's callback only sends 
+  // two arguments... so wrap in an arrow function and call handleRead 
+  // with the contentType that's in scope this also has the side effect 
+  // of using the this that was within scope when the arrow function was 
+  // created (which is the correct this - the instance that sendFile was 
+  // called on)
+  fs.readFile(filePath, readFileOptions, (err, data) => {
+&nbsp;&nbsp;&nbsp;&nbsp;this.handleRead(contentType, err, data)
+  }<br>
+  // ...rest of method implementation
+}<br>
+handleRead(contentType, err, data) {
+  // use Response instance methods like:
+  // this.writeHead, this.setHeader, this.end, etc.
+  // to send back the file as the body of an http response
+  // or send back an 500 server error if an error occurs while reading the
+  // file
+}
+</code></pre>
+5. Call the appropriate `Response` object methods from within `handleRead` to send back a response; note that the methods must be called __in this order__ &rarr;
     1. set the `Content-Type` header
     2. send everything but the body by calling `this.writeHead(200)`
     3. write the data that was passed in as an argument to the callback to the socket (that is, write the data from the file)
     4. close the connection
     5. why write the headers and the body separately? This avoids any issues where the binary data of the image is inadvertently converted to a string.
+	6. (again, this mimics what you implemented in part 1, but with both functions, `sendTextFile` and `sendImage` merged into a single method that handles both types of tiles)
+
+6. Example Usage for `sendFile`:
+    <pre><code data-trim contenteditable>// assuming there's a directory called public/css in your project's root...
+res.sendFile('/css/base.css');
+//
+// note that the url does not have to match the name/path of the file being read!
+</code></pre>
 
 <br>
 
-#### Testing `sendFile`
+### Testing / Using the `Response` Object
 
-Now try adding a path to display:
 
-1. an html file that's located in your `$PROJECT_ROOT/public/html/` folder called `test.html` 
-2. an image that's in located in your `$PROJECT_ROOT/public/img/` folder called `bmo1.gif`
+Once your finished with your implementation above, you can export, test and try using your new `Response` object.
 
-To do this:
+1. Export the object using `module.exports`, and try running the tests in test/webframework-test.js (comment out the other tests... and run `mocha` from within `test` folder)
+2. This `Response` object can be used replace manual calls to `write` and `end` on the socket object (since it wraps the socket object itself!)
+3. For example: `const res = new Response(sock); // pass in a socket object` ...
+    * Call to your `Response` object's `setHeader` method to set the content type: `res.setHeader(...)`
+    * Call to your `Response` object's `send` method to send the response back with the appropriate body: `res.send(200, ...);`
+    * Call to your `Response` object's `end` method to close the connection
+	* etc.
 
-1. Add another condition for the paths `/test` and `/img/bmo1.gif`
-2. Use `sendFile` to send the appropriate file relative to `public`
-3. Remember that the path of the request doesn't have to match the path of the actual file being read
-4. Here's what it'll all look like together: <br> ![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-03-evenWarmer-response.gif)
-5. `bmo1.gif` should be present
-6. you'll have to write your own `test.html`
-
-## Part 3 - Converting to App Object
-
-Now you'll start writing your module, `miniWeb.js`. 
-
-1. Copy your `Request` and `Response` classes from `evenWarmer.js` to `miniWeb.js`
-2. In `minWeb.js`, add one more class, `App`. Use the [specifications for the `App` object below](#app)
-3. Go through your code and check for places that may cause 500 errors (for example, if the `err` object exists when handling a file read, send back a 500 as a response... or if the framework user tries to send a file that has an extension that is not recognized, that should also be a 500)
-4. Export `App` along with `Require` and `Response`
-
-<a name="app"></a>
+<br>
 
 ### `App` Object
 
@@ -702,6 +717,10 @@ const app = new App();
 
 app.get('/hello', function(req, res) {
     res.send(200, 'HELLO WORLD');
+});
+
+app.post('/hello', function(req, res) {
+    res.send(200, 'Got a POST request');
 });
 
 app.listen(8080, '127.0.0.1');
@@ -736,15 +755,18 @@ this.server = net.createServer(this.handleConnection.bind(this));
 #### Properties
 
 1. `server` - an instance of the `net` module's `Server` object
-2. `routes` - an object that maps paths to callback functions
+2. `routes` - an object that maps methods and paths to callback functions
+	* you can set this up any way you like
+	* for example, you can concatenate method and path to use as a property
+	* or you can have nested objects, where method is a top level property... and then paths properties of a nested object under the method property
 
 <hr>
 
 #### Methods
 
-1. `get(path, cb)` - adds `path` as a property name in `routes`... the value of which is the callback function, `cb` (again, assumes support only for GET requests)
+1. `get(path, cb)` - adds `GET` and `path` to "key" into `routes`... the value of which is the callback function, `cb` 
     * `path` - the path to respond to (that is, a valid path for the web application)
-    * `callback` - the function called when `path` is requested (essentially... what to do when a specific path is asked for)
+    * `callback` - the function called when a `GET` to this `path` is requested (essentially... what to do when a specific path is asked for)
         * the callback function will take two arguments
         * a `Request` object
         * a `Response` object
@@ -755,7 +777,20 @@ this.server = net.createServer(this.handleConnection.bind(this));
     res.send(200, 'HELLO WORLD');
 });
 </code></pre>
-2. `listen(port, host)` - binds the server to the given `port` and `host` ("listens" on `host`:`port`)
+2. `post(path, cb)` - adds `POST` and `path` to "key" into `routes`... the value of which is the callback function, `cb` 
+    * `path` - the path to respond to (that is, a valid path for the web application)
+    * `callback` - the function called when a `POST` to this `path` is requested (essentially... what to do when a specific path is asked for)
+        * the callback function will take two arguments
+        * a `Request` object
+        * a `Response` object
+        * `cb(req, res) ...`
+    * no return value
+    * example usage:
+        <pre><code data-trim contenteditable>app.post('/hello', function(req, res) {
+    res.send(200, 'Got a POST');
+});
+</code></pre>
+3. `listen(port, host)` - binds the server to the given `port` and `host` ("listens" on `host`:`port`)
     * `port` - the port number to bind to
     * `host` - the host that the server will be running on (for example, '127.0.0.1')
     * no return value
@@ -805,33 +840,57 @@ sock.on('close', this.logResponse.bind(this, req, res));
 </code></pre> 
 
 
-## Part 4 - Using your Module!
+### Using Your `Request`, `Response`, and `App` Classes
 
-Create a small site using your framework. In a file called `fansite.js` create a fan site for a fictional character from a book, movie or television series. It must respond to the following URLs (note that the URLs should still work if an extra trailing slash is added... `/about` and `/about/` should go to the same place):
+Create a small site using your framework. __The site should be a fan site about one of your favorite characters from a book, movie, or television show__. It must adhere to the technical specifications below, but _actual content_ is your discretion). 
 
-* `/` - a homepage that has an image and that uses a stylesheet
-* `/about` - a page that has an `h1` header somewhere in the markup
-* `/css/base.css` - the css that the homepage (and other pages optionally) should use
-* `/rando` - a page that displays a random image; this must be an html page with no client side JavaScript... the server will generate a random image url to be displayed
-* `/image1.jpg` 
-* `/image2.png`
-* `/image3.gif`
-* `/home` - should issue a permanent redirect (301) to `/`
+In a file called `better.js`, create a site that responds to the following requests: 
+
+* `GET /` - a homepage that contains links to `/form, `/random`, and `/rando`
+* `GET /css/base.css` - a css file linked to by every document on your site (style any way that you like, as long as it's obvious that the page is styled)
+* `GET /image1.jpg` - a jpg (the path must be as specified) of your favorite character
+* `GET /image2.gif` - a gif (the path must be as specified) of your favorite character
+* `GET /image3` - an image...format does not matter, gif, jpg or png, but make sure there's no extension in the url path (the file on the file system may have an extension, though)
+* `GET /random` - a page that displays a random image using an `img` tag; this must be an html page with no client side JavaScript... the server will generate a random image url to be displayed
+	* this might be tricky to do by using `sendFile`
+	* so... in this case, it may be best to put together a string containing the html... and changing the image `src` with a conditional
+	* alternatively, you can attempt to implement templating (perhaps create a separate `Response` method that will read the contents of a file and substitute portions of it)
+* `GET /rando` - a permanent redirect (a 301) back to `random`
+* `GET /form` - a page with the following form markup (note that pressing the submit button will cause a `POST` request to be submitted to `/form`:
+	<pre><code data-trim contenteditable>&lt;form method="POST" action=""&gt;
+	&lt;div&gt;
+		Character: &lt;input type="text" name="character" value=""&gt;	
+	&lt;/div&gt;
+	&lt;div&gt;
+		Quote: &lt;input type="text" name="quote" value=""&gt;	
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;input type="submit"&gt;	
+	&lt;/div&gt;
+&lt;/form&gt;</code></pre>
+* `POST /form` - parse the body of the incoming `POST` request (the body should contain the form input element names and their values) and display __only the values__ in plain text
+	* the form above contains a couple of text inputs, `character` and `quote`
+	* when the form is submitted, it will take the values of the text inputs and combine them with the names of the inputs in the following format (assuming that `foo` and `bar` are entered):
+	* `character=foo&quote=bar` - note that the form input elements names and their values are joined with an equal sign, `=`
+	* name and value pairs are joined with an ampersand: `&amp;`
+	* __only display the values (not the names)__ ... in the case above, only `foo` and `bar` would be displayed in plain text
 
 To create your site:
 
 1. Bring in your module and create a new `App` object: 
-    <pre><code data-trim contenteditable>const App = require('./miniWeb.js').App;
+    <pre><code data-trim contenteditable>const App = require('./webframework.js').App;
 const app = new App();
 2. Add routes as necessary... 
     <pre><code data-trim contenteditable>app.get('/', function(req, res) {
-    // ... do stuff here
+  // ... do stuff here when a GET request to / is received
 });
+app.post('/form', function(req, res) {
+  // ... do stuff here when a POST request to /form is received
+});</code></pre>
 3. Use any mechanism you'd like to send back a response (you can use `sendFile` and read files from `public`, you can just use `send` to send back strings of html, etc.) ... obviously, for some, like images, you'll have to use specific methods
 4. Bind to a port and host with `listen`:
     <pre><code data-trim contenteditable>app.listen(8080, '127.0.0.1');
 </code></pre>
-
 
 Check your work
 
@@ -843,8 +902,7 @@ Check your work
 
 Here's an example of how it might all work:
 
-![pic alt](/csci-ua.0480-fall2017-007/resources/img/hw03-04-fansite.gif)
-
+![pic alt](../resources/img/hw03-web4u-11-all.gif)
 
 </div>
 

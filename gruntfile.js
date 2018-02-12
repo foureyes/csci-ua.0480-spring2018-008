@@ -94,6 +94,8 @@ module.exports = function(grunt) {
           '_posts/**',
           '_includes/**',
           '_layouts/**',
+          '!examples',
+          '!examples/**',
           '!**/node_modules/**',
           '!**/_site/**',
           '!_site',
