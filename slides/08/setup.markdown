@@ -16,7 +16,7 @@ For the first few homeworks, I've setup skeleton projects for you. _Eventually_ 
 
 * generating a `package.json`
 * using `--save` vs `--save-dev`
-* linting / `jshint` 
+* linting / `eslint` 
 </section>
 
 <section markdown="block">
@@ -228,7 +228,7 @@ A __linter__ is a program that performs static analysis on your code to determin
 
 __Static analysis__ is the inspection of the text of your program without actually executing it.
 
-As you know, the linter that we're using is __JSHint__. __What are some issues that it reports on that could potentially lead to errors?__ &rarr;
+As you know, the linter that we're using is __ESLint__. __What are some issues that it reports on that could potentially lead to errors?__ &rarr;
 
 * {:.fragment} `===` vs `==`
 * {:.fragment} variables declared without `var`
@@ -291,6 +291,7 @@ npm install eslint --save-dev
 * __For example, it works on the commandline, with [vim](https://github.com/scrooloose/syntastic/tree/master/syntax_checkers/javascript), with [atom](https://atom.io/packages/linter-eslint), with [SublimeText](https://github.com/roadhump/SublimeLinter-eslint)__ &rarr;
 </section>
 
+{% comment %}
 <section markdown="block">
 ## JSHint Configuration 
 
@@ -316,3 +317,4 @@ You can also place comments on top of a file or before a line to explicitly set 
 </code></pre>
 
 </section>
+{% endcomment %}
