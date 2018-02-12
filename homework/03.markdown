@@ -133,7 +133,7 @@ Use `fs.readFile` to read the data from the file from the path passed in:
 	* for example, if you're running your project from `/Users/foo/abc123-homework03/src`, then `__dirname` will contain that path
 	* you can assume that your program, `intro.js` will be run directly from the `src` folder in your project's root
 	* consequently, to read `fileName` from `public`, you'll have to use a combination of `__dirname` and `../` to go up one directory to your project root
-	* for example, to construct the absolute path to the file, concatenate or use [path.join](https://nodejs.org/api/path.html#path_path_join_paths) from the `path` module to put together: `__dirname`, `/../public`, and `fileName`
+	* for example, to construct the absolute path to the file, concatenate or use [path.join](https://nodejs.org/api/path.html#path_path_join_paths) from the `path` module to put together: `__dirname`, `..`, `public`, and `fileName`
 2. you can assume that the file you are reading is `utf8`, so use that as the 2nd argument to `fs.readFile`
 3. in the callback to `fs.readFile` use the `socket` object that was provided as an argument to the original function to write out a response.
 
@@ -622,8 +622,11 @@ These two methods will be used to send back a file in an http response:
 To implement these methods:
 
 1. In `sendFile`,  search for the `fileName` passed in as an argument within the `public` folder in the root of your project directory: determine the absolute path to the file name that's passed in by using `__dirname` to find the directory of the running application... and go up one so that `public` can be accessed
-    <pre><code data-trim contenteditable>const publicRoot = __dirname + '/../public';
-const filePath =  publicRoot + fileName;
+	* you can pass everything to `path.join` (as in the previous part)
+    	<pre><code data-trim contenteditable>const filePath = path.join(__dirname, '..', 'public', '/html/foo.html');
+// assuming OSX file system, with projects/homework03 in home directory
+// the above code yields:
+// /Users/username/projects/homework03/public/html/foo.html
 </code></pre>
 2. Use the extension of the file to determine:
     * if it's an image
