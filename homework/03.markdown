@@ -132,7 +132,7 @@ Use `fs.readFile` to read the data from the file from the path passed in:
 	* the built-in variable, `__dirname` contains the directory that your program is running from
 	* for example, if you're running your project from `/Users/foo/abc123-homework03/src`, then `__dirname` will contain that path
 	* you can assume that your program, `intro.js` will be run directly from the `src` folder in your project's root
-	* consequently, to read `fileName` from `public`, you'll have to use a combination of `__dirname` and `../` to go up one directory to your project root
+	* consequently, to read `fileName` from `public`, you'll have to use a combination of `__dirname` and `..` to go up one directory to your project root
 	* for example, to construct the absolute path to the file, concatenate or use [path.join](https://nodejs.org/api/path.html#path_path_join_paths) from the `path` module to put together: `__dirname`, `..`, `public`, and `fileName`
 2. you can assume that the file you are reading is `utf8`, so use that as the 2nd argument to `fs.readFile`
 3. in the callback to `fs.readFile` use the `socket` object that was provided as an argument to the original function to write out a response.
