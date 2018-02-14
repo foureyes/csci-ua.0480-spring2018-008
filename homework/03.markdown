@@ -905,7 +905,8 @@ Check your work
 
 Here's an example of how it might all work:
 
-<img src="../resources/img/hw03-web4u-11-all.gif")>
+
+<img src="../resources/img/hw03-web4u-11-all.gif">
 
 </div>
 
