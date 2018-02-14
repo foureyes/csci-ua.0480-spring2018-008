@@ -75,7 +75,7 @@ You'll start off by writing some helper functions. Then at the end of this part,
 8. A request that isn't `GET` or `POST` - a `405` is sent back saying that the method is not allowed 
 9. A request that is a `GET` or `POST` but does not have a matching path - a `404` is sent back saying that the resource/page was not found
 
-Before starting, __make sure to review the couse materials on the net module and creating tcp/ip servers__:
+Before starting, __make sure to review the course materials on the net module and creating tcp/ip servers__:
 
 1. check out the [slides on the `net` module](../slides/06/sockets.html#/2), paying close attention to the [the last slide](../slides/06/sockets.html#/10).
 2. go over the [notes from previous classes](../examples/class06/notes.js)
@@ -314,7 +314,7 @@ Finally, handle the following error conditions:
 * if a request is a `GET` or `POST`,  but it does not have a matching path, send back a `404`  with a plain text body saying that the page was not found
 * both of these can be implemented by manually using `write` and `end` on the socket object to write back the appropriate response... or you can write a method that does this in your helper functions module
 * an example of a 405 using `nc` to send a request that's not `GET` or `POST`:
-	![pic alt](../resources/img/hw03-web4u-09-405.gif)
+	<img src="../resources/img/hw03-web4u-09-405.gif">
 * an example of a 404 using curl:
 	<img src="../resources/img/hw03-web4u-10-404.gif">
 
