@@ -258,7 +258,7 @@ __A Styled Page__
 	* you can add any other styles that you like
 * you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with the appropriate body (html and css respectively)
 * example (note that the styles are from `/css/base.css`, but the page is `/such/stylish`)... you can style this page any way you like, but minimally, change the colors of the text (you don't _have_ to add borders or a background):
-	![pic alt](../resources/img/hw03-web4u-02-style.png)
+	<img src="../resources/img/hw03-web4u-02-style.png">
 
 __A Page with an Image__
 
@@ -272,7 +272,7 @@ __A Page with an Image__
 * you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with the appropriate body (html and an image, jpg, respectively)
 * if your image doesn't work, check out the [troubleshooting section below](#troubleshoot-part1)
 * example:
-	![pic alt](../resources/img/hw03-web4u-03-image.png)
+	<img src="../resources/img/hw03-web4u-03-image.png">
 
 __A Redirect__
 
@@ -288,7 +288,7 @@ __A Redirect__
 	* use incognito mode or clear your cache to make sure that the redirect is not cached when testing
 * you'll have to manually `write` out an http response and `end` the connection to implement a redirect as response... or add a helper function to `webutils.js` that does this
 * example (note that the initial response should be a 301, at which point your browser is redirected to `picsplz`, which is what will appear in the url bar):
-	![pic alt](../resources/img/hw03-web4u-05-redirect-02.png)
+	<img src="../resources/img/hw03-web4u-05-redirect-02.png">
 
 __Handling a POST Request__
 
@@ -303,7 +303,7 @@ __Handling a POST Request__
 	* alternatively, use `curl -i localhost:8080 -d name=whatever_you_typed` to initiate a POST request from curl
 * you'll have to manually `write` out an http response and `end` the connection to implement this... make sure to include the body that was parsed out of the request as part of the response!
 example (entering data in the form in `/` should display the form data that was entered):
-	![pic alt](../resources/img/hw03-web4u-07-post.png)
+	<img src="../resources/img/hw03-web4u-07-post.png">
 
 
 __Handling Bad Requests__
@@ -316,13 +316,13 @@ Finally, handle the following error conditions:
 * an example of a 405 using `nc` to send a request that's not `GET` or `POST`:
 	![pic alt](../resources/img/hw03-web4u-09-405.gif)
 * an example of a 404 using curl:
-	![pic alt](../resources/img/hw03-web4u-10-404.gif)
+	<img src="../resources/img/hw03-web4u-10-404.gif">
 
 __Everything Together__
 
 Once you've finished up all of the paths specified, an example interaction may look like this:
 
-![pic alt](../resources/img/hw03-web4u-08-all.gif)
+<img src="../resources/img/hw03-web4u-08-all.gif">
 
 <span id="troubleshoot-part1" name="troubleshoot-part1"></span>
 
@@ -905,7 +905,7 @@ Check your work
 
 Here's an example of how it might all work:
 
-![pic alt](../resources/img/hw03-web4u-11-all.gif)
+<img src="../resources/img/hw03-web4u-11-all.gif")>
 
 </div>
 
