@@ -243,7 +243,7 @@ __A Homepage With Links__
 * you can use one of your helper functions from `webutils.js` to implement this, or manually `write` out an http response with html as the body
 * if you're not getting the response you expect (your browser doesn't show the page, only shows plain text, etc.), check out the [troubleshooting section below](#troubleshoot-part1)
 * example (your text does not have to match exactly, but there should be three links and a form):
-	![pic alt](../resources/img/hw03-web4u-01-home.png)
+	![pic alt](/../resources/img/hw03-web4u-01-home.png)
 
 __A Styled Page__
 
