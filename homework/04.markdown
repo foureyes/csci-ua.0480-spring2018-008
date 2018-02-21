@@ -12,7 +12,6 @@ h1.warning {
 	background-color: #eaa;
 }
 </style>
-<h1 class='warning'>DRAFT</h1>
 # Express - Static Files, Forms, Sessions __Due Monday, March 5th, by 11PM__
 
 ## Overview
@@ -280,6 +279,10 @@ req.query: {}
 req.body: {}
 </code></pre>
 
+
+<h1 class='warning'>SKIP THIS PART</h1>
+
+(We did not cover it in class yet)
 
 ## Part 5 - Stats Page / Using a Session Value
 
