@@ -123,7 +123,10 @@ Now that static files are set, create a homepage.
 Here's an example of what the page could look like (you don't have to use the same exact styles, but add enough styles so that you can see that the style sheet is integrated correctly):
 
 <div markdown="block" class="img">
+<img src='../resources/img/hw04_02_home.png'>
+<!--
 ![png](../resources/img/hw04_02_home.png)
+-->
 </div>
 
 
@@ -183,7 +186,8 @@ __Test your page.__
 * (ignore the form for now... you'll set that up next)
 
 <div markdown="block" class="img">
-![list](../resources/img/hw04_03_list.png)
+<!--![list](../resources/img/hw04_03_list.png)-->
+<img src="../resources/img/hw04_03_list.png">
 </div>
 
 ###  Filter by Subway Line
@@ -204,7 +208,8 @@ __Once you have your list of complaints working... add a form that allows you to
 * __here's what the filter interaction should look like:__ 
 
 <div markdown="block" class="img">
-![filter](../resources/img/hw04_04_filter.gif)
+<!--![filter](../resources/img/hw04_04_filter.gif)-->
+<img src="../resources/img/hw04_04_filter.gif">
 </div>
 
 __The log should look something like this:__
@@ -245,7 +250,8 @@ req.body: {}
 
 
 <div markdown="block" class="img">
-![add](../resources/img/hw04_05_add.gif)
+<!--![add](../resources/img/hw04_05_add.gif)-->
+<img src="../resources/img/hw04_05_add.gif">
 </div>
 
 The logs should look something like this for the POST, Redirect and GET:
@@ -312,7 +318,8 @@ __Modify your add route (<code>/complain</code>) so that every time a user adds 
 * the page should look like:
 
 <div markdown="block" class="img">
-![stats](../resources/img/hw04_06_stats.gif)
+<!--![stats](../resources/img/hw04_06_stats.gif)-->
+<img src="../resources/img/hw04_06_stats.gif"> 
 </div>
 
 __Test the session management.__
