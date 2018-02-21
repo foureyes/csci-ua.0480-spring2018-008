@@ -1,4 +1,4 @@
-* what constitutes client side validation?
+r* what constitutes client side validation?
 	* use a library... 
 		* like jquery
 		* http://parsleyjs.org/
