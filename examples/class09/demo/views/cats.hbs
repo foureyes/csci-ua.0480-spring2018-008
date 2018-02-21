@@ -1,0 +1,51 @@
+<!--
+{{ allCats }}
+
+looping array of objects with loop var as c
+{{#each allCats as |c|}}
+	<div>{{ c.name }} - {{ c.lives }}</div>
+{{/each}}
+
+
+just using props of objs in array
+<ol>
+{{#each allCats}}
+	<li>{{ name }} - {{ lives }}</li>
+{{/each}}
+</ol>
+-->
+
+<ol>
+{{#each allCats}}
+	<li>{{ name }} - {{ lives }}</li>
+{{/each}}
+</ol>
+<form method="GET" action="">
+		min lives: <input type="number" name="lives" value="">	
+		<input type="submit">	
+</form>
+<form method="POST" action="">
+		name: <input type="text" name="name" value="">	
+		lives: <input type="number" name="lives" value="">	
+		<input type="submit">	
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
