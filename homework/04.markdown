@@ -12,7 +12,7 @@ h1.warning {
 	background-color: #eaa;
 }
 </style>
-# Express - Static Files, Forms, Sessions __Due Monday, March 5th, by 11PM__
+# Express - Static Files, Forms, Sessions __Due Monday, Feb 26th, by 11PM__
 
 ## Overview
 
@@ -34,7 +34,9 @@ You'll be creating 3 pages:
 ### Example Interaction
 
 <div markdown="block" class="img">
-![interaction](../resources/img/hw04_01_example_interaction.gif)
+<!--![interaction](../resources/img/hw04_01_example_interaction.gif)-->
+<img src="../resources/img/hw04_01_example_interaction.gif">
+
 </div>
 
 ### Submission Process
