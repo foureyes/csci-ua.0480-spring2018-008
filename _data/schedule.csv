@@ -242,7 +242,7 @@ NO GRACE PERIOD on extended deadline (was 2/19).
 
 Code Samples
 
-* [get, post, form, middleware](examples/demo/get-post-form-middleware.tar.gz)
+* [get, post, form, middleware](examples/class09/demo/get-post-form-middleware.tar.gz)
 
 ","* [Middleware](https://expressjs.com/en/guide/writing-middleware.html)
 * [MDN on Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
