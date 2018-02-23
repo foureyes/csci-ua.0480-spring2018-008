@@ -296,7 +296,7 @@ __Boilerplate setup.__
 const express = require('express');
 </code></pre>
 
-{% comment %{
+{% comment %}
 const bodyParser = require('body-parser');
 {% endcomment %}
 
