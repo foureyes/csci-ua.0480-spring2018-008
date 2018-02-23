@@ -294,8 +294,11 @@ __For "production", instead of using a custom solution , you can use the `expres
 __Boilerplate setup.__
 <pre><code data-trim contenteditable>
 const express = require('express');
-const bodyParser = require('body-parser');
 </code></pre>
+
+{% comment %{
+const bodyParser = require('body-parser');
+{% endcomment %}
 
 __Include the express-session module...__
 
@@ -307,7 +310,7 @@ const session = require('express-session');
 const app = express();
 
 app.set('view engine', 'hbs');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 </code></pre>
 
 </section>
