@@ -15,5 +15,11 @@
     "grunt-liquid": "^2.0.1",
     "grunt-touch": "^1.0.0",
     "q": "^1.5.1"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
+    "node-uuid": "^1.4.8"
   }
 }
