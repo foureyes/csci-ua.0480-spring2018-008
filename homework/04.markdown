@@ -12,7 +12,12 @@ h1.warning {
 	background-color: #eaa;
 }
 </style>
-# Express - Static Files, Forms, Sessions __Due Monday, Feb 26th, by 11PM__
+
+# Creating a Tiny Web Framework, Due <strike>Monday, Feb 26th by 11PM</strike> __Wednesday, Feb 28th by 11PM__
+
+⚠️⚠️⚠️NO GRACE PERIOD⚠️⚠️⚠️ 
+
+Extended due .
 
 ## Overview
 
@@ -90,6 +95,7 @@ First, let's make sure you can serve up static content, like css and images.
 * add a blank css file in <code>public/css/base.css</code>
 * add a subway related image in <code>public/img/subway.jpg</code>
 * create a basic express application called <code>app.js</code>; you don't have to define any routes yet...
+	* make sure that your application is __served over port 3000__
 * just add the appropriate requires and middleware to enable static file serving:
 	* check out the [slides on serving static files with Express](../slides/08/express.html#/29)
 	* or see page 26 in Chapter 3 of {{ site.book_web }}
