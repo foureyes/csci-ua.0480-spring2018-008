@@ -285,11 +285,33 @@ If you used the example in the previous slide, the `HttpOnly` cookie, `MY_SESSIO
 </section>
 
 <section markdown="block">
-## Using Session Middleware
+## Session Middleware
 
 The previous slides sketch out a way of implementing manual cookie management.
 
-__For "production", instead of using a custom solution , you can use the `express-session` module!__ &rarr;
+__For "production", instead of using a custom solution , you can use the [`express-session` module](https://github.com/expressjs/session)!__ &rarr;
+
+* {:.fragment} handles session id generation for you!
+* {:.fragment} deals with setting cookies on the browser, parsing cookies and retrieving session ids from requests
+* {:.fragment} __most importantly, it provides a property on your request object that contains session data: req.session!__
+	* on the server, you can store data in a user's session by using req.session.someData = 'some value'
+	* ... and, of course, you can read it back out by using `req.session.someData`
+
+<br>
+__How might you use this?__
+{:.fragment}
+
+* {:.fragment} tracking views to a page: in a route handler for a path, `req.session.count += 1`
+* {:.fragment} keeping preferences: in route that handles form input, `req.session.favoriteColor = req.body.favoriteColor` 
+
+
+
+</section>
+
+<section markdown="block">
+## Setting Up Session Middleware
+
+__Use npm to install as usual:__ `npm install express-session`
 
 __Boilerplate setup.__
 <pre><code data-trim contenteditable>
@@ -349,6 +371,31 @@ Some others interesting ones that we don't explicitly set:
 * __genid__ - function that generates session id 
 
 </section>
+
+<section markdown="block">
+## Default MemoryStore
+
+__By default, `express-session` uses an in memory session store, `MemoryStore`__ &rarr;
+
+* {:.fragment} this works great for development and prototyping because you don't have to set up a database to store sessions
+* {:.fragment} however, from the module's documentation:
+* {:.fragment} "__Warning__ The default server-side session storage, `MemoryStore`, is purposely not designed for a production environment. It will leak memory under most conditions, does not scale past a single process, and is meant for debugging and developing." 
+
+So, for our purposes, it's ok to use the in-memory store, but any production application should use another compatible [session store](https://github.com/expressjs/session#compatible-session-stores), such as memcache, mongodb, etc.
+{:.fragment}
+
+</section>
+
+<section markdown="block">
+## req.session, req.session.id
+
+__Once you have all of the setup finished, you'll have a new property available on your request object. It will allow you to use:__ &rarr;
+
+1. {:.fragment} `req.session` - an object that you can read and write session data to 
+2. {:.fragment} `req.session.id` and `req.sessionID` - the id for the session (both are the same and both are read only)
+
+</section>
+
 <section markdown="block">
 ## Saving Data in a Session
 
@@ -418,7 +465,7 @@ Session data will be unique to each browser session (so you can have foo for one
 
 1. chrome://settings/cookies
 2. find localhost:3000
-3. check out the of __connect.sid__
+3. check out the content of __connect.sid__
 
 </section>
 
@@ -435,11 +482,11 @@ curl localhost:3000
 Nooope... no info to identify the session, so name isn't there.
 {:.fragment}
 
-We can actually use curl to send cookies by using the --cookie flag. Let's copy over the cookie data...
+We can actually use curl to send cookies by using the `--cookie` flag. Let's copy over the cookie data...
 {:.fragment}
 
 <pre><code data-trim contenteditable>
-curl localhost:3000 -v --cookie "session=..." --cookie "connect.sid=..."
+curl localhost:3000 -v --cookie "connect.sid=..."
 </code></pre>
 {:.fragment}
 
