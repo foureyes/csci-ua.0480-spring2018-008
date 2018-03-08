@@ -87,8 +87,8 @@ You will be given access to a private repository on GitHub.
   * insert the following reviews:
 
 <pre><code data-trim contenteditable>
-CSCI-UA.0480, AIT, Spring, 2018, Versoza, "The answer is always undefined"
-CSCI-UA.0002, Intro To Computer Programming, Fall, 2018, Professor K, "OMG you have to take this course"
+CSCI-UA.0480, AIT, Spring, 2018, Versoza, The answer is always undefined
+CSCI-UA.0002, Intro To Computer Programming, Fall, 2018, Foobarbaz, OMG you have to take this course
 </code></pre>
 
 * use <code>db.reviews.find()</code> to show all of the reviews that you've inserted
@@ -106,6 +106,7 @@ Start your usual express app in `src/reviews` by:
 * additionally, install __mongoose__: <code>npm install --save mongoose</code>
 * creating the appropriate folders for your templates, public, etc.
 
+
 ### Connect to the Database
 
 Create a file called <code>db.js</code> within `src/reviews`. <code>db.js</code> will contain:
@@ -115,7 +116,7 @@ Create a file called <code>db.js</code> within `src/reviews`. <code>db.js</code>
 
 In <code>db.js</code>, add the require for the <code>mongoose</code> module:
 
-<pre><code data-trim contenteditable>var mongoose = require('mongoose') </code></pre>
+<pre><code data-trim contenteditable>const mongoose = require('mongoose') </code></pre>
 
 Leave a placeholder for your schema...
 
@@ -171,17 +172,17 @@ There's a bunch of setup that we need in order to integrate our databases access
 * at the top of <code>app.js</code>, after you've created your application object: <code>require('./db');</code>
 * after that, retrieve the model that you registered with mongoose:
 
-<pre><code data-trim contenteditable>var mongoose = require('mongoose');
-var Review = mongoose.model('Review');
+<pre><code data-trim contenteditable>const mongoose = require('mongoose');
+const Review = mongoose.model('Review');
 </code></pre>
 
 You can now use <code>Review.find</code> to retrieve all of the reviews in your database!
 
-* create a route handler that accepts requests for <code>/reviews</code>
+* create a route handler that accepts requests for <code>/</code>
 * in that route handler, the callback should use <code>Review.find</code> to retrieve all reviews!
-* <code>find</code> takes an __query object__ (just a regular object) that specifies the criteria for what we're searching for using name/value pairs... for example {year: 2016} would be all reviews for courses in 2016
+* <code>find</code> takes a __query object__ (just a regular object) that specifies the criteria for what we're searching for using name/value pairs... for example {year: 2016} would be all reviews for courses in 2016
 * if you leave the query object empty, it'll just give back all reviews
-* the second argument it find is yet another callback... this time, it's the function that's executed when mongoose finishes finding stuff for you
+* the second argument for find is yet another callback... this time, it's the function that's executed when mongoose finishes finding stuff for you
 * find works like this:
 
 <pre><code data-trim contenteditable>SomeModel.find({search: criteria}, function(err, varToStoreResult, count) {
