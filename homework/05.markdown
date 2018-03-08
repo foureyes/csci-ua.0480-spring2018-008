@@ -14,12 +14,11 @@ title: CSCI-UA.0480 - Homework #5
 
 ### Goals
 
-This assignment will cover storing and retrieving data in a database as well as in an in-memory session store. You will:
+This assignment will cover storing and retrieving data in a database and in an in-memory session store. You will:
 
 * use the commandline mongodb client to create a database, collection and several documents
-* use mongoose to read data from mongodb
-* use mongoose to write data to mongodb
-* use pre-built session middleware  
+* use mongoose to read and write data to and from mongodb from an express application
+* use pre-built session middleware to read and write data to and from an in-memory session store on a per session basis
 
 ### Description
 
@@ -29,23 +28,23 @@ By the end of this project... you should be familiar with:
 * some basic read and write operations with mongodb... 
 * integrating mongodb with an Express web application using Mongoose (See the [example interaction at the end of this page](#examples)).
 
-You'll create a single express application
+You'll create a single express application with the following directory layout (when you're done with all of the directions, the folder hierarchy should match the look the same as the one listed below):
 
+`/` (project root)
 
-Just like the previous assignment, we'll have a non-standard layout for our project since it will have to separate sites. When you're done with all of the directions, the folder hierarchy should look like this:
-
-* `/` (project root)
-    * `package.json`
-    * `node_modules`
-    * `.gitignore`
-    * `.eslintrc.js`
-    * `/src`
-		* `app.js`
-		* `public`
-		* `img`
-		* `css`
-		* `views`
-			* `layout.hbs`
+* `package.json`
+* `node_modules`
+* `.gitignore`
+* `.eslintrc.js`
+* `/src`
+	* `app.js`
+	* `public`
+	* `img`
+	* `css`
+		* your css file
+	* `views`
+		* `layout.hbs`
+		* any other views
 
 ### Submission Process
 
@@ -63,11 +62,10 @@ You will be given access to a private repository on GitHub.
 
 ### Installing MongoDB and Preparing Data
 
-* follow the [install instructions](http://docs.mongodb.org/manual/installation/) for your operating system
-* or (recommended), use a package manager, like apt or homebrew (brew install mongodb)
-* by default, mongodb does not require a username/password to connect (__!?__), but if you'd like to add authentication [you can follow this guide](https://docs.mongodb.com/manual/tutorial/enable-authentication/) (optional, but recommended)
+* to install MongoDB, use a package manager like apt on Linux or homebrew on MacOS (`brew install mongodb`)...  or follow the [install instructions for your operating system on MongoDB's site](http://docs.mongodb.org/manual/installation/) 
+* by default, MongoDB does not require a username/password to connect (__!?__), but if you'd like to add authentication [you can follow this guide](https://docs.mongodb.com/manual/tutorial/enable-authentication/) (optional, but recommended)
 * in order for you to connect to your database to work with data, your database server must be running
-  * for some installations, mongodb will start when your computer starts
+  * for some installations, MongoDB will start when your computer starts
   * for other installations, you'll have to start it manually
   * you can test if your database is running by:
     * attempting to connect to the test database
@@ -84,13 +82,13 @@ You will be given access to a private repository on GitHub.
     * ensure that it is up and running by connecting to it using a commandline client... so in a different terminal tab/window, type in <code>mongo</code>:
 * once you're connected with a commandline client (mongo), start inserting documents into a database called <code>hw05</code> and a collection called <code>reviews</code>:
   * reviews will have a course number, course name, semester (fall/spring/summer), year, professor's name, and a review field
-  * so to insert, just do this in the commandline client: <code>db.reviews.insert({ courseNumber: "6087-22", courseName: "AIT", semester: "Fall", year: 2018, professor: "Professor V", review: "best course ever!" });</code>
+  * so to insert, just do this in the commandline client: <code>db.reviews.insert({ courseNumber: "CSCI-UA.0101", courseName: "Intro to CS", semester: "Fall", year: 2015, professor: "McTeacherson", review: "Now I can sort like pro!" });</code>
   * (inserting will automatically create the database and collection for you if they don't already exist)
   * insert the following reviews:
 
 <pre><code data-trim contenteditable>
-(6087-22), AIT, Spring, 2018, Professor V, "The course was intense and our professor was funny so things balanced out."
-(6087-33), Intro To Computer Programming, Fall, 2018, Professor K, "OMG you have to take this course"
+CSCI-UA.0480, AIT, Spring, 2018, Versoza, "The answer is always undefined"
+CSCI-UA.0002, Intro To Computer Programming, Fall, 2018, Professor K, "OMG you have to take this course"
 </code></pre>
 
 * use <code>db.reviews.find()</code> to show all of the reviews that you've inserted
