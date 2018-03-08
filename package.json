@@ -20,7 +20,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "hbs": "^4.0.1",
-    "mongoose": "^5.0.7",
+    "mongoose": "^5.0.8",
     "node-uuid": "^1.4.8"
   }
 }
