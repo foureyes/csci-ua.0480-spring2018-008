@@ -86,8 +86,7 @@ You will be given access to a private repository on GitHub.
   * (inserting will automatically create the database and collection for you if they don't already exist)
   * insert the following reviews:
 
-<pre><code data-trim contenteditable>
-CSCI-UA.0480, AIT, Spring, 2018, Versoza, The answer is always undefined
+<pre><code data-trim contenteditable>CSCI-UA.0480, AIT, Spring, 2018, Versoza, The answer is always undefined
 CSCI-UA.0002, Intro To Computer Programming, Fall, 2018, Foobarbaz, OMG you have to take this course
 </code></pre>
 
@@ -104,9 +103,12 @@ Start your usual express app in `src/reviews` by:
 * creating an `app.js` file
 * installing the appropriate modules and saving them to `package.json` using <code>--save</code> (this should have already been done from the previous parts)  in the root directory of your project
 * additionally, install __mongoose__: <code>npm install --save mongoose</code>
-* creating the appropriate folders for your templates, public, etc.
-
-
+* set up and creating the appropriate folders for templating, serving static files, and parsing http POST request bodies
+	* activate express-static and create a `public` folder (along with some folders for css, etc.)
+	* configure hbs as the templating engine and create a `views` folder along with `layout.hbs`
+	* activate express.urlencoded (body parser) to parse http request bodies
+* configure your server __so that it uses port 3000__
+	
 ### Connect to the Database
 
 Create a file called <code>db.js</code> within `src/reviews`. <code>db.js</code> will contain:
@@ -193,7 +195,7 @@ You can now use <code>Review.find</code> to retrieve all of the reviews in your 
 * so, once you've retrieved stuff from the database, you'll probably want to render your template... so in your callback, call <code>res.render</code>, rendering whatever template you'd like to display your table
 * of course, you'll have to pass in your find results so that you can iterate over them in your template
 * in your template, use standard <code>table</code> markup, with each row containing a review
-* try opening your page in your browser to show a table of all reviews!
+* try opening your page in your browser to show a table of all reviews: `http://localhost:3000`
 
 
 <img src='../resources/img/hw05-review-01-all.gif'>
