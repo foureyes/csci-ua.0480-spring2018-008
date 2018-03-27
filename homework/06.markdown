@@ -8,133 +8,136 @@ title: CSCI-UA.0480 - Homework #6
 }
 </style>
 
+<h1 style="background-color: #ff99aa">DRAFT, do not start until repositories are distributed</h1>
 <div class="panel panel-default">
 	<div class="panel-heading">Homework #6</div>
 	<div class="panel-body" markdown="block">
 
-# A Taste of Login - __Due Saturday, April 8th, by 11PM__
+# Authentication and Mongoose Models - __Due Tuesday, April 3rd, by 11PM__
 
 ## Overview
 
 ### Description
 
-#### Implement parts of user authentication, _mostly_ from scratch!
+#### Login, Registration, and Multiple Models
 
-Create a site that allows user registration and login. User data will be stored in MongoDB, with passwords salted and hashed. A successful registration or login will result in an authentication session. Some pages on the site will require an authenticated session to view content.
+Create a link aggregator site (_like_ reddit, hacker news, etc.) that supports user registration and login... along with the ability to post articles (links).
 
-### Goals / Concepts and Technologies Used
+Registering or logging in will create an authenticated session that contains all of the logged in user's information. Some elements on pages will only appear when a user is logged in. Some pages will redirect to login if a user arrives unauthenticated.
 
-To implement the features above, we'll use the following techniques:
+### Goals
 
-* using the bcrypt module to salt and hash a password
-* using express-session to store user data  / an authenticated session
-* applying the concepts from [the slides on authentication](../slides/16/auth.html) to create login and registration
+* use `bcrypt.js` to salt and hash a password and to compare a hash to a plain text password
+* use [the slides on authentication](../slides/16/auth.html) to implement login and registration
+* use express-session to store user data  / an authenticated session
+* use embedded or related documents to model users and posted articles
+* extract path components to determine what data to use to render a page
 
-### Disclaimers
+### ⚠️⚠️⚠️ WARNING ⚠️⚠️⚠️
 
-<span class="warning">Note, however, that our authentication implementation will not be complete / suitable for _real world_ use because:</span>
+<span class="warning">This homework is for learning purposes only; __do not use it__ for authentication on a deployed site</span>
 
-* our application will not be served over an encrypted connection and cookies aren't set to secure
-* using nested callbacks instead of promises makes error handling complex
-* not all errors accounted for
+* our application will only be served locally, and consequently, it will not be served over an encrypted connection ... and - related - cookies aren't set to secure
+* it will allow case sensitive usernames
+* it encourages the use of multiple nested callbacks instead of promises and / or async await
+* not all errors accounted for or handled gracefully
 * user interaction and error messaging will be minimal (for example, successful login should redirect to page that required login) 
 * some error messages reveal will info about the existence of a user
 * our session secret will be in version control
 
-
 ### Features
 
-#### In this application, users will be able to:
+1. register a new account
+2. login using an existing account
+3. add a new article
+4. view all posted articles
+5. show a single article's details
+6. prevent / allow access to certain ui elements or pages based on authenticated status
 
-* register a new account
-* login using an existing account
-* view a home page that has content that changes depending on logged in state
-* view a restricted page that can only be seen if logged in
 
+#### You'll have 5 pages and 3 forms:
 
-Aaaand, if you do the extra credit...
-
-* implement logout
-
-#### You'll have 4 pages and 2 forms:
-
-* __/__ - home page
+* __/__ - lists all articles
 * __/register__ - register form
 * __/login__  - login form
-* __/restricted__ - a page that can only be seen if logged in
+* __/articles/add__ - add new article form
+* __/article/:slug__ - detail page for a specific article
 
 
 #### Example Interaction
 
-Here's an example of registration, login and viewing a restricted page.
+Here's what it looks like to login, add a new article, and view the link and details page:.
 
-* registration
-    <br> ![register](../resources/img/hw06-auth-02-register.gif)
-* login
-    <br> ![login](../resources/img/hw06-auth-03-login.gif)
-* restricted page
-    <br> ![viewing a restricted page](../resources/img/hw06-auth-04-restricted.gif)
-
+<img src="../resources/img/hw06-aintreddit-00-all.gif">
 
 ### Submission Process
 
-You will be given access to a private repository on GitHub. Generate an Express application using express-generator (see instructions below) when you clone it.
-
-The final version of your assignment should be in GitHub
+You will be given access to a private repository on GitHub. The repository will have a partially built Express application. The final version of your assignment should be in GitHub:
 
 * __Push__ your changes to the homework repository on GitHub.
 * Add the URL of the repository to your assignment submission in NYU Classes.
 
-### Make at Least 3 Commits
+### Make at Least 4 Commits
 
 * Commit multiple times throughout your development process.
-* Make at least 3 separate commits - (for example, one option may be to make one commit per part in the homework).
+* Make at least 4 separate commits - (for example, one option may be to make one commit per part in the homework).
 
 
-## Part 1 - Setup
+## Part 1 - Setup and Authentication Functions
 
 ### Starting Project
 
-Start your project by creating the following files. This can be done directly in the root folder of your repository:
+Your repository should have the following files and directories.
 
-* `.gitignore` - ignore `node_modules`
-* `.eslintrc.js` - you can use a previous configuration for this
-* `package.json` - `npm init`
-* `app.js` - this is your main express file
+<pre><code data-trim contenteditable>
+├── package.json
+├── src
+│   ├── app.js
+│   ├── auth.js
+│   ├── db.js
+│   ├── public
+│   │   └── css
+│   └── views
+│       ├── article-add.hbs
+│       ├── login.hbs
+│       ├── register.hbs
+└── test
+    ├── mock-user.js
+    └── test-auth.js
+</code></pre>
 
-### Install (using `npm`) and Configure the Following Modules
+{% comment %}
+    ├── cli-tests.js
+│       ├── article-detail.hbs
+│       └── restricted.hbs
+│       ├── error.hbs
+│       ├── index.hbs
+│       ├── layout.hbs
+│   │       └── site.css
+{% endcomment %}
 
-(Use previous homework instructions / completed homeworks for examples)
+Add the following:
+
+* `.gitignore` - ignore `node_modules` and any other files that you would like to keep out of your repository (varies depending on your OS and editor... for example, if you're on vim on MacOS, you may want to ignore `.swp` files and `.DS_Store` etc.)
+* `.eslintrc.js`/`.eslintrc.json` - you can use a previous configuration for this
+
+### Dependencies
+
+The following modules are already listed in `package.json` and configured in `app.js` ... so simply run `npm install` in the project root
 
 * `express`
-* `hbs` - for templating
-* `body-parser` - for parsing POST request bodies (from form submission)
+* `hbs` 
 * `express-session` - for session management
-    * generate a random secret for this 
-    * (for example, you can start node as in interactive shell and run `require('crypto').randomBytes(64).toString('hex')`)
-    * ideally the secret would not be stored in version control (perhaps using something like `process.env` to retrieve the secret from the environment)...
-    * but to easy the grading process, you can check in the secret for this homework
 * `mongoose` - for database access
+* `bcryptjs` - module for salting, hashing and comparing passwords
+* `mongoose-url-slugs` - plugin for autogenerating slugs
 
-<span class="warning">Make sure to use dynamically generated paths for your views and static files by using `__dirname`</span>
-
-```
-// express static setup
-const path = require('path');
-app.use(express.static(path.join(__dirname, 'public')));
-
-// hbs setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-```
-<span class="warning">Configure your app to listen on port 3000</span>
+Your app is configured to listen on port 3000. <span class="warning">Do not change this.</span>
 
 
-### Install bcrypt
+### About bcrypt.js
 
-`npm install bcrypt`
-
-We'll use this module in our code for login and registration.  `bcrypt` is a node module for password hashing. The result of using bcrypt contains both the hash and the salt! Check out the details in the first section of the [wikipedia article](https://en.wikipedia.org/wiki/Bcrypt) and the diagram below illustrating the output of bcrypt: 
+bcrypt.js is a JavaScript implementation of password hashing function called (you guessed it!) bcrypt. We'll use it for login and registration. The result of using bcrypt contains both the hash and the salt! Check out the details in the first section of the [wikipedia article](https://en.wikipedia.org/wiki/Bcrypt) and the diagram below illustrating the output of bcrypt: 
 
 ```
 $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
@@ -148,31 +151,45 @@ $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
 
 ```
 
-There are some errors that you may encounter while installing `bcrypt`. Here's how to troubleshoot:
+Check out [how to use bcrypt.js](https://www.npmjs.com/package/bcryptjs).
 
-1. If npm says `ERR! Tried to download(404)` - this means that it couldn't locate the binary for the module... but it'll fall back to trying to download the source and compiling, so it may still work!
-2. If the installation ends with the following, then `bcrypt` has successfully been installed despite the message from part #1
-    <pre><code data-trim contenteditable>netid-homework06@1.0.0 /Users/username/Desktop/AIT/homeworks/netid-homework06
-└── bcrypt@1.0.2 
-</code></pre>
-3. If you see `Error: Python executable ... is xxxx which is not supported by gyp`, that means that you may need to explicitly pass a version of python to `npm` to compile the source
-4. In this case, when running `npm install`  add the `--python=/path/to/python` flag with the path to a version of Python that's greater than 2.5.x, but not 3.x.x. The path to the right version of python may be `/usr/bin/python` or `/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7` (change the version numbers) if you're on OSX. If you're on windows, you could try installing python 2.x and python 3.x side-by-side... or for a quicker solution...
-5. Try using [an alternate module, such bcryptjs](https://www.npmjs.com/package/bcryptjs) which has a very similar api. Check out the docs to see what methods you'd use to salt and hash... as well as compare hashes.
 
 ### Database Setup
 
-* create a `db.js` file in the root of your project
-* using mongoose, write a `User` schema with username and password 
-    * both should be type, `String`
-    * username should be a unique field, so set as `{type: String, unique: true}`
-    * typically hash and salt should be stored in separate fields
-    * however, when using bcrypt, hash will contain both salt and salted and hashed password, so no separate field needed for salt
-* don't forget to register your model
-    * `mongoose.model('User', User);`
-* name your database `hw06`:
+* in `src/db.js`....
+* using mongoose, __create two schemas__:
+	* `UserSchema`
+		* it should have the following fields (all `String`, and all required):
+			* `username` - user name used for login and public display
+			* `email` - user's email
+			* `password` - the combined salt and hash
+    	* username should be a unique field, so set as `{type: String, unique: true, required: true}`
+    	* typically hash and salt should be stored in separate fields, but because we're using `bcrypt` a single field is adequate for both
+	* `ArticleSchema`
+		* it should have the following fields (all `String`, validation is your discretion)
+			* `title`
+			* `url`
+			* `description`
+	* finally, __you must associate users and articles__ by using embedded or related documents:
+		* if relating documents, add a `User`'s id to `ArticleSchema`
+		* if embedding, perhaps adding an `Array` of `Article` objects to `UserSchema` woudl work
+		* which one would be easier to use to list all of the articles posted by everyone on the home page, without user info?
+* don't forget to register your models:
+    * `mongoose.model('User', UserSchema);`
+    * `mongoose.model('Article', ArticleSchema);`
+* your db.js is configured to connect to `hw06`:
     * `mongoose.connect('mongodb://localhost/hw06');`
 
-## Part - 2 Registration
+### Create Helper Functions
+
+Create the following functions in `src/auth.js`:
+
+1. `register` 
+	* 
+2. `login`
+3. `startAuthenticatedSession`
+
+### `register`
 
 ### Description
 
@@ -394,3 +411,11 @@ Here's what the restricted page interaction should look like:
 
 </div>
 
+<img src="../resources/img/hw06-aintreddit-01-register.gif">
+<img src="../resources/img/hw06-aintreddit-02-register-same.gif">
+<img src="../resources/img/hw06-aintreddit-03-register-short.gif">
+<img src="../resources/img/hw06-aintreddit-04-login.gif">
+<img src="../resources/img/hw06-aintreddit-05-no-username.gif">
+<img src="../resources/img/hw06-aintreddit-06-login-password.gif">
+<img src="../resources/img/hw06-aintreddit-07-add.gif">
+<img src="../resources/img/hw06-aintreddit-08-details.gif">
