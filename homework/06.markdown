@@ -212,8 +212,6 @@ return:
 
 description:
 
-The `register` function should:
-
 1. when you encounter any errors as you run through the registration process:
 	* log the error to the console (server)
 	* call the `errorCallback` passing in an error object containing a key called `message` and a value of a string describing the error that occurred (this gives the caller the ability to pass in a function that handles the error - for example, rendering a template with an error message)
@@ -243,7 +241,22 @@ bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
     * set the `username` and `email` to whatever was passed in as arguments, and the `password` should be set to the salt and hash generated
 	* call `save`
 	* if the `save` succeeds, call the `successCallback` function with the newly saved user
-	* otherwise call the `errorCallback` with an object that contains the key, `message`, and a generic error message as the value
+	* otherwise call the `errorCallback` with an object that contains the key, `message`, and a generic error message, `DOCUMENT SAVE ERROR`, as the value
+10. check that your function works by:
+	1. running the unit tests, `mocha test/test-auth.js` (comment out all tests except for registration related ones), to check for:
+		* a user object being passed to the success callback
+		* the user object having the same name and email as the original arguments passed in to the `register` function
+		* the password hash in the user object being the same as the hashed version of the original password passed in to the `register` function
+		* the error callback being called if a duplicate user is found (`USERNAME ALREADY EXISTS`)
+		* the error callback being called if a save issue occurred (`DOCUMENT SAVE ERROR`)
+	2. writing a small script to test if running the function actually creates a user in the database!
+		<pre><code data-trim contenteditable>require('../src/db.js');
+const auth = require('../src/auth.js');
+auth.register('testtest', 'test@test.test', 'testtest',
+  function(err) {console.log(err);},
+  function(user) {console.log(user);}
+);
+</code></pre>
 
 Example Usage:
 
@@ -278,7 +291,56 @@ return:
 
 description:
 
-The `login` function should:
+
+1. when you encounter any errors as you run through the login process:
+	* log the error to the console (server)
+	* call the `errorCallback` passing in an error object containing a key called `message` and a value of a string describing the error that occurred (this gives the caller the ability to pass in a function that handles the error - for example, rendering a template with an error message)
+	* some errors will require specific strings to be in the `message` property of the error object, while others are your discretion (read the instructions and run the tests for details)
+* your route handler should find the user with username entered in the form using `findOne`
+    <pre><code data-trim contenteditable>
+User.findOne({username: req.body.username}, (err, user, count) => {
+        if (!err && user) {
+            // compare with form password!
+    }
+});
+</code></pre>
+* if the user doesn't exist, show a message on the login form or show a generic error page saying that the user doesn't exist (in terms of security, this reveals too much information, but for debugging and for ease of use, this is what we'll use)
+* if the user exists... then check if the password entered matches the password in the database
+    * the password in the database is salted and hashed... and contains the salt
+    * so a simple compare with `===` is not adequate
+    * we must salt and hash the password and compare with the hash stored in the database
+    * we can use the function, `bcrypt.compare` to do this:
+        <pre><code data-trim contenteditable>bcrypt.compare(req.body.password, user.password, (err, passwordMatch) => {
+    // regenerate session if passwordMatch is true
+});
+</code></pre>
+    * note that `passwordMatch` within the callback will be either true or false, signifying whether or not the salted and hashed version of the incoming password matches the one stored in the database
+* once the match is verified, a new authenticated session can be started - you can use the same code that you used in registration
+    <pre><code data-trim contenteditable> // assuming that user is the user retrieved from the database
+req.session.regenerate((err) => {
+    if (!err) {
+        req.session.username = user.username; 
+    } else {
+        console.log('error'); 
+        res.send('an error occurred, please see the server logs for more information');
+    }
+});
+1. when you encounter any errors as you run through the registration process:
+	* log the error to the console (server)
+	* call the `errorCallback` passing in an error object containing a key called `message` and a value of a string describing the error that occurred (this gives the caller the ability to pass in a function that handles the error - for example, rendering a template with an error message)
+	* some errors will require specific strings to be in the `message` property of the error object, while others are your discretion (read the instructions and run the tests for details)
+* once the match is verified, a new authenticated session can be started - you can use the same code that you used in registration
+    <pre><code data-trim contenteditable> // assuming that user is the user retrieved from the database
+req.session.regenerate((err) => {
+    if (!err) {
+        req.session.username = user.username; 
+    } else {
+        console.log('error'); 
+        res.send('an error occurred, please see the server logs for more information');
+    }
+});
+</code></pre>
+* finally, once the session has been started, you can redirect to the homepage, `/`
 
 
 Example Usage:
@@ -293,46 +355,16 @@ function error(err) {
 auth.login(req.body.username, req.body.password, error, success);
 </code></pre>
 
+### `startAuthenticatedSession`
 
-### POST /register Validation
+`startAuthenticatedSession(req, user, callback)` 
 
-To implement the POST logic for `/register`:
+parameters:
 
-* <span class="warning">unless specified otherwise, any errors (`err`) that occur when using callbacks can just be logged out to the console, with a generic error message sent to the client:`</span> 
-    * `console.log(err);`
-    * `res.send('an error has occurred, please check the server output')`
-* create the route for `POST /register` in `app.js`
-* if the password is under 8 characters, send a message back saying that the password length is too short, and have a link that goes back home, `/`, or ideally allow the user to re-register immediately
-
-
-* pw
-    * there's no need to redirect
-    * if you want, you can re-render the registration template with an error message (again, this is ideal)
-    * or render a generic error template
-    * or even more simply just use `res.send` to send back a string of markup
-    * the error message can be as simple as this:
-        <br> ![password length](../resources/img/hw06-auth-05-length.png)
-* it should check if user already exists 
-    * remember to pull out your `User` model by using `const User = mongoose.model('User');`
-    * use `User.findOne((err, result, count) => {   })` to check if the user already exists
-        * you can check the object with `if(result)` to determine if a `User` object was returned
-    * or use `User.find((err, result, count) => {   })`... the 
-        * you can check if the length of the resulting `Array` is greater than 0
-    * the error message should be similar to the password length error message, with a link back to home (`/`) or a way to "re-register" 
-    * there's no need to redirect
-    * again, you can re-render the registration template to show the form again... but add an error message
-    * or you can use a generic error template or simply use `res.send` to send back a string of markup
-    * here's an example of a simple error page for trying to register an existing user:
-        <br> ![username exists](../resources/img/hw06-auth-06-exists.png)
-* <span class="warning">if the user doesn't already exist and the password is at least 8 characters long... you can proceed with salting and hashing the password, saving the new user and automatically starting an authenticated / logged in session</span>
-
-### POST /register Salting and Hashing Password
-
-* the following can all be done in your registration route handler, but a nicer solution would be to move some of this out to a module (though the functions that you create will require callbacks)
-
-### POST /register Saving User
-
-### POST /register Starting an Authenticated Session
+* `req`: an express Request object that contains a session variable
+* `user`: the user data to store in the session
+* `callback`: the callback to call after a new session has been created
+	* `callback(err)` - the callback only has a single parameter, `err`
 
 * once you've successfully saved the user, start an authenticated session:
     * regenerate a session id
@@ -348,6 +380,48 @@ req.session.regenerate((err) => {
         res.send('an error occurred, please see the server logs for more information');
     }
 });
+
+Once you've started an authenticated session, you can determine if a user is logged in by using:
+
+`req.session.user`
+
+So, a simple check in your express app and template may be:
+
+<pre><code data-trim contenteditable>
+// add req.session.user to every context object for templates
+app.use((req, res, next) => {
+  // now you can use {{user}} in your template!
+  res.locals.user = req.session.user;
+  next();
+});
+</code></pre>
+
+<pre><code data-trim contenteditable>
+{{#if user}} 
+<h1>something that can only be seen if logged in</h1>
+{{/if user}} 
+</code></pre>
+
+
+You can retrieve a user's username with:
+
+`req.session.user.usernmae`
+
+### POST /register Validation
+
+To implement the POST logic for `/register`:
+
+errors:
+
+password or username too short
+username already exists
+
+no errors:
+
+start authenticated session
+redirec to home page
+
+
 </code></pre>
 
 ### POST /register Redirect to Homepage
@@ -433,37 +507,6 @@ Create two routes for login
 Now it's time to handle the data POSTed by the form above...
 
 * create the route for `POST /login` in `app.js`
-* your route handler should find the user with username entered in the form using `findOne`
-    <pre><code data-trim contenteditable>
-User.findOne({username: req.body.username}, (err, user, count) => {
-        if (!err && user) {
-            // compare with form password!
-    }
-});
-</code></pre>
-* if the user doesn't exist, show a message on the login form or show a generic error page saying that the user doesn't exist (in terms of security, this reveals too much information, but for debugging and for ease of use, this is what we'll use)
-* if the user exists... then check if the password entered matches the password in the database
-    * the password in the database is salted and hashed... and contains the salt
-    * so a simple compare with `===` is not adequate
-    * we must salt and hash the password and compare with the hash stored in the database
-    * we can use the function, `bcrypt.compare` to do this:
-        <pre><code data-trim contenteditable>bcrypt.compare(req.body.password, user.password, (err, passwordMatch) => {
-    // regenerate session if passwordMatch is true
-});
-</code></pre>
-    * note that `passwordMatch` within the callback will be either true or false, signifying whether or not the salted and hashed version of the incoming password matches the one stored in the database
-* once the match is verified, a new authenticated session can be started - you can use the same code that you used in registration
-    <pre><code data-trim contenteditable> // assuming that user is the user retrieved from the database
-req.session.regenerate((err) => {
-    if (!err) {
-        req.session.username = user.username; 
-    } else {
-        console.log('error'); 
-        res.send('an error occurred, please see the server logs for more information');
-    }
-});
-</code></pre>
-* finally, once the session has been started, you can redirect to the homepage, `/`
 * here's an example of how a successful login should look:
     <br> ![login](../resources/img/hw06-auth-03-login.gif)
 
