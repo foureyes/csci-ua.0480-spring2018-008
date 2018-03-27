@@ -185,11 +185,185 @@ Check out [how to use bcrypt.js](https://www.npmjs.com/package/bcryptjs).
 Create the following functions in `src/auth.js`:
 
 1. `register` 
-	* 
 2. `login`
 3. `startAuthenticatedSession`
 
+You'll use these functions in your express application to implement a login and registration page.
+
 ### `register`
+
+`register(username, email, password, errorCallback, successCallback)` 
+
+parameters:
+
+* `username`: username
+* `email`: email
+* `password`: plain text password
+* `errorCallback`: function to call if an error occurs
+	* `errorCallback(errObj)`
+	* `errObj` will have a key called message that contains an error message
+* `successCallback`: function to call if registration works
+	* `successCallback(userObject)`
+	* `userObject` is the object that represents the newly saved user
+
+return:
+
+* no return value (instead, calls callback functions)
+
+description:
+
+The `register` function should:
+
+1. when you encounter any errors as you run through the registration process:
+	* log the error to the console (server)
+	* call the `errorCallback` passing in an error object containing a key called `message` and a value of a string describing the error that occurred (this gives the caller the ability to pass in a function that handles the error - for example, rendering a template with an error message)
+	* some errors will require specific strings to be in the `message` property of the error object, while others are your discretion (read the instructions and run the tests for details)
+2. check the length of the username and password passed in; they should both be greater than or equal to 8
+3. if either the username or password does not meet this requirement, call the `errorCallback` function with an object containing a key called `message` and value of `USERNAME PASSWORD TOO SHORT`
+4. check if the user already exists (case sensitive check is ok)
+	* remember to pull out your `User` model by using `const User = mongoose.model('User');`
+    * use `User.findOne((err, result, count) => {   })` to check if the user already exists
+        * you can check the object with `if(result)` to determine if a `User` object was returned
+    * or use `User.find((err, result, count) => {   })`... the 
+        * you can check if the length of the resulting `Array` is greater than 0
+5. if the user already exists, call the `errorCallback` function with an object containing a key called `message` with the value, `USERNAME ALREADY EXISTS`
+6. if the user doesn't exist yet, then it's ok to go ahead and create a new user...
+7. salt and hash the password using the `bcryptjs` module
+    * [check out the documentation on the bcrypt module](https://www.npmjs.com/package/bcryptjs#usage---async)
+	* do not use the sync calls (use the async version of bcrypt)
+    * auto generate a hash and a salt:
+        <pre><code data-trim contenteditable>// you can use a default value of 10 for salt rounds 
+bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+          // do more stuff here!
+});
+</code></pre>
+8. notice the `hash` parameter in the callback above; it _actually_ contains both the hash and the salt
+9. now we have everything we need to create a new user
+    * instantiate  a new `User` object
+    * set the `username` and `email` to whatever was passed in as arguments, and the `password` should be set to the salt and hash generated
+	* call `save`
+	* if the `save` succeeds, call the `successCallback` function with the newly saved user
+	* otherwise call the `errorCallback` with an object that contains the key, `message`, and a generic error message as the value
+
+Example Usage:
+
+<pre><code data-trim contenteditable>
+function success(newUser) {
+  // start an authenticated session and redirect to another page
+}
+function error(err) {
+  // render a template containing an error message
+}
+auth.register(req.body.username, req.body.email, req.body.password, error, success);
+</code></pre>
+
+### `login`
+
+`login(username, password, errorCallback, successCallback)` 
+
+parameters:
+
+* `username`: username
+* `password`: plain text password
+* `errorCallback`: function to call if an error occurs
+	* `errorCallback(errObj)`
+	* `errObj` will have a key called message that contains an error message
+* `successCallback`: function to call if login is successful
+	* `successCallback(userObject)`
+	* `userObject` is the object that represents the newly saved user
+
+return:
+
+* no return value (instead, calls callback functions)
+
+description:
+
+The `login` function should:
+
+
+Example Usage:
+
+<pre><code data-trim contenteditable>
+function success(newUser) {
+  // start an authenticated session and redirect to another page
+}
+function error(err) {
+  // render a template containing an error message
+}
+auth.login(req.body.username, req.body.password, error, success);
+</code></pre>
+
+
+### POST /register Validation
+
+To implement the POST logic for `/register`:
+
+* <span class="warning">unless specified otherwise, any errors (`err`) that occur when using callbacks can just be logged out to the console, with a generic error message sent to the client:`</span> 
+    * `console.log(err);`
+    * `res.send('an error has occurred, please check the server output')`
+* create the route for `POST /register` in `app.js`
+* if the password is under 8 characters, send a message back saying that the password length is too short, and have a link that goes back home, `/`, or ideally allow the user to re-register immediately
+
+
+* pw
+    * there's no need to redirect
+    * if you want, you can re-render the registration template with an error message (again, this is ideal)
+    * or render a generic error template
+    * or even more simply just use `res.send` to send back a string of markup
+    * the error message can be as simple as this:
+        <br> ![password length](../resources/img/hw06-auth-05-length.png)
+* it should check if user already exists 
+    * remember to pull out your `User` model by using `const User = mongoose.model('User');`
+    * use `User.findOne((err, result, count) => {   })` to check if the user already exists
+        * you can check the object with `if(result)` to determine if a `User` object was returned
+    * or use `User.find((err, result, count) => {   })`... the 
+        * you can check if the length of the resulting `Array` is greater than 0
+    * the error message should be similar to the password length error message, with a link back to home (`/`) or a way to "re-register" 
+    * there's no need to redirect
+    * again, you can re-render the registration template to show the form again... but add an error message
+    * or you can use a generic error template or simply use `res.send` to send back a string of markup
+    * here's an example of a simple error page for trying to register an existing user:
+        <br> ![username exists](../resources/img/hw06-auth-06-exists.png)
+* <span class="warning">if the user doesn't already exist and the password is at least 8 characters long... you can proceed with salting and hashing the password, saving the new user and automatically starting an authenticated / logged in session</span>
+
+### POST /register Salting and Hashing Password
+
+* the following can all be done in your registration route handler, but a nicer solution would be to move some of this out to a module (though the functions that you create will require callbacks)
+
+### POST /register Saving User
+
+### POST /register Starting an Authenticated Session
+
+* once you've successfully saved the user, start an authenticated session:
+    * regenerate a session id
+    * add the username to the session
+    * this way, to check if someone is logged in, we simply check if username exists in session (`if(req.session.username)`)
+        <pre><code data-trim contenteditable>
+// assuming that user is the user object just saved to the database
+req.session.regenerate((err) => {
+    if (!err) {
+        req.session.username = user.username; 
+    } else {
+        console.log('error'); 
+        res.send('an error occurred, please see the server logs for more information');
+    }
+});
+</code></pre>
+
+### POST /register Redirect to Homepage
+
+* finally, create a home page and redirect to that page once registration has succeeded (all validation passed, a new user is saved, and a new authenticated session is started)...
+    * add `res.redirect('/');` to your successful registration (that is... within the callbacks to generating the hash, saving and starting a new session)
+    * create a route handler for `/`
+    * for the homepage, show a message that says whether or not a user is logged in
+    * you can do this by passing `req.session.username` to the template when calling `render`
+* checking your work
+    * use the commandline client, `mongo`, to connect to your running mongo db instance
+    * `use hw06`
+    * `db.users.find()`
+    * check that you have user documents with username and password filled in
+* here's an example of how a successful registration should look:
+    <br> ![register](../resources/img/hw06-auth-02-register.gif)
 
 ### Description
 
@@ -228,98 +402,6 @@ For registration, we'll handle a couple of error states:
 1. password length too short 
 2. user already exists
 
-### POST /register Validation
-
-To implement the POST logic for `/register`:
-
-* <span class="warning">unless specified otherwise, any errors (`err`) that occur when using callbacks can just be logged out to the console, with a generic error message sent to the client:`</span> 
-    * `console.log(err);`
-    * `res.send('an error has occurred, please check the server output')`
-* create the route for `POST /register` in `app.js`
-* it should check the length of the password entered by the user
-* if the password is under 8 characters, send a message back saying that the password length is too short, and have a link that goes back home, `/`, or ideally allow the user to re-register immediately
-    * there's no need to redirect
-    * if you want, you can re-render the registration template with an error message (again, this is ideal)
-    * or render a generic error template
-    * or even more simply just use `res.send` to send back a string of markup
-    * the error message can be as simple as this:
-        <br> ![password length](../resources/img/hw06-auth-05-length.png)
-* it should check if user already exists 
-    * remember to pull out your `User` model by using `const User = mongoose.model('User');`
-    * use `User.findOne((err, result, count) => {   })` to check if the user already exists
-        * you can check the object with `if(result)` to determine if a `User` object was returned
-    * or use `User.find((err, result, count) => {   })`... the 
-        * you can check if the length of the resulting `Array` is greater than 0
-    * the error message should be similar to the password length error message, with a link back to home (`/`) or a way to "re-register" 
-    * there's no need to redirect
-    * again, you can re-render the registration template to show the form again... but add an error message
-    * or you can use a generic error template or simply use `res.send` to send back a string of markup
-    * here's an example of a simple error page for trying to register an existing user:
-        <br> ![username exists](../resources/img/hw06-auth-06-exists.png)
-* <span class="warning">if the user doesn't already exist and the password is at least 8 characters long... you can proceed with salting and hashing the password, saving the new user and automatically starting an authenticated / logged in session</span>
-
-### POST /register Salting and Hashing Password
-
-* the following can all be done in your registration route handler, but a nicer solution would be to move some of this out to a module (though the functions that you create will require callbacks)
-* first, salt and hash the password using the `bcrypt` module
-    * [check out the documentation on the bcrypt module](https://github.com/kelektiv/node.bcrypt.js/blob/master/README.md)
-    * require `bcrypt`: const bcrypt = require('bcrypt');
-    * use the async versions of these functions (we don't want this to block)
-    * there are two techniques that you can use:
-    * manually generating the salt and then hashing:
-        <pre><code data-trim contenteditable>bcrypt.genSalt(saltRounds, function(err, salt) {
-          bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-            // Store hash in your password DB.
-          });
-});
-</code></pre>
-    * auto generate a hash and a salt:
-        <pre><code data-trim contenteditable>// you can use a default value of 10 for salt rounds 
-bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-          // Store hash in your password DB.
-});
-</code></pre>
-
-### POST /register Saving User
-
-* remember that the output of `bcrypt` contains both the hash and the salt... so now we can simply create and save the new user in our database
-    * create a new `User` object
-    * set the `username` and `password` with the password as the single string (the hash and salt combined) created from `bcrypt`
-    * don't forget to call `save` on the resulting object!
-* again any errors from salting and hashing or saving should just be logged out to the console on the server side and a generic error message sent to the frontend
-
-### POST /register Starting an Authenticated Session
-
-* once you've successfully saved the user, start an authenticated session:
-    * regenerate a session id
-    * add the username to the session
-    * this way, to check if someone is logged in, we simply check if username exists in session (`if(req.session.username)`)
-        <pre><code data-trim contenteditable>
-// assuming that user is the user object just saved to the database
-req.session.regenerate((err) => {
-    if (!err) {
-        req.session.username = user.username; 
-    } else {
-        console.log('error'); 
-        res.send('an error occurred, please see the server logs for more information');
-    }
-});
-</code></pre>
-
-### POST /register Redirect to Homepage
-
-* finally, create a home page and redirect to that page once registration has succeeded (all validation passed, a new user is saved, and a new authenticated session is started)...
-    * add `res.redirect('/');` to your successful registration (that is... within the callbacks to generating the hash, saving and starting a new session)
-    * create a route handler for `/`
-    * for the homepage, show a message that says whether or not a user is logged in
-    * you can do this by passing `req.session.username` to the template when calling `render`
-* checking your work
-    * use the commandline client, `mongo`, to connect to your running mongo db instance
-    * `use hw06`
-    * `db.users.find()`
-    * check that you have user documents with username and password filled in
-* here's an example of how a successful registration should look:
-    <br> ![register](../resources/img/hw06-auth-02-register.gif)
 
 ## Part 3 - Login
 
