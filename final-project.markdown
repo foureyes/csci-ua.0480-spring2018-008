@@ -32,7 +32,7 @@ pre {
 	<div class="panel-heading">Final Project</div>
 	<div class="panel-body" markdown="block">
 
-# Final Project, Due <strike>WED, Nov 29th at 11pm</strike> __MON, Dec 4th at 11pm__
+# Final Project, Due __WED, April 25th at 11pm__
 
 
 ## Overview 
@@ -52,16 +52,16 @@ Create a __small__ web application using Express and MongoDB. Build the applicat
 
 __Completing the milestones leading up to the due date is required!__ Milestones 1 - 3 are worth over half of your final project grade.
 
-* (15 points) Milestone #1 - requirements, draft data model, and a skeleton application
-* (20 points) Milestone #2 - deployment attempt and a single working form (__You cannot change _your idea_ for your final project after this__)
+* (20 points) Milestone #1 - requirements, draft data model, and a skeleton application
+* (20 points) Milestone #2 - deployment attempt and a single working form (__You cannot change _your idea_ for your final project after this__, but you can still make minor modifications)
 * (20 points) Milestone #3 - two working forms and proof of work on research topics
-* (45 points total) Completed project
+* (40 points total) Completed project
     * (15 points) minimum 3 x forms or ajax interactions (__excluding login__)
     * (6 points) minimum 3 x any of the following (can be the same): 
-        * original Constructors (that is, a constructor you've written yourself), including methods added to prototype
+        * es6 classes that you've written yourself (using the `class` keyword)
         * Object.create (where prototype matters)
-        * es6 classes 
-        * original higher order functions or these built-in higher order functions on the Array object: map, reduce, filter
+        * original higher order functions that you've written yourself
+		* or use any of these built-in higher order functions found in `Array.prototype`: `map`, `reduce`, `filter`
     * (2 points) minimum 2 x mongoose schemas
     * (9 points) stability / security
         * simple validation on user input to prevent application from crashing
@@ -93,8 +93,8 @@ Choose at least __8 points__ worth of these following topics (research and imple
     * You'll have to link to testing code in repository
     * ... and show a screen capture of tests
 * (5 points) Automated functional testing for all of your routes using any of the following:
-	* [PhantomJS](http://phantomjs.org/) - headless browser testing
 	* [Selenium](http://www.seleniumhq.org/)
+	* [Headless Chrome](https://developers.google.com/web/updates/2017/06/headless-karma-mocha-chai) - headless browser testing
     * Minimally 4 tests
     * You'll have to link to testing code in repository
     * ... and show a screen capture of tests
@@ -106,21 +106,23 @@ Choose at least __8 points__ worth of these following topics (research and imple
     * (2 points) Integrate ESLint / JSHint / JSLint into your workflow
         * Must be used __with build tool__ (see above requirement on Grunt or Gulp
         * Must have have configuration file in repository
-        * Must run on entire codebase __outside of <code>node_modules</code>
+        * Must run on entire codebase __outside of <code>node_modules</code> automatically on file change__ (_watch_ for changes to the file system)
         * Must link to relevant lines in build configuration and lint configuration 
+		* Must show screen capture / animated gif of running on save
     * (2 points) Concatenation and minification of CSS  and JavaScript files
         * Must be used __with build tool__ (see above requirement on Grunt or Gulp
         * (Only client side files!)
         * Only minify and concatenate client side JavaScript
         * Must link to relevant lines in build configuration and mark-up (to show included css) 
+		* Must run automatically on fille change
+		* Must show screen capture / animated gif of running on save
     * (2 points) Use a CSS preprocesser
 	    * [Sass](http://sass-lang.com/)
 	    * [Less](http://lesscss.org/)
 	    * [Myth](http://www.myth.io/)
         * Must link to relevant lines in build configuration and directory of _unprocessed_ CSS source
-* (5 points) Integrate user authentication
-	* Minimally, implement sign up and registration
-	* Or implement sign in with provider, such as FB Connect, Google, etc. (which could be worth more points)
+		* Must run automatically on fille change
+		* Must show screen capture / animated gif of running on save
 * (3 points) Perform client side form validation using custom JavaScript or JavaScript __library__
     * errors must be integrated into the DOM 
     * the following will not receive full credit:
@@ -147,7 +149,7 @@ Choose at least __8 points__ worth of these following topics (research and imple
 
 <a name="proposal"></a>
 
-### <strike>11/01</strike> __11/02 at 11PM__ - Milestone 1 - Requirements / Specifications, Draft Data Model, Skeleton Application (15 points)
+###  __4/4 at 11PM__ - Milestone 1 - Requirements / Specifications, Draft Data Model, Skeleton Application (20 points)
 
 [Check out sample documentation](https://github.com/nyu-csci-ua-0480-008-spring-2017/final-project-example)
 
@@ -187,14 +189,17 @@ Choose at least __8 points__ worth of these following topics (research and imple
 
 <div id="final" markdown="block">
 
+{% comment %}
 <a name="milestone2">
 
 <br>
 <br>
 <br>
+{% endcomment %}
 
-### 11/09 at 11pm - Milestone 2 - Initial Deployment and First Form (20 points)
+### __4/11 at 11pm__ - Milestone 2 - Initial Deployment and First Form (20 points)
 
+{% comment %}
 1. attempt to deploy your code to Courant's _compute_ and assignment servers by following [instructions](homework/deploy.html)
 2. <span class="warning">use [this form to submit your deployed site](https://docs.google.com/forms/d/e/1FAIpQLSfxPUKkpkk5UMwtUarE4kMBGplYg7piTIIdH_ASWm_e9A2ZtQ/viewform)</span>
 3. your submission won't be graded unless the form above is sent with urls to your deployed site
@@ -212,10 +217,12 @@ Choose at least __8 points__ worth of these following topics (research and imple
 <br>
 <br>
 <br>
+{% endcomment %}
 
 
-### 11/17 at 11pm - Milestone 3 - 2nd Form and More Progress on Research (20 points)
+### __4/18 at 11pm__ - Milestone 3 - 2nd Form and More Progress on Research (20 points)
 
+{% comment %}
 Note - this due date may change!
 
 1. make at least 3 additional commits to add:
@@ -244,8 +251,11 @@ Note - this due date may change!
 <br>
 <br>
 
-### __12/4 11PM__ - Final Project Complete and Code is fully  _Deployed_  
+{% endcomment %}
 
+### __4/25 11PM__ - Final Project Complete and Code is fully  _Deployed_  
+
+{% comment %}
 * __all commits must be in by Monday, Dec 4th__ (repositories and forms will be closed 24 hours after due date to allow for late submissions) 
 * __project must be deployed__ on cims servers (or other platform, such as Heroku, gomix, zeit, etc.)     
 	* if your application needs to be restarted while being graded; I will contact you     
@@ -260,6 +270,7 @@ Note - this due date may change!
 <br>
 <br>
 <br>
+{% endcomment %}
 
 <a name="suggestions">
 

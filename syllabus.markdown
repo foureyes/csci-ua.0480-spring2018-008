@@ -174,9 +174,9 @@ Significant material will be pulled from the following sites:
 <a name="grading"></a>
 <div class="panel-heading">Grading</div>
 <div class="panel-body" markdown="block">
-* __25%__ - Homework
+* __20%__ - Homework
 * __30%__ - Exam #1
-* __30%__ - Exam #2
+* __35%__ - Exam #2
 * __5%__ - Quizzes / Activities
 * __10%__ - Final Project
 </div>
