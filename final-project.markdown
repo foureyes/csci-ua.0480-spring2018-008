@@ -56,20 +56,20 @@ __Completing the milestones leading up to the due date is required!__ Milestones
 * (20 points) Milestone #2 - deployment attempt and a single working form (__You cannot change _your idea_ for your final project after this__, but you can still make minor modifications)
 * (20 points) Milestone #3 - two working forms and proof of work on research topics
 * (40 points total) Completed project
-    * (15 points) minimum 3 x forms or ajax interactions (__excluding login__)
+    * (12 points) minimum 3 x forms or ajax interactions (__excluding login__)
     * (6 points) minimum 3 x any of the following (can be the same): 
         * es6 classes that you've written yourself (using the `class` keyword)
         * Object.create (where prototype matters)
         * original higher order functions that you've written yourself
 		* or use any of these built-in higher order functions found in `Array.prototype`: `map`, `reduce`, `filter`
     * (2 points) minimum 2 x mongoose schemas
-    * (9 points) stability / security
+    * (8 points) stability / security
         * simple validation on user input to prevent application from crashing
         * doesn't allow user input to be displayed unescaped directly on page
         * pages that require authentication cannot be accessed without authentication
         * data specified as private to a user cannot be viewed by another user
         * etc.
-    * (5 points) _originality_ 
+    * (4 points) _originality_ 
         * is not mostly based on existing homework
         * majority of code is not from online tutorial
     * (8 points) worth of research topics; see below
