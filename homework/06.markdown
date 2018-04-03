@@ -171,6 +171,10 @@ Check out [how to use bcrypt.js](https://www.npmjs.com/package/bcryptjs).
 			* `title`
 			* `url`
 			* `description`
+		* <span class="warning">if you use embedded documents, you can skip using mongoose-url-slugs, and create slugs on your own</span>
+			* [it seems like sub docs aren't supported](https://github.com/talha-asad/mongoose-url-slugs/issues/13)
+			* (mainly because the plugin only works when save is explicitly called)
+			* soooo.... instead, manually create a slug field, and set it to the lowercase version of the title, replacing spaces with dashes
 		* use `mongoose-url-slugs` to add a slug to uniquely identify each article:
 			* this plugin will autogenerate a `slug` field (no need to explicitly add it to your schema)
 			* a slug is a string that serves as a short, human readable name
@@ -529,7 +533,7 @@ Login should allow a user to authenticate using a username and password. To do t
 
 Steps 2 through 4 are handled by the `login` function in the `auth` module implemnted in a previous part.
 
-Step 5 should be implemented by passing a success callback function to `register`
+Step 5 should be implemented by passing a success callback function to `login`
 
 There are two routes for login:
 
