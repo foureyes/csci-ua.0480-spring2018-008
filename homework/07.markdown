@@ -3,18 +3,11 @@ layout: homework
 title: CSCI-UA.0480 - Homework #7
 ---
 
-<style>
-.warning {
-    background-color: #eecccc;
-}
-</style>
-
 <div class="panel panel-default">
 	<div class="panel-heading">Homework #7</div>
 	<div class="panel-body" markdown="block">
 
-
-# One Hand of Blackjack (Client Side JavaScript) - __Due Friday, Nov 17th, by 11PM__
+# Threes Dice Game (Client Side JavaScript) - __Due Wednesday, April 11th, by 11PM__
 
 
 ## Overview
@@ -23,36 +16,29 @@ title: CSCI-UA.0480 - Homework #7
 
 You'll be using the following concepts:
 
-* manipulating the DOM by creating and adding elements
+* manipulating the DOM
 * setting DOM element attributes
-* handling events with `addEventListener`
-* stopping form submission with `preventDefault`
-* using CSS to arrange elements with `position` and `display` 
+* handling events with addEventListener
 
 ### Description
 
-Create a two-player (user vs computer) client-side card game. The card game will be __a single hand__ of blackjack. If you're unfamiliar with the rules:
+Threes is a dice game where the goal is to get the lowest score (with each die face counting for that value, with the exception of threes, which count as 0).  It's played with 5 dice. In our version there are two players, the user and the computer. 
 
-* each player will try to construct a hand of cards that's equal to 21 or as close to 21 as possible, without going over
-    * the sum of the numeric values of the cards determine the value of a hand
-	* face cards are worth 10
-	* aces are worth 1 or 11
-    * the player with the hand closest to (or equal to) 21 wins
-    * ties are possible
-* each player is dealt 2 cards from a 52 card deck, with each card representing some numeric value
-* in our version, the initial cards are dealt to the computer and user in an alternating fashion, with the computer being dealt the 1st card:
-    * the computer is dealt one card, and the user is dealt another card
-    * this repeats one more time so that both the user and computer have 2 cards each
-* once the initial two cards are dealt, the user can choose to be dealt more cards ("hit") or stop being dealt cards ("stand") 
-    * if the user's hand ends up exceeding 21, then the user automatically loses 
-    * if the user chooses to "stand" (to stop being dealt cards), then the computer can choose to continually "hit" or "stand"
-* once both players have either chosen to stand or have a hand with a total that's more than 21 ("bust"), the hands are compared
-    * the player with the hand that's closest to 21 without going over wins
-    * again ties are possible (either same total, or both player "bust")
+1. A player starts off buy rolling 5 dice.
+2. The player then chooses 1 or more dice to pin (that is, to _save_ and count towards their score).
+3. Once at least 1 die is pinned, the player rolls the remaining dice ...
+4. The player then chooses 1 or more dice to pin.
+5. This process repeats until the player either pins all of the remaining dice, or there's only 1 die left, and the player is forced to pin that die.
+6. Once all of a player's dice are pinned, the values of all of the rolls are added to determine a player's score.
+    * 3's count as 0
+    * for example, if the pinned dice were: 1, 4, 1, 2, 3
+    * ... then the score would be: 8
+7. The other player then repeats steps 1 - 6 to get their score.
+8. The player __with the lower score wins__.
 
-Here's an example of what your game may look like:
+You will be making an online version of this game where all of the game logic is client side JavaScript. Here's an example of what your game may look like:
 
-![Demo](/csci-ua.0480-fall2017-007/resources/img/hw07-blackjack-01-overview.gif)
+![Demo](../resources/img/hw07b-01-win.gif)
  
 ### Submission Process
 
@@ -60,236 +46,253 @@ You will be given access to a private repository on GitHub.  The final version o
 
 * __Push__ your changes to the homework repository on GitHub.
 
-### Make at Least 4 Commits
+### (4 points) Make at Least 4 Commits
 
 * Commit multiple times throughout your development process.
 * Make at least 4 separate commits
 
-## Blackjack Game Requirements
+## Threes Dice Game Requirements
 
+### __Required Features__
 
-There are three main features required for the game:
+(6 points) __Use the following markup__
 
-1. An initial screen where the user can enter a series of comma separated face values (2 - 10, J, Q, K, A) that will set the cards of the top of the deck to those values
-	* Consequently, if a user puts in 2,3,4,5 .... 2 will be on the top of the deck, 3 next, etc.
-	* So when hands are dealt, the computer will be dealt a 2 and a 4, and the player will be dealt a 3 and a 5
-2. A client-side JavaScript implementation of one hand of blackjack
-3. A small amount of styling:
-    * the cards in a hand should appear adjacent to each other
-    * cards should have a height and a width
-    * _some effort_ should be made to make the game appear visually polished
-
-
-## Setup and Initial Screen
-
-
-### Create an express application and setup some directories
-
-1. You don't _really_ need an Express application to do this homework, but start with one anyway, in case you decide to do the extra credit...
-2. Start a new express project that uses express-static, using the following directory structure:
-    * `package.json`
-    * `.eslintrc.js`
-    * `README.md`
-    * `src`
-        * `app.js`
-        * `public`
-            * `index.html`
-            * `stylesheets`
-                * `style.css`
-            * `javascripts`
-                * `main.js`
-3. (there's no need to create any route handlers for this homework, you can do the whole thing with static files)
-4. In your public folder, create an <code>index.html</code> file.
-5. In your public folder, create a `stylesheets` folder and a file, `style.css`, within it 
-6. In your public folder, create a `javascripts` folder and a file, `main.js`, within it 
-
-
-### Create a form
-
-1. Add the following code to your <code>index.html</code> (it will be the only markup in your project, everything else will be generated with JavaScript):
+1. Start a new express project that uses express-static.
+	* the root directory should contain `package.json`, your eslint config, `.gitignore`, etc.
+	* the `src` directory should contain `app.js` (serving on 3000), `public`, etc.
+2. (there's no need to create any route handlers for this homework, you can do the whole thing with static files)
+3. In your public folder, create an <code>index.html</code> file.
+4. Add the following code to your <code>index.html</code>:
     <pre><code data-trim contenteditable>&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
-&lt;title&gt;Cards!&lt;/title&gt;
-&lt;link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen" title="no title" charset="utf-8"&gt;
-&lt;meta charset="utf-8" /&gt; 
+  &lt;title&gt;A Little Threesy&lt;/title&gt;
+  &lt;script src="game.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" href="base.css" type="text/css" media="screen" title="no title" charset="utf-8"&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;script src="javascripts/main.js"&gt;&lt;/script&gt;
-&lt;div class="start"&gt;
-  &lt;form method="POST" action=""&gt;
-    &lt;label for="startValues"&gt;Start Values:&lt;/label&gt; &lt;input type="text" name="startValues" id="startValues"&gt;  
-    &lt;input class="playBtn" type="submit" value="Play"&gt;  
-  &lt;/form&gt;
-&lt;/div&gt;
-&lt;div class="game"&gt;
-&lt;/div&gt;
+  &lt;div id="content"&gt;
+    &lt;h1&gt;A Little Threesy&lt;/h1&gt; 
+    &lt;div id="intro"&gt;
+      Starting Dice Values (leave empty for random):
+      &lt;input type="text" id="diceValues" name="diceValues"&gt;
+      &lt;button&gt;Go!&lt;/button&gt;
+
+    &lt;/div&gt;
+      &lt;div id="game" class="hidden"&gt;
+    &lt;/div&gt;
+
+    &lt;div id="error-message" class="overlay"&gt;
+      &lt;div class="modal"&gt;
+        &lt;p&gt;&lt;/p&gt;
+        &lt;button class="closeButton"&gt;Ok. Got it!&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--close id="content"--&gt;
 &lt;/body&gt;
+&lt;/head&gt;
 &lt;/html&gt;
 </code></pre>
-2. Test that your form shows up when you go to `http://localhost:3000`
-3. __You are not allowed to use any additional markup, and you cannot modify the markup above__; you must generate any additional elements you'll need with JavaScript 
+5. __You are not allowed to use any additional markup__; you must generate any additional elements you'll need with JavaScript 
+6. All of your JavaScript should go in your external JavaScript file.
+7. ... and, of course, all of your CSS should go in your external CSS file. 
 
-### Initialize your JavaScript
+(3 points) __Only show title screen and form on page load__
 
-Note that `main.js` is included at the top of the body. This means that the code within it may run before the rest of the page (DOM) is actually available to manipulate. This problem will result in:
+* Only show the content in the div with id <code>intro</code>
+    * Make sure the overlay div and the game div are not displayed
+    * Hint: 
+        * Make the appropriate CSS rules
+        * Use JavaScript's <code>someElementObj.classList</code>'s <code>add</code>, <code>remove</code>, and <code>contains</code> [to _add and remove_ classes](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) so that you can control which CSS rules are active
+* If the user clicks on the button, then start the game (see next requirement for instructions)
+* Here's what the interaction should look like (you won't have any real content on the _next_ page yet, though):
+    <br>
+    ![title](../resources/img/hw07b-00-start.gif)
+    <br>
 
-1. a failure to find an element that _should_ exist (when using `document.getElementById`, `querySelector`, etc.)
-2. which most likely will manifest itself as an undefined object
+(8 points) __Pressing "Go" reveals the game screen and sets predefined dice roll results__
 
-So, __to delay the running of your JavaScript until the page has completely loaded__ (and without changing the markup, use `document.addEventListener` to call the main line of execution for your program only when the DOM has completely loaded. Follow these steps to do this:
-
-1. in `main.js`, create a function called `main` - this will be where your game code resides (of course, you can create other functions, but you _should_ have at least a main function)
-2. after that, add the following line to make sure that the `main` function is only run when the DOM is completely loaded:  `document.addEventListener('DOMContentLoaded', main);`
-
-### Handle the Form Submission and Modify the User Interface
-
-Submitting the form hides the original form and distributes (deals) cards to the computer and user. If the user entered a list of card faces in the form before submitting, then those cards will be dealt first from the top of the deck.
-
-Start off by handling the submit button on the form and making the form disappear. Use a combination of `document.querySelector` and `addEventListener` to allow the submit button on the form to be pressed:
-
-* see the [slides on `document.querySelector`](../slides/19/js-css.html#/6) or the [mdn documentation](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
-* check out the [slides on events](../slides/19/events.html#/)
-* ...along with mdn's documentation on [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), [click](https://developer.mozilla.org/en-US/docs/Web/Events/click), and [DOMContentLoaded](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded)
-* because the button in the form is a submit button, it'll _actually_ make a GET or POST request when pressed; we don't want this to happen, so we'll use [preventDefault](../slides/19/events.html#/15) to stop the default action from occurring on a click event
-* and lastly, the [slides](../slides/19/css.html#/56) on [classList](../slides/19/css.html#/7) will show you how to add, remove and toggle css classes on elements
-*  Remember, you'll need to put all of your DOM dependant JavaScript in a <code>DOMContentLoaded</code> listener (which you already did above)
-* and, of course, you'll need to add a <code>click</code> event listener for your submit button 
-* within the callback to your `click` event listener:
-    1. make sure to call `preventDefault` (see the [slides on events](slides/19/events.html#/15)) to stop the form from submitting
-    2. create and apply the appropriate CSS classes to get rid of the _form_ (do this with styles, there's no need to remove the element) to make room for displaying cards (in addition to the slides above, [here's the mdn docs on classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList))
-* <span class="warning">Note that `this` within the callback passed to `addEventListener` will refer to the element that was clicked on, as long as the function you use is not an arrow function</span>
-    * For example....
-    * Using this markup: `<div id="clicker">Click Me</div>`
-    * Using this JavaScript: `document.querySelector('#clicker').addEventListener('click', myCallback)`
-    * `this` within `function myCallback` will refer to the original div element clicked on!
-
-![Demo](/csci-ua.0480-fall2017-007/resources/img/hw07-blackjack-02-form.gif)
-
-### Generate a Deck of Cards and Deal Cards
-
-Once you've gotten rid of the form, generate a deck of cards and distribute a hand to the user and the computer (optionally setting the top cards to the values set in the form above).
-
-* Note that there was a text field in the original form - this can be used to set the cards at the top of the deck 
-    * If the player enters a value in this field, then the cards on top of the deck are set to the sequence inputted
-    * The input should be a comma separated list of characters and/or numbers (for example `K,2,3,7`), the suit of the cards can be any suit (in the example below, all of the specified cards were given a default suit of diamonds)
+* Use <code>addEventListener</code> to allow the button on the _title screen_ to be pressed
+    * It should lead to the next _screen_, which will be contained within the `div` with id, `game`
+    * Check out the [slides on events](../slides/19/events.html#/)
+    * Along with mdn's documentation on [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), [click](https://developer.mozilla.org/en-US/docs/Web/Events/click), and [DOMContentLoaded](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded)
+    * Remember, you'll need to put all of your DOM dependant JavaScript in a <code>DOMContentLoaded</code> listener
+    * And, of course, you'll need to add a <code>click</code> event listener for your button 
+    * <code>document.querySelector</code> will also be very useful - see the [docs](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) or [slides](slides/19/js-css.html)!
+    * Create and apply the appropriate classes to get rid of the _title screen_ (do this with styles, there's no need to remove the element) and show the _game screen_
+* Note that there's a form field in the _title screen_ ...
+    * This field will allow the player to set the results of the dice rolls in the game (it's kind of like cheating / using loaded dice, but it's really for making it easier to test!)!
+    * If the player enters a value in this field, then the dice rolls will be set to the sequence inputted
+    * The input should be a comma separated list of numbers, for example `1,2,3,4,5,6,7,8,9`
+		* the first 5 rolls should be 1,2,3,4,5
+		* the next 5 rolls should be 6,7,8,9 plus a random 5th number
     * No validation is required (assume that the user puts in valid input or no input)
     * You can retrieve the user input from the text field by using the `value` property on the form element that contains the user input - [see the mdn docs on value under HTML Input Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)
-* __The following should done programmatically via client side JavaScript__ (the graphical part will be specified in the next section)
-* Generate a deck of 52 shuffled cards (perhaps an Array of objects?)
-* If there were card faces that were entered in the form above...
-    * add those cards to the top of the deck (again, you can just pick a suit; it's the faces that matter)
-    * these cards will be dealt first, alternating between the computer and the user
-    * for example, if the cards 2, 5, 2, 5, J, Q, K, then:
-        * the computer would get a 2 and 2
-        * the user would get a 5 and 5
-        * the next cards dealth (from pressing the "Hit" button) would be J, Q, and K
-* Deal the cards - alternate between the computer and player
-    * the computer gets the first and third card
-    * the player gets the second card and fourth card
+    * If there's nothing in the field, then dice rolls should be random
+    * To implement this behavior, see below ...
+* Create a function or object that generates dice rolls
+    * You'll use this any time a roll is needed for the player or the computer
+    * Again, dice rolls should initially be random ...
+    * However, the function or object should be _configurable_ so that it can draw numbers from the list of numbers entered
+    * (Use whatever mechanism you like to do this - perhaps storing the list in a closure or in a property in the function or constructor... or just a plain old global)
+	* Note that the first several numbers will be exhausted by the computer's rolls
+    * Once the list of specified numbers is exhausted, random numbers should be generated again
+* Here's an example of how it may work (again, the _game screen_ will be blank for now, but when it's implemented, it should function like this):
+    ![title](../resources/img/hw07b-00a-start-btn-fix.gif)
+    <br>
 
 
-### Display the Cards and User Interface
+(8 points) __Generate DOM elements for 5 dice and 3 buttons__ 
 
-Based on the cards dealt, add elements to the user interface to represent both the user's and computer's hands (set of cards).
-
-* Create DOM elements to represent cards
-    * Check out the slides and mdn documentation on modifying and creating elements
-        * [slides on adding and removing elements](../slides/18/modifying-creating.html#/1)
-        * [slides on changing an elements text](../slides/18/modifying-creating.html#/5)
-        * [slides on creating elements](../slides/18/modifying-creating.html#/7)
-        * [mdn docs on `createElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)
-        * [mdn docs on `createTextNode`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode)
-        * [mdn docs on `appendChild`](https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild)
-    * You should consider writing some helper functions for creating and adding elements
-    * For example, one of our books introduces [a function to create an element and add children immediately](http://eloquentjavascript.net/13_dom.html#c_Mnkp5ioh9C)
-    * Programmatically create elements to represent cards
-    * All of the computer's cards should appear next to each other horizontally - one of the cards should not be revealed
-    * All of the user's cards should appear next to each other horizontally
-    * All of the cards should have a width and height
-    * Hint: to lay out elements adjacent to each other and still maintain a width and height, you can use ...
+* Create DOM elements to represent 5 dice
+    * The elements should start off with no text 
+    * Hint: you may find it helpful to create a containing element that holds all 5 dice
+    * Hint: to lay out all 5 dice adjacent to each other and still maintain a width and height, you can use ...
         * <code>display: inline-block</code>
-        * <code>display: flex</code>
         * a <code>table</code>  
         * or <code>float</code> your elements
-* Calculate the hand total for both the computer and the user
-    * Remember that aces can be 1 or 11
-    * Make sure that your algorithm optimizes the values of aces so that the hand total is as close to 21 as possible without going over
-* Create two elements to display the computer and user total
-    * the computer total should be displayed as ?
-    * the user total should reflect the total in the user's hand
-* Create two buttons, `Hit` and `Stand`
-* See an example interaction below:
-* <span class=warning>THE STYLING IN THE ANIMATED GIFS IS JUST FOR EMBELLISHMENT; YOUR STYLING DOES NOT HAVE TO MATCH</span>
-    * (but you should put in some effort to make the cards _card-like_)
+	* Hint: depending on your layout and positioning, it may be useful to have a <code>vertical-align: top;</code> in the containing element to keep the dice aligned in the same row once you start adding text nodes to them
+* Create three buttons, `Start`, <code>Roll</code>, and <code>Pin</code>
+    * Set `Roll` and <code>Pin</code> to disabled by adding a <code>disabled</code> attribute
+    * For example:`<button disabled>My Button</button>`
+    * Hint: To do this in JavaScript, use either `someElementObject.disabled = true;` or <code>someElementObject.setAttribute("disabled", "disabled");</code>
+* The generated dice and buttons should look something like this:
+    <br>
+    ![dice](../resources/img/hw07b-00b-dice.gif)
+
+(12 points) __Pressing "Start" Generates a score for the computer and shows your score__
+
+* Add an event listener to the Start button so that it when it's clicked it:
+    1. Generates a set of pinned dice for the computer
+    2. Shows the player's score
+    3. Allows the player to start rolling
+* Generate a set of pinned dice (and consequently a score) for the computer
+    * The computer will:
+        1. roll 5 dice, and pick the lowest out of the 5 to pin
+        2. roll the remaining 4 dice, and pick the lowest out of the 4 to pin
+        3. roll the remaining 3 dice, and pick the lowest out of the 3 to pin
+        4. ... and continue to roll remaining dice and choose the single lowest dice to pin until all 5 dice are pinned
+    * You can test this by setting the initial form input to `5,5,5,5,5,4,4,4,4,3,3,3,2,2,1`
+        * (the computer's dice should be 5, 4, 3, 2, and 1)
+    * Display the result as `Computer Score: 5 + 4 + 3 + 2 + 1` (where the numbers are the values of the pinned dice)
+    * This text should go below the title, but above the player's score
+* Display the player's score (which is 0 for now) below the computer's score, but above the dice
+* Here's what the two scores should look like:
+    <br>
+    ![title](../resources/img/hw07b-00b-comp.gif)
+* Finally, disable the `Start` button and enable the `Roll` button
+    * Hint: To do this in JavaScript, use either `someElementObject.disabled = false;` or <code>someElementObject.removeAttribute("disabled");</code>
+
+(9 points) __Rolling dice__
+
+* When the roll button is pressed...
+* Assign a random number between 1 and 6 to each _unpinned_ die
+    * You'll have to keep track of which dice have been _saved_ / _pinned_ versus dice that have not been pinned
+    * Hint: There are many ways to do this:
+        * Simply use global variables, or variables that are accessible to all of your listener callback functions
+        * You can also base pinned and unpinned on the attributes of the elements themselves (for example, each pinned die could have a <code>data-pinned</code> attribute or could have a class, <code>pinned</code>)
+        * Or any other design or architecture that meets the requirements 
+* Display that number in each DOM element
+* After you roll, the <code>Roll</code> button should be disabled
+* The pin button should be enabled
+* You can do this by using <code>someElementObject.removeAttribute('disabled');</code>
+* See an example roll below...
+    <br>
+    ![title](../resources/img/hw07b-00c-roll.gif)
 
 
-![Deal](/csci-ua.0480-fall2017-007/resources/img/hw07-blackjack-03-deal.gif)
+(9 points) __Selecting dice to pin__
 
-### Hit and Stand
+* After rolling, a player must pin at least one die
+* First, the player must select the dice that they would like to pin
+* They do this by clicking on the actual displayed dice
+    * Clicking on a die selects it for pinning (when the <code>Pin</code> button is pressed) and changes the die's appearance (you can make this whatever you like - such as changing the background color, adding a differently styled border, etc.)
+    * Note that dice that have already been pinned should not be clickable (they'll be a different style; in the sample program, pinned dice are __dark__ gray)
+    * Hovering over the dice should also have an effect on styling (in the examples, hovering over dice show a green background)
+    * The example below shows a die selected for pinning being given a background color of __light__ gray...
+        <br>
+        ![title](../resources/img/hw07b-00d-select.gif)
+* Clicking on a die again _deselects_ it for pinning
+    * A user can deselect a die simply by clicking on the die again 
+    * Note that this reverts its style
+    * Hint: <code>someElementObject.classList.toggle(someClassName)</code> is helpful when dealing with flipping back-and-forth between one state and another
+    * See below for an example of selecting and then deselecting (toggling)
+        <br>
+        ![title](../resources/img/hw07b-00d-deselect.gif)
+* __Selecting the dice to pin doesn't actually pin the dice... you'll have to press the pin button to do that__ (see next step!)
 
-Once user's hand and the computer's hand are displayed after the initial deal, the user can now decide whether they want more cards or stay with the cards that they have. The previous section added buttons (Hit and Stand), but now you'll have to add event listeners to those buttons. 
+(5 points) __Pressing the pin button__
 
-1. pressing `Hit` should deal the next card from the deck
-    * the next card should be moved from the deck to the user's hand
-    * an element should be created to add the card to the user's hand in the user interface
-    * if hitting makes a user's total go over 21: 
-        * then the user's turn ends immediately 
-        * ... and they lose the hand
-        * (the computer does not even need to decided to hit or stand)
-2. pressing `Stand` should end the user's turn and allow the computer to Hit or Stand
-    * the computer's strategy is your discretion
-    * though the computer must hit in some situations or stand in others
-    * an easy strategy is to always hit if a hand total is underneath a threshold, but stand if it's eqaul to or above that threshold
+* Once a player has chosen the dice to pin, they can finalize their choices by clicking the <code>Pin</code> button
+    * At least one die must be selected to pin for the <code>Pin</code> button to work
+    * Pinned dice can no longer be rolled
+    * ...And they can't be chosen to be pinned again (they're _already pinned_!)
+* Clicking on the <code>Pin</code> button will change the styles on the selected dice
+    * When the <code>Pin</code> button is pressed, the dice that were not set to be pinned become blank (see image below)
+    * The dice that were selected to be pinned receive a different style (in the examples shown, the background is dark gray)
+* After the <code>Pin</code> button is pressed, the player's score should be re-calculated and updated based on the newly pinned dice
+* Again, if there are still unpinned dice after pinning, then they become blank (no number)
+* Everything together should look like:
+    <br>
+    ![select and pin](../resources/img/hw07b-00d-select-and-pin.gif)
 
-The following is an example of the user:
 
-1. hitting twice
-2. then going over 21 (busting)
-3. (and consequently, immediately losing the hand)
 
-![Play](/csci-ua.0480-fall2017-007/resources/img/hw07-blackjack-04-play.gif)
 
-### Determine the winner
+(5 points) __Determine the winner__
 
-Once the user and computer have both decided to "stand" or have a hand total over 21...
+Once all of the dice have been pinned...
 
-1. Compare the computer's score with the user's score
-2. The player with the score closer to or equal to 21 wins
-3. Add text to indicate of who won
-4. If the player went over 21, they lose automatically
-5. __A tie is possible__
+1. Disable both the <code>Pin</code> and <code>Roll</code> buttons
+2. Compare the computer's score with the user's score
+3. The player with the lower score wins
+4. Add text to indicate of the user won, lost or tied
+5. The text should be styled differently depending on the game outcome... for example, in the screen captures for the solution's version...
+    * win text is green
+    * lose text is red
+    * tie text is blue
+6. See the example below of a user losing a game below:
+    ![lose](../resources/img/hw07b-02-lose.gif)
 
-Below is an example of the user winning a hand:
+(10 points) __Validation and error messages__
 
-![Win](/csci-ua.0480-fall2017-007/resources/img/hw07-blackjack-05-win.gif)
+There are two interactions that the user __shouldn't be able to do__:
+
+1. Click on the <code>Pin</code> button before the user has selected dice to pin
+2. Select a die to pin before a they've rolled (that is, click on the die when it's blank)
+
+If either state occurs, create an overlay on the screen with the appropriate error message. When they click on the <code>OK</code> button (or even better anywhere, in the overlay), the overlay should disappear. 
+
+* implement this using plain CSS and/or JavaScript (no JQuery or bootstrap)
+* Hint: the overlay should be <code>position:fixed</code> with a <code>height</code> and <code>width</code> of <code>100%</code>
+* Hint: the overlay's <code>z-index</code> should be a high number (100?) so that it appears _on top_ of everything else
+* Hint: to center content within the overlay, <code>margin: auto</code> and a specific <code>width</code> is helpful
+
+![error](../resources/img/hw07b-05-error.gif)
+
 
 ### Optional Features (Extra Credit)
 
-Implement any of the following features for extra credit. 
+Implement any of the following features
 
-<span class="warning">If you are implementing extra credit:</span>
+(10 points) __Restart game__
 
-1. add a README.md to the root of your project
-2. add notes specifying which extra credit you did
+* when game ends, add a restart button along the bottom row of buttons
+* the restart button resets the game so that:
+    * the computer generates a new score
+    * the player starts with 5 unpinned dice
+    * Start and Pin are disabled, but Roll is enabled
 
-(5 points) __Reset hand__
+(5 points) __Add actual dice faces to the game__
 
-* when a hand ends, remove the `Hit` and `Stand` buttons and add a `Restart` button along the bottom row
-* when the `Restart` button is pressed, it resets the game so that:
-    * the computer and player hands are cleared
-    * new cards are dealt
-    * the `Hit` and `Stand` button are added back
-
-(10 points) __Save results in database__
-
-* when the game ends, allow the user to enter their initials in a form
-* when the form is submitted:
-    * save the results of this hand (the computer scores and the user score) in the database, along with the user's initials
-    * display the results of the last 5 hands
-* if this is combined with the reset hand, then place the restart button after the form has been submitted
-
+* instead of numbers, add an actual face to each die
+    * you can use images
+    * ... or [svgs](https://commons.wikimedia.org/wiki/File:Dice_1-6.svg)
+    * ... or even [css / flexbox](https://davidwalsh.name/flexbox-dice)!
+* (the computer's pinned dice can remain as numbers, though)
 
 </div>
 </div>
+
+
 

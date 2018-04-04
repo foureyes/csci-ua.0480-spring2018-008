@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+<title></title>
+</head>
+<body>
+<article>
+  <h1>About Events</h1>
+  <button>Click to Say Hello</button>
+</article>
+
+		<script>
+const a = document.querySelector('article');
+const b = document.querySelector('button');
+a.addEventListener('click', function(evt) {
+  console.log('article!');
+});
+b.addEventListener('click', function(evt) {
+  console.log('button!');
+});
+		</script>
+</body>
+</html>

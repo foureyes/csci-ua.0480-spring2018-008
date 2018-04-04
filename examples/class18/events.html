@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+<title></title>
+</head>
+<body>
+<style type="text/css" media="screen">
+.big {
+	font-size: 2em;
+}		
+</style>
+<script>
+function main() {
+	const button = document.querySelector('button');
+	button.addEventListener('click', handleClick);
+}
+
+function handleClick(evt) {
+		// this w/ in event listener, this will
+		// refer to element that event listener was
+		// added to
+		this.classList.toggle('big');
+		const div = document.querySelector('div');
+		div.textContent = evt.x + ' ' + evt.y;
+		this.removeEventListener('click', handleClick);
+};
+
+
+document.addEventListener('DOMContentLoaded', main);
+
+</script>
+		<div></div>
+		<button>Submit</button>
+</body>
+</html>

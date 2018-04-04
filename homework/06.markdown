@@ -172,9 +172,9 @@ Check out [how to use bcrypt.js](https://www.npmjs.com/package/bcryptjs).
 			* `url`
 			* `description`
 		* <span class="warning">if you use embedded documents, you can skip using mongoose-url-slugs, and create slugs on your own</span>
-			* [it seems like sub docs aren't supported](https://github.com/talha-asad/mongoose-url-slugs/issues/13)
-			* (mainly because the plugin only works when save is explicitly called)
-			* soooo.... instead, manually create a slug field, and set it to the lowercase version of the title, replacing spaces with dashes
+			*  sadly, it looks like [sub docs aren't supported with mongoose-url-slugs](https://github.com/talha-asad/mongoose-url-slugs/issues/13) (embedded documents won't work)
+			* ...mainly because the plugin only works  correctly when save is explicitly called (which doesn't happen when dealing with embedded documents)
+			* soooo…. instead, manually create a slug field (in your schema), and set it to the lowercase version of the title, replacing spaces with dashes (whenever a new article is created)
 		* use `mongoose-url-slugs` to add a slug to uniquely identify each article:
 			* this plugin will autogenerate a `slug` field (no need to explicitly add it to your schema)
 			* a slug is a string that serves as a short, human readable name
