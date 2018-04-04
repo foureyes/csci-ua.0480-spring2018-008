@@ -251,7 +251,7 @@ Once all of the dice have been pinned...
     * win text is green
     * lose text is red
     * tie text is blue
-6. See the example below of a user losing a game below:
+6. See the example below of a user losing a game:
     <img src="../resources/img/hw07b-02-lose.gif">
 
 (10 points) __Validation and error messages__
