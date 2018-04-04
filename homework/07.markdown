@@ -38,7 +38,7 @@ Threes is a dice game where the goal is to get the lowest score (with each die f
 
 You will be making an online version of this game where all of the game logic is client side JavaScript. Here's an example of what your game may look like:
 
-![Demo](../resources/img/hw07b-01-win.gif)
+<img src="../resources/img/hw07b-01-win.gif">
  
 ### Submission Process
 
@@ -107,7 +107,7 @@ You will be given access to a private repository on GitHub.  The final version o
 * If the user clicks on the button, then start the game (see next requirement for instructions)
 * Here's what the interaction should look like (you won't have any real content on the _next_ page yet, though):
     <br>
-    ![title](../resources/img/hw07b-00-start.gif)
+    <img src="../resources/img/hw07b-00-start.gif">
     <br>
 
 (8 points) __Pressing "Go" reveals the game screen and sets predefined dice roll results__
@@ -138,7 +138,7 @@ You will be given access to a private repository on GitHub.  The final version o
 	* Note that the first several numbers will be exhausted by the computer's rolls
     * Once the list of specified numbers is exhausted, random numbers should be generated again
 * Here's an example of how it may work (again, the _game screen_ will be blank for now, but when it's implemented, it should function like this):
-    ![title](../resources/img/hw07b-00a-start-btn-fix.gif)
+    <img src="../resources/img/hw07b-00a-start-btn-fix.gif">
     <br>
 
 
@@ -158,7 +158,7 @@ You will be given access to a private repository on GitHub.  The final version o
     * Hint: To do this in JavaScript, use either `someElementObject.disabled = true;` or <code>someElementObject.setAttribute("disabled", "disabled");</code>
 * The generated dice and buttons should look something like this:
     <br>
-    ![dice](../resources/img/hw07b-00b-dice.gif)
+    <img src="../resources/img/hw07b-00b-dice.gif">
 
 (12 points) __Pressing "Start" Generates a score for the computer and shows your score__
 
@@ -179,7 +179,7 @@ You will be given access to a private repository on GitHub.  The final version o
 * Display the player's score (which is 0 for now) below the computer's score, but above the dice
 * Here's what the two scores should look like:
     <br>
-    ![title](../resources/img/hw07b-00b-comp.gif)
+    <img src="../resources/img/hw07b-00b-comp.gif">
 * Finally, disable the `Start` button and enable the `Roll` button
     * Hint: To do this in JavaScript, use either `someElementObject.disabled = false;` or <code>someElementObject.removeAttribute("disabled");</code>
 
@@ -198,7 +198,7 @@ You will be given access to a private repository on GitHub.  The final version o
 * You can do this by using <code>someElementObject.removeAttribute('disabled');</code>
 * See an example roll below...
     <br>
-    ![title](../resources/img/hw07b-00c-roll.gif)
+    <img src="../resources/img/hw07b-00c-roll.gif">
 
 
 (9 points) __Selecting dice to pin__
@@ -211,14 +211,14 @@ You will be given access to a private repository on GitHub.  The final version o
     * Hovering over the dice should also have an effect on styling (in the examples, hovering over dice show a green background)
     * The example below shows a die selected for pinning being given a background color of __light__ gray...
         <br>
-        ![title](../resources/img/hw07b-00d-select.gif)
+        <img src="../resources/img/hw07b-00d-select.gif">
 * Clicking on a die again _deselects_ it for pinning
     * A user can deselect a die simply by clicking on the die again 
     * Note that this reverts its style
     * Hint: <code>someElementObject.classList.toggle(someClassName)</code> is helpful when dealing with flipping back-and-forth between one state and another
     * See below for an example of selecting and then deselecting (toggling)
         <br>
-        ![title](../resources/img/hw07b-00d-deselect.gif)
+        <img src="../resources/img/hw07b-00d-deselect.gif">
 * __Selecting the dice to pin doesn't actually pin the dice... you'll have to press the pin button to do that__ (see next step!)
 
 (5 points) __Pressing the pin button__
@@ -234,7 +234,7 @@ You will be given access to a private repository on GitHub.  The final version o
 * Again, if there are still unpinned dice after pinning, then they become blank (no number)
 * Everything together should look like:
     <br>
-    ![select and pin](../resources/img/hw07b-00d-select-and-pin.gif)
+    <img src="../resources/img/hw07b-00d-select-and-pin.gif">
 
 
 
@@ -252,7 +252,7 @@ Once all of the dice have been pinned...
     * lose text is red
     * tie text is blue
 6. See the example below of a user losing a game below:
-    ![lose](../resources/img/hw07b-02-lose.gif)
+    <img src="../resources/img/hw07b-02-lose.gif">
 
 (10 points) __Validation and error messages__
 
@@ -268,7 +268,7 @@ If either state occurs, create an overlay on the screen with the appropriate err
 * Hint: the overlay's <code>z-index</code> should be a high number (100?) so that it appears _on top_ of everything else
 * Hint: to center content within the overlay, <code>margin: auto</code> and a specific <code>width</code> is helpful
 
-![error](../resources/img/hw07b-05-error.gif)
+<img src="../resources/img/hw07b-05-error.gif">
 
 
 ### Optional Features (Extra Credit)
