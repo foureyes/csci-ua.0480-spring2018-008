@@ -61,11 +61,7 @@ To determine which port number and server you'll use:
 1. Log in to NYU Classes
 2. Go to <code>Assignments</code>
 3. Click on <code>Milestone 2</code>
-4. Find your NetID in the table
-  * The port number listed is for your express application
-  * Write this number down... you'll use this in a later step
-    * The server domain listed will be the server that you deploy on
-    * Write this down; you'll need it to connect via ssh!
+4. Find the link to the port retrieval page in the milestone 2 instructions
 
 </section>
 
