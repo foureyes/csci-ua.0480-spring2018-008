@@ -77,9 +77,13 @@ We'll be using ssh, a commandline tool that allows you to login to and run comma
     * use your netid to log in
     * save the credentials that you receive
     * if the above does not work or if you need to reset the password that was given to you from the above page, you can go to [https://cims.nyu.edu/webapps/password/reset](https://cims.nyu.edu/webapps/password/reset)
-  * if you receive an error saying that your account does not exist, email helpdesk@cims.nyu.edu ... and cc me on your correspondence so that I'm aware that you're having account issues
-        * make sure to specify that you've already tried your netid here: https://cims.nyu.edu/webapps/password
-        * and that you've tried resetting your password here: https://cims.nyu.edu/webapps/password
+  * if you receive an error saying that your account does not exist:
+	* try using this flowchart to troubleshoot:	https://cims.nyu.edu/cms_content/cims-account-access-troubleshooting.pdf
+		* yes, I know it _looks_ complicated, but follow along to make sure there's really a system related issue
+	* if that still doesn't work, send me a note with:
+		* all of the solutions you've tried
+		* along with your username and netid (do not send me your password)
+	* I will contact helpdesk@ on your behalf
 2. To access your assigned server, you must first ssh to `access.cims.nyu.edu`... and then from there, ssh to your _actual_ server:
     * `ssh your_username@access.cims.nyu.edu`
     * once you've logged in... use ssh again
