@@ -21,7 +21,7 @@ draft,type,num,date,day,topics,slides,readings,assignments,
 ,,17,28-Mar,Wed,"* CSS<!--* Flexbox* Grids-->","* [Final Project](final-project.html)* [Some Sample Markup](code/class18.html)* [Layout and Style](slides/19/layout-style.html)* [JavaScript Timers](slides/19/timers.html)* [CSS](slides/19/css.html)* [Selectors, JS and CSS](slides/19/js-css.html)* [Events](slides/19/events.html)","(readings same as previous class)","__Due Wednesday 4/4 at 11pm:__*  [Final Project Miletsone #01](final-project.html#milestone01)",
 ,,18,2-Apr,Mon,"* CSS Continued* Events / Timers Continued* AJAX* APIs","* See Previous Slides for CSS, Events* [Ajax Part 1](slides/20/ajax.html)",* {{ site.book_js_5 }} - Chapter 17 - HTML (Focus on the section on XMLHttpRequest),,
 ,,19,4-Apr,Wed,"* AJAX Continued* Promises* Fetch API","* [Ajax Part 1](slides/20/ajax.html) (from previous class)* [Ajax Part 2](slides/21/ajax-express.html)* [Promises](slides/21/promises.html)",,"__Due Wednesday 4/11 at 11pm:__* [Homework #7](homework/07.html) * [Final Project Miletsone #02](final-project.html#milestone02)",m1 due
-y,,20,9-Apr,Mon,"* AJAX Review* Promises Review* async / await",,,,
+,,20,9-Apr,Mon,"* AJAX Review* Promises Review* async / await",See previous slides,,,
 y,,21,11-Apr,Wed,* SocketIO,,,"Socket I/O Lab Today__Due Wednesday 4/18 at 11pm:__ * Final Project",m2 due
 y,,22,16-Apr,Mon,* SocketIO Continued,,,,
 y,,23,18-Apr,Wed,* Frontend Framework  ,,,"__Due Wednesday 4/25 at 11pm:__* [Homework #9](homework/09.html) * (Frontend Framework)",m3 due
