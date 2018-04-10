@@ -197,7 +197,7 @@ Choose at least __8 points__ worth of these following topics (research and imple
 <br>
 {% endcomment %}
 
-### __4/11 at 11pm__ - Milestone 2 - Initial Deployment and First Form (20 points)
+### __4/12 at 11pm__ - Milestone 2 - Initial Deployment and First Form (20 points)
 
 1. attempt to deploy your code to Courant's _compute_ and assignment servers by following [instructions](homework/deploy.html)
 2. <span class="warning">use [this form to submit your deployed site](https://docs.google.com/forms/d/e/1FAIpQLSfcpmZ6umoks5GbWz91SJeMmqCwrHAuBT48a5oiecQTkM5y9g/viewform)</span>
@@ -218,7 +218,7 @@ Choose at least __8 points__ worth of these following topics (research and imple
 <br>
 
 
-### __4/18 at 11pm__ - Milestone 3 - 2nd Form and More Progress on Research (20 points)
+### __4/19 at 11pm__ - Milestone 3 - 2nd Form and More Progress on Research (20 points)
 
 {% comment %}
 Note - this due date may change!
@@ -251,7 +251,7 @@ Note - this due date may change!
 
 {% endcomment %}
 
-### __4/25 11PM__ - Final Project Complete and Code is fully  _Deployed_  
+### __4/26 11PM__ - Final Project Complete and Code is fully  _Deployed_  
 
 {% comment %}
 * __all commits must be in by Monday, Dec 4th__ (repositories and forms will be closed 24 hours after due date to allow for late submissions) 
