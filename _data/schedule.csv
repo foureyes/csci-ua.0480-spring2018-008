@@ -22,11 +22,11 @@ draft,type,num,date,day,topics,slides,readings,assignments,
 ,,18,2-Apr,Mon,"* CSS Continued* Events / Timers Continued* AJAX* APIs","* See Previous Slides for CSS, Events* [Ajax Part 1](slides/20/ajax.html)",* {{ site.book_js_5 }} - Chapter 17 - HTML (Focus on the section on XMLHttpRequest),,
 ,,19,4-Apr,Wed,"* AJAX Continued* Promises* Fetch API","* [Ajax Part 1](slides/20/ajax.html) (from previous class)* [Ajax Part 2](slides/21/ajax-express.html)* [Promises](slides/21/promises.html)",,"__Due <s>Wednesday 4/11</s> Thursday 4/12 at 11pm:__* [Homework #7](homework/07.html) * [Final Project Miletsone #02](final-project.html#milestone02)",m1 due
 ,,20,9-Apr,Mon,"* AJAX Review* Promises Review* async / await",See previous slides,,,
-y,,21,11-Apr,Wed,* SocketIO,,,"Socket I/O Lab Today__Due Wednesday 4/18 at 11pm:__ * Final Project",m2 due
-y,,22,16-Apr,Mon,* SocketIO Continued,,,,
-y,,23,18-Apr,Wed,* Frontend Framework  ,,,"__Due Wednesday 4/25 at 11pm:__* [Homework #9](homework/09.html) * (Frontend Framework)",m3 due
-y,,24,23-Apr,Mon,* Frontend Framework Continued,,,,
-y,,25,25-Apr,Wed,* TBD (everything together?),,,,m4 due
-y,,26,30-Apr,Mon,"* TBD (wasm, webgl, electron or webaudio?)",,,,
+,,21,11-Apr,Wed,"* AJAX Review* Promises Review* async / await","* Previous class on AJAX post* Previous class on Promises* AJAX Polling* [Example Code for AJAX Polling / Chat](code/chat.zip)",,"__Due Thursday 4/19 at 11pm:__ * Homework #8 (to be posted)",m2 due
+,,22,16-Apr,Mon,* SocketIO, * [Socket.io](slides/23/socketio.html),,"* [Socket IO How-To](http://socket.io/docs/)",
+y,,23,18-Apr,Wed,* SocketIO Continued,,,"__Due Wednesday 4/25 at 11pm:__* [Homework #9](homework/09.html) * (Frontend Framework)",m3 due
+y,,24,23-Apr,Mon,* Frontend Framework  ,,,,
+y,,25,25-Apr,Wed,* Frontend Framework Continued,,,,m4 due
+y,,26,30-Apr,Mon,"* TBD (everything together, wasm, webgl, electron or webaudio?)",,,,
 y,,27,2-May,Wed,* Review,,,,
 ,exam,28,7-May,Mon,EXAM #2 (Final Exam),,,,
