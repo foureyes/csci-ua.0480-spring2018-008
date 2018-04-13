@@ -22,7 +22,7 @@ draft,type,num,date,day,topics,slides,readings,assignments,
 ,,18,2-Apr,Mon,"* CSS Continued* Events / Timers Continued* AJAX* APIs","* See Previous Slides for CSS, Events* [Ajax Part 1](slides/20/ajax.html)",* {{ site.book_js_5 }} - Chapter 17 - HTML (Focus on the section on XMLHttpRequest),,
 ,,19,4-Apr,Wed,"* AJAX Continued* Promises* Fetch API","* [Ajax Part 1](slides/20/ajax.html) (from previous class)* [Ajax Part 2](slides/21/ajax-express.html)* [Promises](slides/21/promises.html)",,"__Due <s>Wednesday 4/11</s> Thursday 4/12 at 11pm:__* [Homework #7](homework/07.html) * [Final Project Miletsone #02](final-project.html#milestone02)",m1 due
 ,,20,9-Apr,Mon,"* AJAX Review* Promises Review* async / await",See previous slides,,,
-,,21,11-Apr,Wed,"* AJAX Review* Promises Review* async / await","* Previous class on AJAX post* Previous class on Promises* AJAX Polling* [Example Code for AJAX Polling / Chat](code/chat.zip)",,"__Due Thursday 4/19 at 11pm:__ * Homework #8 (to be posted)",m2 due
+,,21,11-Apr,Wed,"* AJAX Review* Promises Review* async / await","* Previous class on AJAX post* Previous class on Promises* AJAX Polling* [Example Code for AJAX Polling / Chat](code/chat.zip)",,"__Due Friday 4/20 at 11pm:__ * [Homework #8](homework/08.html)* [Final Project Miletsone #03](final-project.html#milestone03)",m2 due
 ,,22,16-Apr,Mon,* SocketIO, * [Socket.io](slides/23/socketio.html),,"* [Socket IO How-To](http://socket.io/docs/)",
 y,,23,18-Apr,Wed,* SocketIO Continued,,,"__Due Wednesday 4/25 at 11pm:__* [Homework #9](homework/09.html) * (Frontend Framework)",m3 due
 y,,24,23-Apr,Mon,* Frontend Framework  ,,,,

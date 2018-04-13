@@ -32,7 +32,7 @@ pre {
 	<div class="panel-heading">Final Project</div>
 	<div class="panel-body" markdown="block">
 
-# Final Project, Due __THU, April 26th at 11pm__
+# Final Project, Due __FRI, April 27th at 11pm__
 
 
 ## Overview 
@@ -218,10 +218,8 @@ Choose at least __8 points__ worth of these following topics (research and imple
 <br>
 
 
-### __4/19 at 11pm__ - Milestone 3 - 2nd Form and More Progress on Research (20 points)
+### __4/20 at 11pm__ - Milestone 3 - 2nd Form and More Progress on Research (20 points)
 
-{% comment %}
-Note - this due date may change!
 
 1. make at least 3 additional commits to add:
     * your 2nd form / ajax interaction
@@ -232,15 +230,12 @@ Note - this due date may change!
     3. run `forever stopall` and `forever start bin/www` 
         * you'll have to use the full path to forever, likely `~/usr/local/node_modules/bin/forever`
         * and perhaps the full bath to `bin/www`
-3. __[fill out form to submit assignment](https://docs.google.com/forms/d/e/1FAIpQLScBpsaoEs1zSEG7-Sf-kkaZeU07nDEsjzEpgyzB-nUvdVApFw/viewform)__; it will contain:
+3. __[fill out form to submit assignment](https://docs.google.com/forms/d/e/1FAIpQLScCfGEc4Mz19tm8ioMWMP_h488oHq4mXTaT3HxChhwfBK9Epw/viewform)__; it will contain:
     * __both working forms or ajax interactions (that are not login or registration)__ 
     * a link to show code changes since milestone #2:
-        * start with the url to your repository: `https://github.com/nyu-csci-ua-0480-007-fall-2017/NETID-final-project/`
-        * and append the following to the url: `compare/master@%7B04-09-17%7D...master`
-        * for example: `https://github.com/nyu-csci-ua-0480-007-fall-2017/NETID-final-project/compare/master@%7B04-09-17%7D...master`
-                     
-
-
+        * start with the url to your repository: `https://github.com/nyu-csci-ua-0480-008-spring-2018/NETID-final-project/`
+        * and append the following to the url: `compare/master@%7B04-13-18%7D...master`
+        * for example: `https://github.com/nyu-csci-ua-0480-008-spring-2018/NETID-final-project/compare/master@%7B04-13-18%7D...master`
 
 <a id="final_submit" name="final_submit">
 
@@ -249,9 +244,7 @@ Note - this due date may change!
 <br>
 <br>
 
-{% endcomment %}
-
-### __4/26 11PM__ - Final Project Complete and Code is fully  _Deployed_  
+### __4/27 11PM__ - Final Project Complete and Code is fully  _Deployed_  
 
 {% comment %}
 * __all commits must be in by Monday, Dec 4th__ (repositories and forms will be closed 24 hours after due date to allow for late submissions) 
