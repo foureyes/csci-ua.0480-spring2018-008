@@ -46,7 +46,7 @@ You will be given access to a private repository on GitHub.  The final version o
 
 * __Push__ your changes to the homework repository on GitHub.
 
-### (4 points) Make at Least 4 Commits
+### Make at Least 4 Commits
 
 * Commit multiple times throughout your development process.
 * Make at least 4 separate commits
@@ -55,7 +55,7 @@ You will be given access to a private repository on GitHub.  The final version o
 
 ### __Required Features__
 
-(6 points) __Use the following markup__
+__Use the following markup__
 
 1. Start a new express project that uses express-static.
 	* the root directory should contain `package.json`, your eslint config, `.gitignore`, etc.
@@ -97,7 +97,7 @@ You will be given access to a private repository on GitHub.  The final version o
 6. All of your JavaScript should go in your external JavaScript file.
 7. ... and, of course, all of your CSS should go in your external CSS file. 
 
-(3 points) __Only show title screen and form on page load__
+__Only show title screen and form on page load__
 
 * Only show the content in the div with id <code>intro</code>
     * Make sure the overlay div and the game div are not displayed
@@ -110,7 +110,7 @@ You will be given access to a private repository on GitHub.  The final version o
     <img src="../resources/img/hw07b-00-start.gif">
     <br>
 
-(8 points) __Pressing "Go" reveals the game screen and sets predefined dice roll results__
+__Pressing "Go" reveals the game screen and sets predefined dice roll results__
 
 * Use <code>addEventListener</code> to allow the button on the _title screen_ to be pressed
     * It should lead to the next _screen_, which will be contained within the `div` with id, `game`
@@ -142,7 +142,7 @@ You will be given access to a private repository on GitHub.  The final version o
     <br>
 
 
-(8 points) __Generate DOM elements for 5 dice and 3 buttons__ 
+__Generate DOM elements for 5 dice and 3 buttons__ 
 
 * Create DOM elements to represent 5 dice
     * The elements should start off with no text 
@@ -160,7 +160,7 @@ You will be given access to a private repository on GitHub.  The final version o
     <br>
     <img src="../resources/img/hw07b-00b-dice.gif">
 
-(12 points) __Pressing "Start" Generates a score for the computer and shows your score__
+__Pressing "Start" Generates a score for the computer and shows your score__
 
 * Add an event listener to the Start button so that it when it's clicked it:
     1. Generates a set of pinned dice for the computer
@@ -183,7 +183,7 @@ You will be given access to a private repository on GitHub.  The final version o
 * Finally, disable the `Start` button and enable the `Roll` button
     * Hint: To do this in JavaScript, use either `someElementObject.disabled = false;` or <code>someElementObject.removeAttribute("disabled");</code>
 
-(9 points) __Rolling dice__
+__Rolling dice__
 
 * When the roll button is pressed...
 * Assign a random number between 1 and 6 to each _unpinned_ die
@@ -201,7 +201,7 @@ You will be given access to a private repository on GitHub.  The final version o
     <img src="../resources/img/hw07b-00c-roll.gif">
 
 
-(9 points) __Selecting dice to pin__
+__Selecting dice to pin__
 
 * After rolling, a player must pin at least one die
 * First, the player must select the dice that they would like to pin
@@ -221,7 +221,7 @@ You will be given access to a private repository on GitHub.  The final version o
         <img src="../resources/img/hw07b-00d-deselect.gif">
 * __Selecting the dice to pin doesn't actually pin the dice... you'll have to press the pin button to do that__ (see next step!)
 
-(5 points) __Pressing the pin button__
+__Pressing the pin button__
 
 * Once a player has chosen the dice to pin, they can finalize their choices by clicking the <code>Pin</code> button
     * At least one die must be selected to pin for the <code>Pin</code> button to work
@@ -239,7 +239,7 @@ You will be given access to a private repository on GitHub.  The final version o
 
 
 
-(5 points) __Determine the winner__
+__Determine the winner__
 
 Once all of the dice have been pinned...
 
@@ -254,7 +254,7 @@ Once all of the dice have been pinned...
 6. See the example below of a user losing a game:
     <img src="../resources/img/hw07b-02-lose.gif">
 
-(10 points) __Validation and error messages__
+__Validation and error messages__
 
 There are two interactions that the user __shouldn't be able to do__:
 
