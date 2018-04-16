@@ -198,7 +198,7 @@ On the client:
 The `Server` object represents socket.io server. Instantiate it by:
 
 <pre><code data-trim contenteditable>
-var io = require('socket.io')();
+const io = require('socket.io')();
 </code></pre>
 
 Some methods that you can call on it are:
@@ -232,7 +232,7 @@ The callback passed to `on` for a connection event has a __socket__ as a paramet
 * __<code>io</code>__ 
     * {:.fragment} a function that gives back a socket object
     * {:.fragment} socket can be used to interact with server
-    * {:.fragment} `var socket = io('http://localhost');`
+    * {:.fragment} `const socket = io('http://localhost');`
 * __<code>socket.on('event name', callback)</code>__ 
     * {:.fragment} listen for an event name, trigger the callback
 * __<code>socket.emit('event name', 'message')</code>__  
@@ -277,10 +277,10 @@ Socket.IO requires access to the underlying HTTP server object that backs expres
 In its simplest form, you can _attach_ a socket.io Server to Express using this code:
 
 <pre><code data-trim contenteditable>
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 app.use(express.static('public'));
 
 
@@ -300,11 +300,11 @@ That was a little different than what we're used to doing. If you want to use ex
 * the end of your app.js file should now look like this (after: module.exports = app)
 
 <pre><code data-trim contenteditable>
-var debug = require('debug')('projectname');
+const debug = require('debug')('projectname');
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+const server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 </code></pre>
@@ -320,7 +320,7 @@ Create a Socket.IO server by
 
 <br>
 <pre><code data-trim contenteditable>
-var io = require('socket.io')(server);
+const io = require('socket.io')(server);
 </code></pre>
 
 This adds Socket.IO support to your HTTP server!
@@ -377,7 +377,7 @@ This gives your page access to a global <code>io</code> object. So... make sure 
 Use the global io object to create a Socket object
 
 <pre><code data-trim contenteditable>
-var socket = io();
+const socket = io();
 </code></pre>
 
 ...And __that's it!__. Let's test it out. __Start your server and load your page in a few browser windows.__
@@ -459,7 +459,7 @@ Really... __all we have to add here is a custom event handler that just emits to
 
 <pre><code data-trim contenteditable>
 // our previous setup 
-var io = require('socket.io')(server);
+const io = require('socket.io')(server);
 io.on('connection', function(socket) {
   console.log(socket.id, 'connected');  
   socket.on('disconnect', function() {
@@ -506,8 +506,8 @@ __Minimally, what markup would we need for this app?__ &rarr;
 __Let's create our socket... and setup our button to trigger a function called <code>sendMessage</code> when it's clicked:__ &rarr;
 
 <pre><code data-trim contenteditable>
-var socket = io();
-var button = document.querySelector('input[type=button]');
+const socket = io();
+const button = document.querySelector('input[type=button]');
 console.log(button);
 button.addEventListener('click', sendMessage);
 </code></pre>
@@ -681,7 +681,7 @@ So... from the description in the previous slide, __the analogous code may look 
 <pre><code data-trim contenteditable>
 socket.on('other mouse', function(data) {
 	console.log(data);
-	var otherMouse = document.getElementById(data.id);
+	let otherMouse = document.getElementById(data.id);
 	if (!otherMouse) {
 		otherMouse = document.body.appendChild(document.createElement('div'));
 		otherMouse.id = data.id;
