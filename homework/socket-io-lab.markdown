@@ -45,7 +45,7 @@ Make a real time web app that:
 8. (optional) end game and show message when one emoji crosses the finish line
 
 
-![Emoji Racer](../resources/img/hw09-screen.gif)
+<img src="../resources/img/hw09-screen.gif" alt="example emoji racer animation">
 
 
 ## Instructions
@@ -54,7 +54,7 @@ Make a real time web app that:
 
 Use the _one-page_ version of the slides to guide you through socket.io:
 
-[https://foureyes.github.io/csci-ua.0480-fall2017-007/slides/23/socketio.html?print-pdf#/](https://foureyes.github.io/csci-ua.0480-fall2017-007/slides/23/socketio.html?print-pdf#/)
+[https://foureyes.github.io/csci-ua.0480-spring2018-008/slides/23/socketio.html?print-pdf#/](https://foureyes.github.io/csci-ua.0480-spring2018-008/slides/23/socketio.html?print-pdf#/)
 
 1. create a directory to store your project
 2. create your `package.json` and install these packages:
