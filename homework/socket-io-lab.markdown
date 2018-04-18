@@ -12,7 +12,7 @@ title: CSCI-UA.0480 - Socket IO Lab
 ## Submission Process
 
 * work in groups of 2 or 3
-* __submit using [this form](https://docs.google.com/forms/d/e/1FAIpQLSeaycESjcV2a4-OPIex4a3GNlowyobjUwApKxi5RIIFLmqUEw/viewform)__
+* __submit using [this form](https://docs.google.com/forms/d/e/1FAIpQLSeXfOwrx1LvRdaHfbU_FogOcRQeKn2lOWkHQRf9JfPIPnKj2w/viewform)__
 * __each person on the team should submit their own individual form__
 
 ## Scoring
