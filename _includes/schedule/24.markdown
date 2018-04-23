@@ -1,5 +1,6 @@
 	<td markdown="block">
 
+{% comment %}
 * Out-of-Class Review times! (See piazza)
     * 2 reviews
     * time pending room bookings
@@ -7,6 +8,7 @@
     * [rubric](final-project.html)
     * [full submission details](final-project.html#final_submit)
     * late submissions allowed with no penalty, up to 24 hours after due date
+{% endcomment %}
 * [React Basics](slides/26/react.html)
 * [React Revisited](slides/26/react-state-parent.html)
 * (Optional) [React and Express / Using Webpack](slides/26/react-webpack-continued.html)
