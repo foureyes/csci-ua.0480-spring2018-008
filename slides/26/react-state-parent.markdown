@@ -948,7 +948,8 @@ __Let's try building this component...__ &rarr;
 <br>
 
 <div markdown="block" style="text-align:center;">
-![last clicked](../../resources/img/react-last-clicked.gif)
+<img src="../../resources/img/react-last-clicked.gif" alt="last clicked"/>
+<!-- ![last clicked](../../resources/img/react-last-clicked.gif) -->
 </div>
 
 </section>
