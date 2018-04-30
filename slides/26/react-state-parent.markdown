@@ -1046,3 +1046,14 @@ class MyComponent extends React.Component {
 </code></pre>
 </section>
 
+<section markdown="block">
+## componentDidMount
+
+__Implement the method `componentDidMount` to run code after a component is _mounted_ to the actual DOM.__
+
+Why is this useful? The [React Component docs](https://reactjs.org/docs/react-component.html#componentdidmount) specify that this is where background requests should be placed:
+
+* `componentDidMount` is meant for mutating the existing DOM
+* which likely what will happen after receiving a response
+</section>
+

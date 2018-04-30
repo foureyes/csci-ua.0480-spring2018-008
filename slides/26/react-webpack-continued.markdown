@@ -3,91 +3,6 @@ layout: slides
 title: ""
 ---
 
-{% comment %}
-
-<section markdown="block">
-## Where We Left Off
-
-We last looked at a small react example that __used events and state to:__ &rarr;
-
-
-* render an element with number in it
-* the number starts at 0
-* every time you click on the element, the number increases
-
-<br />
-
-<div markdown="block" class="img">
-![number click](../../resources/img/number-click.gif)
-</div>
-
-
-</section>
-
-
-<section markdown="block">
-## A Solution
-
-Start off with some boiler plate...
-
-<pre><code data-trim contenteditable>
-var MyComponent = React.createClass({
-	// render, getInitialState and event handler
-	// goes here...
-});
-</code></pre>
-
-<pre><code data-trim contenteditable>
-React.render(
-	<MyComponent &#47;>, 
-	document.body
-);
-</code></pre>
-
-</section>
-
-<section markdown="block">
-## A Solution (Continued)
-
-Within your component definition:
-
-
-<pre><code data-trim contenteditable>
-  getInitialState: function() {
-    return {
-      count: 0,
-    }
-  }
-</code></pre>
-
-<pre><code data-trim contenteditable>
-  handleClick: function() {
-    this.setState({count: this.state.count + 1});
-  }
-</code></pre>
-
-<pre><code data-trim contenteditable>
-  render: function() {
-    return (
-      <div className="number" 
-	  onClick={this.handleClick}>{this.state.count}<&#47;div>
-    )
-  }
-</code></pre>
-</section>
-
-<section markdown="block">
-## Prop vs State?
-
-__What's the difference between <code>props</code> and <code>state</code>?__ &rarr;
-
-* {:.fragment} props are controlled _externally_ by whatever is rendering your component (via attributes in JSX!)
-* {:.fragment} state is managed by the component itself
-* {:.fragment} changing state causes a re-render
-* {:.fragment} props are immutable (you can set it when creating a component, but you can't change it afterwards)
-
-</section>
-{% endcomment %}
 
 <section markdown="block">
 ## Integrating with Express 
@@ -117,8 +32,8 @@ This would normally be a straightforward task:
 3. include the appropriate scripts... using the examples for setting up a dev version of a react app [from facebook](https://facebook.github.io/react/downloads.html):
 
 <pre><code data-trim contenteditable>
-<script src="https://fb.me/react-0.14.3.js"></script>
-<script src="https://fb.me/react-dom-0.14.3.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 </code></pre>
 
 
@@ -136,11 +51,11 @@ Markup
 Component
 
 <pre><code data-trim contenteditable>
-var MyComponent = React.createClass({
-&#x9;render: function() {
+class MyComponent extends React.Component{
+&#x9;render() {
 &#x9;&#x9;return React.createElement(&#x27;h1&#x27;, {}, &#x27;hello&#x27;);
 &#x9;}
-});
+}
 
 ReactDOM.render(
 &#x9;React.createElement(MyComponent),
@@ -156,13 +71,13 @@ ReactDOM.render(
 Hey... wait, I thought we used JSX with react. Let's change our code...
 
 <pre><code data-trim contenteditable>
-var MyComponent = React.createClass({
-&#x9;render: function() {
+class MyComponent extends React.Component({
+&#x9;render() {
 &#x9;&#x9;return (
 &#x9;&#x9;&#x9;&#x3C;h1&#x3E;Hello&#x3C;/h1&#x3E;
 &#x9;&#x9;);
 &#x9;}
-});
+}
 
 ReactDOM.render(
 &#x9;&#x3C;MyComponent /&#x3E;
@@ -180,7 +95,7 @@ __Let's see what happens__ &rarr;
 Uncaught SyntaxError: Unexpected token &lt;
 </code></pre>
 
-This _is_ valid JSX, right? It works on Codepen... __so what do you think happened here__? &rarr;
+This _is_ valid JSX, right? It works on Glitch and Codepen... __so what do you think happened here__? &rarr;
 
 * {:.fragment} Hmmm... looks like our browser doesn't understand JSX!
 * {:.fragment} We need to somehow compile it...
@@ -216,7 +131,11 @@ Things would be pretty easy if we could just use babel or some other transformer
 So... all signs point to the fact that compiling in browser is a bad idea, (sigh, yes, it is).
 
 * [facebook says so (don't use JSX-Transformer)](https://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html)
-* [this project exists is folded into babble, but it lists out very specific use cases](https://github.com/Daniel15/babel-standalone)
+* [_this_ project exists (babel-standalone)and is folded into babel, but it lists out very specific use cases](https://github.com/Daniel15/babel-standalone)
+	* [react's docs suggest this](https://reactjs.org/docs/try-react.html)
+	* but it also says...  _don’t use it in production_
+
+<br> 
 
 There's probably a reason why everyone says avoid in-browser transform... __why__ &rarr;
 {:.fragment}
@@ -423,6 +342,7 @@ The webpack configuration file is called <code>webpack.config.js</code>. This wi
 <pre><code data-trim contenteditable>
 const path = require('path');
 module.exports = {
+  mode: 'development' // or production
   // configure the entry point
   // where to output the bundle of static assets
   // and configure the plugins / modules that we'll use
@@ -469,13 +389,17 @@ __Specify our loaders (the transformations we'll be using...)__ &rarr;
 
 <pre><code data-trim contenteditable>
   module: {
-    loaders: [ {
-      // no need to run babel on app and node_modules 
-      exclude: /node_modules|app.js|routes/,
-      loader: 'babel-loader',
-      query: { presets:['react'] }
-    }] 
-  }
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: [/node_modules/, /"app.js/],
+        loader: "babel-loader",
+        options: {
+          presets: ["react"]
+        }
+      }
+    ]
+  },
 </code></pre>
 </section>
 
